@@ -3,7 +3,7 @@ import categoryModel from "../models/category.js";
 
 // SELECT
 categoryController.getcategory = async (req, res) => {
-  const category = await productsModel.find();
+  const category = await categoryModel.find();
   res.json(category);
 };
 

@@ -1,5 +1,5 @@
 const contactController = {};
-import categoryModel from "../models/contact.js";
+import contactModel from "../models/contact.js";
 
 // SELECT
 contactController.getcontact = async (req, res) => {
