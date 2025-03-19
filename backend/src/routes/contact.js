@@ -1,17 +1,17 @@
 import express from "express";
-import customersController from "../controllers/customersController.js";
+import contactController from "../controllers/contactController.js";
 // Router() nos ayuda a colocar los metodos
 // que tendra mi ruta
 const router = express.Router();
 
 router
   .route("/")
-  .get(customersController.getcontact)
-  .post(customersController.createcontact);
+  .get(contactController.getcontact)
+  .post(contactController.createcontact);
 
 router
   .route("/:id")
-  .put(customersController.updatecontact)
-  .delete(customersController.deletecontact);
+  .put(contactController.updatecontact)
+  .delete(contactController.deletecontact);
 
 export default router;
