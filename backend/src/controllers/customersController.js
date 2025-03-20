@@ -12,7 +12,7 @@ customersController.createCustomers = async (req, res) => {
   const { name, password, age, gender, cardNumber, address, phone, email } = req.body;
   const newCustomers = new customersModel({ name, password, age, gender, cardNumber, address, phone, email });
   await newCustomers.save();
-  res.json({ message: "category saved" });
+  res.json({ message: "Customer saved" });
 };
 
 // DELETE
