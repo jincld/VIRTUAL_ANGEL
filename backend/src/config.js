@@ -7,5 +7,13 @@ export const config = {
     },
     server: {
         port: process.env.PORT
+    },
+    JWT: {    
+        secret: process.env.JWK_SECRET,
+        expiresIn: process.env.JWK_EXPIRES
+    },
+    emailAdmin: {
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD
     }
 }
