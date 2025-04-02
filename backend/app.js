@@ -7,11 +7,16 @@ import employeeRoutes from "./src/routes/employee.js";
 import productsRoutes from "./src/routes/products.js";
 import orderRoutes from "./src/routes/order.js";
 import assessmentRoutes from "./src/routes/assessment.js";
+import loginRoute from "./src/routes/login.js";
+import cookieParser from "cookie-parser";
 //crear constante que es igual a la libreria que importé y se ejecuta
 const app = express();
 
-//usar un archivo json
+//que acepte archivos json
 app.use (express.json());
+//que acepte cookies
+app.use(cookieParser());
+
 
 //rutas para crud
 app.use("/api/category", categoryRoutes);
@@ -21,5 +26,6 @@ app.use("/api/employee", employeeRoutes);
 app.use("/api/product", productsRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/assessment", assessmentRoutes);
+app.use("/api/login", loginRoute)
 //importo esta constante para usar express en todos lados
 export default app;
