@@ -25,5 +25,12 @@
     padding-left: 10px;
 }
 
+body {
+    padding-top: 56px; /* Ajusta según la altura del navbar */
+    background-color: #000000;
+  }
+  
+  
+
 
   
