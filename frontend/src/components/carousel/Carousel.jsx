@@ -1,15 +1,17 @@
 import React from "react";
+import './Carousel.css';
 
 function Nav() {
     return (
       <>
-      <div id="carouselExampleAutoplaying" className="carousel slide carousel-fade" data-bs-ride="carousel">
+              <div className="container-fluid contenedor">
+              <div id="carouselExampleAutoplaying" className="carousel carouselo slide carousel-fade" data-bs-ride="carousel">
   <div className="carousel-inner">
     <div className="carousel-item active" data-bs-interval="2000">
       <img src="/car1.png" className="d-block w-100" alt="..."/>
     </div>
     <div className="carousel-item" data-bs-interval="2000">
-      <img src="/virtualangelogo.png" className="d-block w-100" alt="..."/>
+      <img src="/car2.png" className="d-block w-100" alt="..."/>
     </div>
     <div className="carousel-item" data-bs-interval="2000">
       <img src="/car1.png" className="d-block w-100" alt="..."/>
@@ -24,6 +26,8 @@ function Nav() {
     <span className="visually-hidden">Next</span>
   </button>
 </div>
+              </div>
+
       </>
     );
   }
