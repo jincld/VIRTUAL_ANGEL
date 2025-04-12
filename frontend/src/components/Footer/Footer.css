@@ -1,0 +1,8 @@
+.linked{
+    color: #ffffff;
+    font-weight: 400;
+}
+
+.linked:hover{
+    color: #ff0000;  
+}

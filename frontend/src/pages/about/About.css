@@ -1,0 +1,40 @@
+.info1 {
+    padding: 0; /* Elimina cualquier relleno */
+    margin: 0; /* Elimina márgenes */
+  }
+  
+  .info1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Hace que la imagen cubra sin perder proporción */
+  }
+  
+.info2{
+    background-color: #000000;
+    align-items: center;
+    justify-content: center; /* Centra horizontalmente */
+}
+
+body {
+    padding-top: 120px; /* Ajusta según la altura del navbar */
+}
+
+.text1{
+    color: #ffffff;
+    padding: 40px;
+    margin-left: 80px;
+    margin-right: 80px;
+    text-align: left !important;
+}
+
+.abouttitle{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.abouttitledown{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
