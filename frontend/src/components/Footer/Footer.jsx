@@ -45,7 +45,7 @@ function Footer() {
               <a className = "linked" href="about">ABOUT US</a>
               <br></br>
               <br></br>
-              <a className = "linked" href="#">TERMS AND CONDITIONS</a>
+              <a className = "linked" href="terms">TERMS AND CONDITIONS</a>
             </div>
           </div>
 
