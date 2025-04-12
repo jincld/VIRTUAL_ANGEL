@@ -13,7 +13,7 @@ function Nav() {
     return (
       <>
         <div className="container-fluid contenedor">
-        <div id="carouselExampleAutoplaying" className="carousel carouselo slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
+        <div id="carouselExampleAutoplaying" className="carousel carouselo slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
   <div className="carousel-inner">
     <div className="carousel-item active">
       <img src="/car1.png" className="d-block w-100" alt="..."/>
