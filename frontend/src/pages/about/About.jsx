@@ -1,7 +1,7 @@
 import React from 'react';
 import './About.css';
 
-const Home = () => {
+const About = () => {
     return (
     <>
     <div class="container-fluid text-center">
@@ -34,4 +34,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default About;
