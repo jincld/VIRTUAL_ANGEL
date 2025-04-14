@@ -4,6 +4,7 @@ import Home from './pages/home.jsx'
 import Footer from './components/Footer/Footer.jsx'; 
 import About from './pages/about/About.jsx';
 import Terms from './pages/terms/Terms.jsx';
+import Contact from './pages/contact/Contact.jsx';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="terms" element={<Terms />} />
+          <Route path="contact" element={<Contact />} />
     </Routes>
     <Footer/>
     </Router>
