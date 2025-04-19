@@ -4,8 +4,8 @@ import './Footer.css';
 function Footer() {
   return (
     <>
-      <div className="container-fluid footer custom-footer text-white mt-5 pt-5 px-0 position-relative overlay-top footercolor">
-        <div className="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
+      <div className="container-fluid footer custom-footer text-white  pt-5 px-0 position-relative overlay-top footercolor">
+        <div className="row mx-0 pt-5 px-sm-3 px-lg-5 ">
         <div className="col-lg-3 col-md-6 mb-5" style={{ borderRight: "1px solid white" }}>
             <h4 className="text-white text-uppercase mb-4" style={{ letterSpacing: "3px" }}>
               CONTACT US
