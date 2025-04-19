@@ -40,6 +40,12 @@ html, body {
     overflow-x: hidden;
 }
 
+@media (max-width: 570px) {
+    .text1 {
+        font-size: 11px;
+    }
+}
+
 
 
 

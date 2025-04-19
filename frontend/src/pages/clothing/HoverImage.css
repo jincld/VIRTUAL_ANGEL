@@ -1,0 +1,27 @@
+.hover-image-container {
+    position: relative;
+    width: 100%;
+    background-color: #000000;
+  }
+  
+  .image {
+    display: block;
+    transition: opacity 0.4s ease-in-out;
+    width: 100%;
+    height: auto;
+  }
+  
+  .top-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .fade-in {
+    opacity: 1;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }
+  
