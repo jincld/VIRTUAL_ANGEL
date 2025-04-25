@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import './HoverImage.css'; // crea este archivo o pon el CSS en tu main
+import { Link } from 'react-router-dom';
+import './HoverImage.css';
 
-const HoverImage = ({ src1, src2, alt }) => {
+const HoverImage = ({ src1, src2, alt, href }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  return (
+  const imageContent = (
     <div
       className="hover-image-container"
       onMouseEnter={() => setIsHovered(true)}
@@ -14,6 +15,8 @@ const HoverImage = ({ src1, src2, alt }) => {
       <img src={src2} alt={alt} className={`image top-layer ${isHovered ? 'fade-in' : 'fade-out'}`} />
     </div>
   );
+
+  return href ? <Link to={href}>{imageContent}</Link> : imageContent;
 };
 
 export default HoverImage;
