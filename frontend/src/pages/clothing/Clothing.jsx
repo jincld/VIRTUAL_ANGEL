@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import HoverImage from './HoverImage'; // Asegúrate que el path sea correcto
 
-const Contact = () => {
+const Clothing = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -24,9 +24,15 @@ const Contact = () => {
 
           <div className="container">
             <div className="row justify-content-center g-3">
-              <div className="col-6 col-md-4 d-flex justify-content-center">
-                <HoverImage src1="/shirts1.png" src2="/shirts2.png" alt="Shirt" />
-              </div>
+            <div className="col-6 col-md-4 d-flex justify-content-center">
+  <HoverImage
+    src1="/shirts1.png"
+    src2="/shirts2.png"
+    alt="Shirt"
+    href="/shirts" // Este es el link que activará el <Link> interno
+  />
+</div>
+
               <div className="col-6 col-md-4 d-flex justify-content-center">
                 <HoverImage src1="/pants1.png" src2="/pants2.png" alt="Pants" />
               </div>
@@ -47,4 +53,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Clothing;
