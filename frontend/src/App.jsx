@@ -6,6 +6,7 @@ import About from './pages/about/About.jsx';
 import Terms from './pages/terms/Terms.jsx';
 import Contact from './pages/contact/Contact.jsx';
 import Clothing from './pages/clothing/Clothing.jsx';
+import Shirts from './pages/shirts/Shirts.jsx'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="terms" element={<Terms />} />
           <Route path="contact" element={<Contact />} />
           <Route path="clothing" element={<Clothing />} />
+          <Route path="shirts" element={<Shirts />} />
     </Routes>
     <Footer/>
     </Router>
