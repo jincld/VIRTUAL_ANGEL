@@ -7,6 +7,11 @@ import Terms from './pages/terms/Terms.jsx';
 import Contact from './pages/contact/Contact.jsx';
 import Clothing from './pages/clothing/Clothing.jsx';
 import Shirts from './pages/shirts/Shirts.jsx'
+import Pants from './pages/pants/Pants.jsx';
+import Jacket from './pages/jackets/Jackets.jsx';
+import Sweaters from './pages/sweaters/Sweaters.jsx';
+import PantsDetail from './pages/pants/PantsDetail.jsx';
+
 
 function App() {
 
@@ -21,6 +26,12 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="clothing" element={<Clothing />} />
           <Route path="shirts" element={<Shirts />} />
+          <Route path="pants" element={<Pants />} />
+          <Route path="jackets" element={<Jacket/>} />
+          <Route path="sweaters" element={<Sweaters/>} />
+          <Route exact path="/pants/:id" element={<PantsDetail/>} />
+          
+
     </Routes>
     <Footer/>
     </Router>

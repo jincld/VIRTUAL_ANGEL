@@ -34,16 +34,16 @@ const Clothing = () => {
 </div>
 
               <div className="col-6 col-md-4 d-flex justify-content-center">
-                <HoverImage src1="/pants1.png" src2="/pants2.png" alt="Pants" />
+                <HoverImage src1="/pants1.png" src2="/pants2.png" alt="Pants" href="/pants" />
               </div>
             </div>
 
             <div className="row justify-content-center g-3 mt-1">
               <div className="col-6 col-md-4 d-flex justify-content-center">
-                <HoverImage src1="/jackets1.png" src2="/jackets2.png" alt="Jacket" />
+                <HoverImage src1="/jackets1.png" src2="/jackets2.png" alt="Jacket" href="/jackets"/>
               </div>
               <div className="col-6 col-md-4 d-flex justify-content-center">
-                <HoverImage src1="/sweaters1.png" src2="/sweaters2.png" alt="Sweater" />
+                <HoverImage src1="/sweaters1.png" src2="/sweaters2.png" alt="Sweater" href="/sweaters" />
               </div>
             </div>
           </div>
