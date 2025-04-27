@@ -6,7 +6,8 @@ import About from './pages/about/About.jsx';
 import Terms from './pages/terms/Terms.jsx';
 import Contact from './pages/contact/Contact.jsx';
 import Clothing from './pages/clothing/Clothing.jsx';
-import Shirts from './pages/shirts/Shirts.jsx'
+import Shirts from './pages/shirts/Shirts.jsx';
+import News from './pages/news/New.jsx';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="clothing" element={<Clothing />} />
           <Route path="shirts" element={<Shirts />} />
+          <Route path="news" element={<News />} />
     </Routes>
     <Footer/>
     </Router>
