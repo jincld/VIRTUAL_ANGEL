@@ -128,10 +128,13 @@ const filteredJackets = jacketData
   {filteredJackets.map((Jacket) => (
     <div className="col d-flex justify-content-center" data-aos="fade-up" key={Jacket.id}>
       <CardClothing
+        id={Jacket.id}
         imagen={Jacket.imagen}
         titulo={Jacket.titulo}
         precio={Jacket.precio}
         enlace={Jacket.enlace}
+        category="jackets" // Pasamos "pants" como categoría
+        colorcode={Jacket.colorcode}
       />
     </div>
   ))}
