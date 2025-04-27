@@ -18,7 +18,7 @@ function Nav() {
           <a className="nav-link itemnav" href="clothing">CLOTHING</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link itemnav" href="#">NEW</a>
+          <a className="nav-link itemnav" href="news">NEW</a>
         </li>
         <li className="nav-item">
           <a className="nav-link itemnav" href="#">CART</a>

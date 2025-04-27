@@ -11,6 +11,7 @@ import Pants from './pages/pants/Pants.jsx';
 import Jacket from './pages/jackets/Jackets.jsx';
 import Sweaters from './pages/sweaters/Sweaters.jsx';
 import PantsDetail from './pages/pants/PantsDetail.jsx';
+import News from './pages/news/New.jsx';
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
           <Route path="sweaters" element={<Sweaters/>} />
           <Route exact path="/pants/:id" element={<PantsDetail/>} />
           
+
+
+          <Route path="news" element={<News />} />
 
     </Routes>
     <Footer/>
