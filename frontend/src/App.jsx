@@ -12,6 +12,8 @@ import Jacket from './pages/jackets/Jackets.jsx';
 import Sweaters from './pages/sweaters/Sweaters.jsx';
 import PantsDetail from './pages/pants/PantsDetail.jsx';
 import ShirtsDetail from './pages/shirts/ShirtsDetail.jsx';
+import JacketsDetail from './pages/jackets/JacketsDetail.jsx';
+import SweatersDetail from './pages/sweaters/SweatersDetail.jsx';
 import News from './pages/news/New.jsx';
 
 
@@ -31,8 +33,10 @@ function App() {
           <Route path="pants" element={<Pants />} />
           <Route path="jackets" element={<Jacket/>} />
           <Route path="sweaters" element={<Sweaters/>} />
-          <Route path="pants/:id" element={<PantsDetail />} />
           <Route path="shirts/:id" element={<ShirtsDetail />} />
+          <Route path="pants/:id" element={<PantsDetail />} />
+          <Route path="jackets/:id" element={<JacketsDetail />} />
+          <Route path="sweaters/:id" element={<SweatersDetail />} />
           <Route path="news" element={<News />} />
 
     </Routes>

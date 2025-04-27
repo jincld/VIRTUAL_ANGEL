@@ -1,24 +1,55 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import PantsData from "./PantsData"; // O desde donde estés importando los datos de los pantalones
+import './PantsDetail.css';
+import { Link, useParams } from "react-router-dom";
+import PantsData from "./PantsData";  // Asegúrate de tener los datos de los pantalones
+import Reviews from "../../components/Reviews/Reviews";  // Importa Reviews para mostrar las reseñas
 
 function PantsDetail() {
-  const { id } = useParams();  // Obtener el 'id' de la URL
-
-  // Buscar el pantalón correspondiente por 'id'
-  const pant = PantsData.find(pant => pant.id === id);
+  const { id } = useParams();  // Obtenemos el id de la URL
+  const pant = PantsData.find(pant => pant.id === id);  // Encontramos el pantalón con el id correspondiente
 
   if (!pant) {
-    return <h2>Pants not found</h2>;
+    return <h2>Pants not found</h2>;  // Si no se encuentra el pantalón, mostramos un mensaje
   }
 
   return (
-    <div className="container text-center my-5">
-      <img src={pant.imagen} alt={pant.titulo} />
-      <h2>{pant.titulo}</h2>
-      <p>Price: ${pant.precio}</p>
-      <p>Collection: {pant.coleccion}</p>
-      <p>Color: {pant.color}</p>
+    <div className="container-fluid">
+      <div className="pants-card">
+        <div className="pants-card__content">
+          <Link to="/pants" className="btn btn-back">
+            ← BACK
+          </Link>
+
+          {/* Imagen del pantalón */}
+          <div className="pants-card__image-wrapper">
+            <img className="img-item" src={pant.imagen} alt={pant.titulo} />
+          </div>
+
+          {/* Título del pantalón */}
+          <h2 className="pant-title">{pant.titulo}</h2>
+
+          {/* Información del pantalón (color, colección, precio) */}
+          <div className="pant-info-row">
+            <div className="left-meta">
+              <div className="color-box" style={{ backgroundColor: pant.colorcode }}></div>
+              <div className="pant-meta-row">
+                <p className="pant-collection">Collection: {pant.coleccion}</p>
+                <p className="pant-price">${pant.precio}</p>
+              </div>
+            </div>
+          </div>
+
+          <Link to="/" className="btn btn-back">
+            ADD TO CART
+          </Link>
+        </div>
+
+        {/* Sección de reseñas */}
+        <div className="pants-card__image">
+          <h2 className="review-title">REVIEWS</h2>
+          <Reviews /> {/* Aquí llamamos al componente de reseñas que ya toma el id automáticamente */}
+        </div>
+      </div>
     </div>
   );
 }
