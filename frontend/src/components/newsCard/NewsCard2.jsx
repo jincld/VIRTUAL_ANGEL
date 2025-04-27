@@ -10,7 +10,7 @@ function NewsCard2({ title, description, link, image }) {
         <h3>{title}</h3>
         <p>{description}</p>
         <Link to={`/${link}`} className="btn btn-dark btnnews">
-        Explore &rarr;
+        EXPLORE &rarr;
         </Link>
       </div>
       <div className="news-card__image">
