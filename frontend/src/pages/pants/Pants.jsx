@@ -130,6 +130,7 @@ const Pants = () => {
   titulo={pants.titulo}
   precio={pants.precio}
   category="pants" // Pasamos "pants" como categoría
+  colorcode={pants.colorcode}
 />
 
             </div>
