@@ -124,12 +124,14 @@ const Pants = () => {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
           {filteredPants.map((pants) => (
             <div className="col d-flex justify-content-center" data-aos="fade-up" key={pants.id}>
-              <CardClothing
-                id={pants.id} // Asegúrate de pasar el id
-                imagen={pants.imagen}
-                titulo={pants.titulo}
-                precio={pants.precio}
-              />
+<CardClothing
+  id={pants.id}
+  imagen={pants.imagen}
+  titulo={pants.titulo}
+  precio={pants.precio}
+  category="pants" // Pasamos "pants" como categoría
+/>
+
             </div>
           ))}
         </div>

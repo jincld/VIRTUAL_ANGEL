@@ -1,0 +1,127 @@
+.shirts-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 800px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .shirts-card__image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url('/reviews-bg.png');
+    background-size: cover; /* ✅ Mostrar la imagen completa */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ad6969;
+
+  }
+  
+  
+  .review-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+  }
+  
+  .shirts-card__content {
+    background-image: url('/clothing-gradient.png');
+    background-size: cover;
+    background-position: center;
+    flex: 1;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .shirts-card__image-wrapper {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .img-item {
+    width: 60%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .shirt-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .shirt-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .color-box {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .shirt-collection, .shirt-price {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  .btn-back {
+    width: fit-content;
+    background-color: #000;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .btn-back:hover {
+    background-color: #444;
+  }
+  
+  @media (max-width: 768px) {
+    
+    .shirts-card {
+      flex-direction: column;
+      min-height: auto;
+    }
+  
+    .shirts-card__image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9; /* Mantiene proporción en móviles */
+      }
+  
+    .shirts-card__content {
+      padding: 20px;
+    }
+  
+    .shirt-info-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .img-item {
+      width: 80%;
+    }
+  }
+  
