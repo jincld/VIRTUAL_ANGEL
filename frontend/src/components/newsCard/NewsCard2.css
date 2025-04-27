@@ -6,6 +6,7 @@
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    background-color: #ffffff;
 }
 
 /* El orden normal en pantallas grandes, imagen primero, luego el contenido */
@@ -52,7 +53,7 @@
     color: #0f0f0f;
 }
 
-.btn {
+.btnnews {
     padding: 10px 20px;
     background-color: #ff0000;
     color: white;
@@ -63,7 +64,7 @@
     max-width: 200px;
 }
 
-.btn:hover {
+.btnnews:hover {
     background-color: #000000 !important;
 }
 
