@@ -1,16 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";  // Importamos Link desde react-router-dom
 import './Footer.css';
 
 function Footer() {
   return (
     <>
-      <div className="container-fluid footer custom-footer text-white  pt-5 px-0 position-relative overlay-top footercolor">
-        <div className="row mx-0 pt-5 px-sm-3 px-lg-5 ">
-        <div className="col-lg-3 col-md-6 mb-5" style={{ borderRight: "1px solid white" }}>
+      <div className="container-fluid footer custom-footer text-white pt-5 px-0 position-relative overlay-top footercolor">
+        <div className="row mx-0 pt-5 px-sm-3 px-lg-5">
+          <div className="col-lg-3 col-md-6 mb-5" style={{ borderRight: "1px solid white" }}>
             <h4 className="text-white text-uppercase mb-4" style={{ letterSpacing: "3px" }}>
               CONTACT US
             </h4>
-            <a className = "linked" href="contact">CONTACT US</a>
+            {/* Cambié <a> por <Link> */}
+            <Link className="linked" to="/contact">CONTACT US</Link>
             <br></br>
             <br></br>
             <p><i className="fa fa-phone-alt mr-2"></i>+7070-8120</p>
@@ -44,10 +46,11 @@ function Footer() {
               COMPANY INFO
             </h4>
             <div>
-              <a className = "linked" href="about">ABOUT US</a>
+              {/* Cambié <a> por <Link> */}
+              <Link className="linked" to="/about">ABOUT US</Link>
               <br></br>
               <br></br>
-              <a className = "linked" href="terms">TERMS AND CONDITIONS</a>
+              <Link className="linked" to="/terms">TERMS AND CONDITIONS</Link>
             </div>
           </div>
 

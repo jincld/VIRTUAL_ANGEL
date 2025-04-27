@@ -127,12 +127,15 @@ const filteredShirts = shirtsData
 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
   {filteredShirts.map((shirt) => (
     <div className="col d-flex justify-content-center" data-aos="fade-up" key={shirt.id}>
-      <CardClothing
-        imagen={shirt.imagen}
-        titulo={shirt.titulo}
-        precio={shirt.precio}
-        enlace={shirt.enlace}
-      />
+<CardClothing
+  id={shirt.id}
+  imagen={shirt.imagen}
+  titulo={shirt.titulo}
+  precio={shirt.precio}
+  category="shirts" // Pasamos "shirts" como categoría
+  colorcode={shirt.colorcode}
+/>
+
     </div>
   ))}
 </div>
