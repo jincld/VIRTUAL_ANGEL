@@ -1,12 +1,12 @@
 const JacketsData = [
-    { id: "J100", imagen: "/jackets1.png", titulo: "RODRIGO", precio: 12.99, coleccion: "verano", color: "rojo", enlace: "#", colorcode: "#ff0000" },
-    { id: "J101", imagen: "/jackets1.png", titulo: "Chaqueta 2", precio: 11.99, coleccion: "invierno", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "J102", imagen: "/jackets1.png", titulo: "Chaqueta 3", precio: 15.99, coleccion: "limitada", color: "blanco", enlace: "#", colorcode: "#000000" },
-    { id: "J103", imagen: "/jackets1.png", titulo: "Chaqueta 4", precio: 111.99, coleccion: "verano", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "J104", imagen: "/jackets2.png", titulo: "Chaqueta", precio: 12.99, coleccion: "verano", color: "rojo", enlace: "#", colorcode: "#000000" },
-    { id: "J105", imagen: "/jackets1.png", titulo: "Chaqueta 2", precio: 11.99, coleccion: "invierno", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "J106", imagen: "/jackets1.png", titulo: "Chaqueta 3", precio: 15.99, coleccion: "limitada", color: "blanco", enlace: "#", colorcode: "#000000" },
-    { id: "J107", imagen: "/jackets1.png", titulo: "Chaqueta 4", precio: 111.99, coleccion: "verano", color: "negro", enlace: "#", colorcode: "#000000" }
+    { id: "J100", imagen: "/jackets/1.png", titulo: "Puffer jacket", precio: 30.99, coleccion: "ANGEL OR CRAZY", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "J101", imagen: "/jackets/2.png", titulo: "Bomber leather jacket", precio: 32.99, coleccion: "This Is Eclipse", color: "brown", enlace: "#", colorcode: "#362720" },
+    { id: "J102", imagen: "/jackets/3.png", titulo: "Motor jacket", precio: 30.99, coleccion: "GOOD BOY GONE BAD", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "J103", imagen: "/jackets/4.png", titulo: "Oversize leather jacket", precio: 33.99, coleccion: "GOOD BOY GONE BAD", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "J104", imagen: "/jackets/5.png", titulo: "Fur jacket", precio: 35.99, coleccion: "This Is Eclipse", color: "brown", enlace: "#", colorcode: "#b89a86" },
+    { id: "J105", imagen: "/jackets/6.png", titulo: "Formal blazer", precio: 25.99, coleccion: "This Is Eclipse", color: "gray", enlace: "#", colorcode: "#807e7f" },
+    { id: "J106", imagen: "/jackets/7.png", titulo: "Fur and leather jacket", precio: 35.99, coleccion: "ANGEL OR CRAZY", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "J107", imagen: "/jackets/8.png", titulo: "Denim jacket", precio: 34.99, coleccion: "ANGEL OR CRAZY", color: "blue", enlace: "#", colorcode: "#224a70" }
   ];
   
   export default JacketsData;

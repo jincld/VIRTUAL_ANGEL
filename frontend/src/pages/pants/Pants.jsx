@@ -67,20 +67,23 @@ const Pants = () => {
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Collection:</label>
                   <select className="form-select" value={collectionFilter} onChange={(e) => setCollectionFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="verano">ANGEL OR CRAZY</option>
-                    <option value="invierno">This Is Eclipse</option>
-                    <option value="limitada">GOOD BOY GONE BAD</option>
+                  <option value="">All</option>
+            <option value="ANGEL OR CRAZY">ANGEL OR CRAZY</option>
+            <option value="This Is Eclipse">This Is Eclipse</option>
+            <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
                   </select>
                 </div>
 
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Color:</label>
                   <select className="form-select" value={colorFilter} onChange={(e) => setColorFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="rojo">Red</option>
-                    <option value="negro">Black</option>
-                    <option value="blanco">White</option>
+                  <option value="">All</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="gray">Gray</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="brown">Brown</option>
                   </select>
                 </div>
 
