@@ -1,24 +1,30 @@
 import React from "react";
 import './PantsDetail.css';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";  // Importamos useNavigate
 import PantsData from "./PantsData";  // Asegúrate de tener los datos de los pantalones
 import Reviews from "../../components/Reviews/Reviews";  // Importa Reviews para mostrar las reseñas
 
 function PantsDetail() {
   const { id } = useParams();  // Obtenemos el id de la URL
   const pant = PantsData.find(pant => pant.id === id);  // Encontramos el pantalón con el id correspondiente
+  const navigate = useNavigate();  // Usamos el hook useNavigate
 
   if (!pant) {
     return <h2>Pants not found</h2>;  // Si no se encuentra el pantalón, mostramos un mensaje
   }
 
+  const handleBackClick = () => {
+    navigate(-1);  // Esto te lleva a la última página visitada
+  };
+
   return (
     <div className="container-fluid">
       <div className="pants-card">
         <div className="pants-card__content">
-          <Link to="/pants" className="btn btn-back">
+          {/* Botón que redirige a la última página visitada */}
+          <button onClick={handleBackClick} className="btn btn-back">
             ← BACK
-          </Link>
+          </button>
 
           {/* Imagen del pantalón */}
           <div className="pants-card__image-wrapper">

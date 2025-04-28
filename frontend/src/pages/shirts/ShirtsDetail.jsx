@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";  // Agrega Link aquí
 import Reviews from "../../components/Reviews/Reviews";  // Asegúrate de importar el componente Reviews
 
 import shirtsData from "./ShirtsData";  // Asumimos que tienes este archivo
@@ -9,15 +9,22 @@ function ShirtsDetail() {
   const { id } = useParams();  // Aquí obtenemos el id de la URL
   const shirt = shirtsData.find(shirt => shirt.id === id);
 
+  const navigate = useNavigate(); // Usamos el hook useNavigate
+
   if (!shirt) {
     return <h2>Shirt not found</h2>;
   }
+
+  const handleBackClick = () => {
+    navigate(-1);  // Esto te lleva a la última página visitada
+  };
 
   return (
     <div className="container-fluid">
       <div className="shirts-card">
         <div className="shirts-card__content">
-          <Link to="/shirts" className="btn btn-back">← BACK</Link>
+          {/* Cambiar Link por un botón que use navigate */}
+          <button onClick={handleBackClick} className="btn btn-back">← BACK</button>
 
           <div className="shirts-card__image-wrapper">
             <img className="img-item" src={shirt.imagen} alt={shirt.titulo} />
@@ -32,7 +39,7 @@ function ShirtsDetail() {
             <p className="shirt-price">${shirt.precio}</p>
           </div>
 
-          <Link to="/" className="btn btn-back">ADD TO CART</Link>
+          <Link to="/" className="btn btn-back">ADD TO CART</Link>  {/* Asegúrate de mantener Link para otros enlaces */}
         </div>
 
         <div className="shirts-card__image">
