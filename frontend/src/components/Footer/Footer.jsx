@@ -35,9 +35,9 @@ function Footer() {
             </h4>
             <div>
               <h6 className="text-white text-uppercase">Monday - Friday</h6>
-              <p>9:00 AM - 5:00 PM</p>
-              <h6 className="text-white text-uppercase">Sunday</h6>
-              <p>10:00 AM - 6:00 PM</p>
+              <p>9:00 AM - 6:00 PM</p>
+              <h6 className="text-white text-uppercase">Saturday & Sunday</h6>
+              <p>10:00 AM - 7:00 PM</p>
             </div>
           </div>
 
