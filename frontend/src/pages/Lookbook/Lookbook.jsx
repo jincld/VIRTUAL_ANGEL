@@ -80,6 +80,24 @@ const Lookbook = () => {
         <div className="image-item full-width">
           <img src="/lookbook/lb19.png" alt="Look 19" />
         </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb20.png" alt="Look 20" />
+        </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb21.png" alt="Look 21" />
+        </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb22.png" alt="Look 22" />
+        </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb23.png" alt="Look 23" />
+        </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb24.png" alt="Look 24" />
+        </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb25.png" alt="Look 25" />
+        </div>
       </div>
     </div>
   );

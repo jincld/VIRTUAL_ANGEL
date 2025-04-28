@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav/nav'; 
 import Home from './pages/home.jsx'
 import Footer from './components/Footer/Footer.jsx'; 
@@ -20,6 +20,7 @@ import SearchPage from './pages/Search/Search.jsx';
 import Lookbook from './pages/Lookbook/Lookbook.jsx';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
+import NewCollection from './pages/NewCollection/NewCollection.jsx';
 
 function App() {
 
@@ -46,6 +47,8 @@ function App() {
           <Route path="searchpage" element={<SearchPage />} />
           <Route path="lookbook" element={<Lookbook />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="newcollection" element={<NewCollection />} />
+          <Route path="/newcollection/:collectionName" element={<NewCollection />} />
         <Route path="/checkout" element={<CheckoutForm />} />
     </Routes>
     <Footer/>
