@@ -1,0 +1,13 @@
+.backcarts {
+    background-image: url('/shirtsback.png');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }

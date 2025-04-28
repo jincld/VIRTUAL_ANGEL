@@ -23,7 +23,7 @@ function Nav() {
                   <Link className="nav-link itemnav" to="/news">NEW</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link itemnav" to="#">CART</Link>
+                  <Link className="nav-link itemnav" to="/cart">CART</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link itemnav" to="/lookbook">LOOKBOOK</Link>
