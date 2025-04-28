@@ -15,13 +15,15 @@ import ShirtsDetail from './pages/shirts/ShirtsDetail.jsx';
 import JacketsDetail from './pages/jackets/JacketsDetail.jsx';
 import SweatersDetail from './pages/sweaters/SweatersDetail.jsx';
 import News from './pages/news/New.jsx';
-
+import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
+import SearchPage from './pages/Search/Search.jsx';
 
 function App() {
 
   return (
     <>
     <Router>
+      <ScrollToTop />
     <Nav/>
     <Routes>
           <Route path="/" element={<Home />} />
@@ -38,7 +40,7 @@ function App() {
           <Route path="jackets/:id" element={<JacketsDetail />} />
           <Route path="sweaters/:id" element={<SweatersDetail />} />
           <Route path="news" element={<News />} />
-
+          <Route path="searchpage" element={<SearchPage />} />
     </Routes>
     <Footer/>
     </Router>

@@ -1,6 +1,6 @@
 .backjackets {
     background-image: url('/shirtsback.png');
-    background-size: contain 100%; /* Ahora cubre toda la pantalla */
+    background-size: cover; 
     background-position: center;
     background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
     width: 100vw;
