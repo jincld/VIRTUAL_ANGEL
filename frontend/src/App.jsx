@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav/nav'; 
-import Home from './pages/home.jsx'
+import Home from './pages/home.jsx';
 import Footer from './components/Footer/Footer.jsx'; 
 import About from './pages/about/About.jsx';
 import Terms from './pages/terms/Terms.jsx';
 import Contact from './pages/contact/Contact.jsx';
 import Clothing from './pages/clothing/Clothing.jsx';
-import Shirts from './pages/shirts/Shirts.jsx'
+import Shirts from './pages/shirts/Shirts.jsx';
 import Pants from './pages/pants/Pants.jsx';
 import Jacket from './pages/jackets/Jackets.jsx';
 import Sweaters from './pages/sweaters/Sweaters.jsx';
@@ -23,13 +23,12 @@ import CheckoutForm from './pages/Cart/CheckoutForm';
 import NewCollection from './pages/NewCollection/NewCollection.jsx';
 
 function App() {
-
   return (
     <>
-    <Router>
-      <ScrollToTop />
-    <Nav/>
-    <Routes>
+      <Router>
+        <ScrollToTop />
+        <Nav />
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="terms" element={<Terms />} />
@@ -37,8 +36,8 @@ function App() {
           <Route path="clothing" element={<Clothing />} />
           <Route path="shirts" element={<Shirts />} />
           <Route path="pants" element={<Pants />} />
-          <Route path="jackets" element={<Jacket/>} />
-          <Route path="sweaters" element={<Sweaters/>} />
+          <Route path="jackets" element={<Jacket />} />
+          <Route path="sweaters" element={<Sweaters />} />
           <Route path="shirts/:id" element={<ShirtsDetail />} />
           <Route path="pants/:id" element={<PantsDetail />} />
           <Route path="jackets/:id" element={<JacketsDetail />} />
@@ -47,14 +46,16 @@ function App() {
           <Route path="searchpage" element={<SearchPage />} />
           <Route path="lookbook" element={<Lookbook />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="checkout" element={<CheckoutForm />} />
+
+          {/* Estas son las rutas de NewCollection */}
           <Route path="newcollection" element={<NewCollection />} />
-          <Route path="/newcollection/:collectionName" element={<NewCollection />} />
-        <Route path="/checkout" element={<CheckoutForm />} />
-    </Routes>
-    <Footer/>
-    </Router>
+          <Route path="newcollection/:collectionName" element={<NewCollection />} />
+        </Routes>
+        <Footer />
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

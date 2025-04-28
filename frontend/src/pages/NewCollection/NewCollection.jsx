@@ -11,10 +11,10 @@ import JacketsData from '../jackets/JacketsData';
 import SweatersData from '../sweaters/SweatersData';
 
 const NewCollection = () => {
-  const { collectionName } = useParams();
+  const { collectionName } = useParams();  // Obtienes el parámetro de la URL
 
   const [showFilters, setShowFilters] = useState(false);
-  const [collectionFilter, setCollectionFilter] = useState('');
+  const [collectionFilter, setCollectionFilter] = useState(collectionName || ''); // Usar el collectionName en la URL por defecto
   const [colorFilter, setColorFilter] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
@@ -28,18 +28,17 @@ const NewCollection = () => {
     });
   }, []);
 
-  // Decodificar el nombre de la colección desde la URL
+  // Mantener la colección actual en el filtro, sin modificarla
   useEffect(() => {
-    if (collectionName) {
-      const decodedCollectionName = decodeURIComponent(collectionName);
-      setCollectionFilter(decodedCollectionName);
+    if (collectionName && collectionName !== collectionFilter) {
+      setCollectionFilter(collectionName);  // Establecer el filtro según la URL
     }
-  }, [collectionName]);
+  }, [collectionName, collectionFilter]);
 
   const toggleFilters = () => setShowFilters(!showFilters);
 
+  // Limpiar solo los filtros que no afectan la colección
   const clearFilters = () => {
-    setCollectionFilter('');
     setColorFilter('');
     setSortOrder('');
     setMaxPrice(200);
