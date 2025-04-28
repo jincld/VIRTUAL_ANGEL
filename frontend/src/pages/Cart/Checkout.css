@@ -1,0 +1,53 @@
+.backcartsCheckout {
+    background-image: url('/shirtsback.png');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .input-custom {
+    background-color: #111;
+    color: white;
+    border: 1px solid #c51400;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 1rem;
+  }
+  
+  .input-custom::placeholder {
+    color: #aaa;
+  }
+  
+  .send-button {
+    background-color: transparent;
+    border: 2px solid #c51400;
+    color: #c51400;
+    transition: all 0.3s ease;
+  }
+  
+  .send-button:hover {
+    background-color: #c51400;
+    color: white;
+  }
+  
+  /* Opcional: si quieres hacer el fondo de la página también más elegante */
+  .backCheckoutscarts {
+    background: linear-gradient(180deg, rgba(197,20,0,0.3) 0%, rgba(0,0,0,1) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
