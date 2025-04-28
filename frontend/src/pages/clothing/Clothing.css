@@ -1,6 +1,6 @@
 .backclothing {
     background-image: url('/clothingbg.png');
-    background-size: contain 100%; /* Ahora cubre toda la pantalla */
+    background-size: cover; 
     background-position: center;
     background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
     width: 100vw;
@@ -44,9 +44,9 @@
 }
 
 
-@media (max-width: 1250px) {
+@media (max-width: 1720px) {
     .backclothing {
-      background-image: url('/shirtsback.png'); /* Cambia aquí a la imagen deseada */
+      background-image: url('/shirtsbg-small.png'); /* Cambia aquí a la imagen deseada */
     }
   }
   
