@@ -17,6 +17,7 @@ import SweatersDetail from './pages/sweaters/SweatersDetail.jsx';
 import News from './pages/news/New.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 import SearchPage from './pages/Search/Search.jsx';
+import Lookbook from './pages/Lookbook/Lookbook.jsx';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="sweaters/:id" element={<SweatersDetail />} />
           <Route path="news" element={<News />} />
           <Route path="searchpage" element={<SearchPage />} />
+          <Route path="lookbook" element={<Lookbook />} />
     </Routes>
     <Footer/>
     </Router>
