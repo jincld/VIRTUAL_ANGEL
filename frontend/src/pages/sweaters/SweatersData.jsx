@@ -1,12 +1,12 @@
 const sweatersData = [
-    { id: "SW100", imagen: "/sweaters1.png", titulo: "RODRIGO", precio: 12.99, coleccion: "verano", color: "rojo", enlace: "#", colorcode: "#ff0000" },
-    { id: "SW101", imagen: "/sweaters1.png", titulo: "Sueter 2", precio: 11.99, coleccion: "invierno", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "SW102", imagen: "/sweaters2.png", titulo: "Sueter 3", precio: 15.99, coleccion: "limitada", color: "blanco", enlace: "#", colorcode: "#000000" },
-    { id: "SW103", imagen: "/sweaters1.png", titulo: "Sueter 4", precio: 111.99, coleccion: "verano", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "SW104", imagen: "/sweaters1.png", titulo: "Sueter", precio: 12.99, coleccion: "verano", color: "rojo", enlace: "#", colorcode: "#000000" },
-    { id: "SW105", imagen: "/sweaters1.png", titulo: "Sueter 2", precio: 11.99, coleccion: "invierno", color: "negro", enlace: "#", colorcode: "#000000" },
-    { id: "SW106", imagen: "/sweaters1.png", titulo: "Sueter 3", precio: 15.99, coleccion: "limitada", color: "blanco", enlace: "#", colorcode: "#000000" },
-    { id: "SW107", imagen: "/sweaters1.png", titulo: "Sueter 4", precio: 111.99, coleccion: "verano", color: "negro", enlace: "#", colorcode: "#000000" }
+    { id: "SW100", imagen: "/sweaters/1.png", titulo: "Mesh sweater", precio: 19.99, coleccion: "This Is Eclipse", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "SW101", imagen: "/sweaters/2.png", titulo: "Hello Kitty print sweater", precio: 19.99, coleccion: "ANGEL OR CRAZY", color: "white", enlace: "#", colorcode: "#ffffff" },
+    { id: "SW102", imagen: "/sweaters/3.png", titulo: "Heavy knitted sweater", precio: 24.99, coleccion: "GOOD BOY GONE BAD", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "SW103", imagen: "/sweaters/4.png", titulo: "Cherry print hoodie", precio: 22.99, coleccion: "ANGEL OR CRAZY", color: "gray", enlace: "#", colorcode: "#706e74" },
+    { id: "SW104", imagen: "/sweaters/5.png", titulo: "LOONA print hoodie", precio: 22.99, coleccion: "ANGEL OR CRAZY", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "SW105", imagen: "/sweaters/6.png", titulo: "Asymmetric sweater", precio: 25.99, coleccion: "GOOD BOY GONE BAD", color: "black", enlace: "#", colorcode: "#000000" },
+    { id: "SW106", imagen: "/sweaters/7.png", titulo: "Off-shoulder sweater", precio: 24.99, coleccion: "GOOD BOY GONE BAD", color: "gray", enlace: "#", colorcode: "#626061" },
+    { id: "SW107", imagen: "/sweaters/8.png", titulo: "Zipper neck sweater", precio: 27.99, coleccion: "This Is Eclipse", color: "black", enlace: "#", colorcode: "#000000" }
   ];
   
   export default sweatersData;
