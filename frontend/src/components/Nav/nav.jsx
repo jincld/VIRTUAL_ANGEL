@@ -26,6 +26,9 @@ function Nav() {
                   <Link className="nav-link itemnav" to="#">CART</Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link itemnav" to="/lookbook">LOOKBOOK</Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link itemnav" to="/searchpage">SEARCH</Link>
                 </li>
               </ul>
