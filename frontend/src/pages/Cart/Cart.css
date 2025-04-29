@@ -11,3 +11,9 @@
     left: 0;
     z-index: 0;
   }
+  .total-text {
+    background-color: rgba(255, 255, 255, 0.7); /* blanco semitransparente */
+    padding: 5px;
+    color: rgb(56, 46, 46); /* cambia el texto a negro para que contraste */
+    font-weight: bold;
+ }
