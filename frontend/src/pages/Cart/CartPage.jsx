@@ -12,7 +12,7 @@ const products = [
     color: "SPACE BLACK",
     price: 5.99,
     quantity: 1,
-    image: "./pants1.png",
+    image: "/jackets/2.png",
   },
   {
     id: 2,
@@ -22,25 +22,42 @@ const products = [
     color: "LUNAR BLACK",
     price: 10.99,
     quantity: 2,
-    image: "./pants1.png",
+    image: "/shirts/5.png",
   },
 ];
 
- function CartPage() {
+function Total({ totalPrice, totalQuantity }) {
+  console.log("Total Component - totalPrice:", totalPrice, "totalQuantity:", totalQuantity); // Debugging line
+  return (
+    <div className="total-text" style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+      TOTAL ({totalQuantity} {totalQuantity === 1 ? "PRODUCT" : "PRODUCTS"}): 
+      <span className="text-danger">${totalPrice.toFixed(2)}</span>
+    </div>
+  );
+}
+
+function CartPage() {
   const navigate = useNavigate();
 
   const handleCheckout = () => {
     navigate("/checkout");
   };
 
+  // Calculate total price and total quantity
   const totalPrice = products.reduce(
     (total, product) => total + product.price * product.quantity,
     0
   );
+  const totalQuantity = products.reduce(
+    (sum, product) => sum + product.quantity,
+    0
+  );
+
+  // Debugging the calculated total values
+  console.log("CartPage - totalPrice:", totalPrice, "totalQuantity:", totalQuantity); // Debugging line
 
   return (
     <div className="position-relative min-vh-100 bg-white">
-
       {/* Fondo detrás */}
       <div className="backcarts"></div>
 
@@ -60,10 +77,8 @@ const products = [
 
         {/* Total y botón */}
         <div className="mt-5 d-flex justify-content-between align-items-center">
-          <h3 className="fw-bold fs-4">
-            TOTAL ({products.reduce((sum, p) => sum + p.quantity, 0)} PRODUCTS):{" "}
-            <span className="text-danger">${totalPrice.toFixed(2)}</span>
-          </h3>
+          {/* Debugging total quantity */}
+          <Total totalPrice={totalPrice} totalQuantity={totalQuantity} />
 
           <button
             onClick={handleCheckout}
@@ -85,9 +100,12 @@ const products = [
           </button>
         </div>
       </div>
-
     </div>
   );
 }
 
-export default CartPage
+export default CartPage;
+
+
+
+
