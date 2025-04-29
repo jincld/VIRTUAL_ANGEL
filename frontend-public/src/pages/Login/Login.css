@@ -1,0 +1,11 @@
+.backlogin {
+    background-image: url('/login-bg.png');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed; /* <- Cambiado a fixed */
+    top: 120px;
+    left: 0;
+    z-index: 0; /* Asegura que quede detrás */
+  }
