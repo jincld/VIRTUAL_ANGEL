@@ -7,7 +7,7 @@ function Nav() {
       <>
       <nav className="navbar navbary navbar-expand-lg bg-body-tertiary w-100">
         <div className="navbar navbary navbar-expand-lg bg-body-tertiary">
-          <a className="navbar-brand itemnav" aria-current="page" href="/">
+          <a className="navbar-brand itemnav" aria-current="page" href="/home">
               <img src="/virtualangelogo.png" alt="VIRTUAL ANGEL" width="170"/>
             </a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,9 @@ function Nav() {
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link itemnav" to="/searchpage" activeClassName="active">SEARCH</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link itemnav" to="/" activeClassName="active">LOGIN</NavLink>
                 </li>
               </ul>
             </div>

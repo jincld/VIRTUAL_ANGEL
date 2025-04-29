@@ -21,6 +21,7 @@ import Lookbook from './pages/Lookbook/Lookbook.jsx';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
 import NewCollection from './pages/NewCollection/NewCollection.jsx';
+import Login from './pages/Login/Login.jsx';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <ScrollToTop />
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="terms" element={<Terms />} />
           <Route path="contact" element={<Contact />} />
@@ -47,6 +48,7 @@ function App() {
           <Route path="lookbook" element={<Lookbook />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="checkout" element={<CheckoutForm />} />
+          <Route path="/" element={<Login />} />
 
           {/* Estas son las rutas de NewCollection */}
           <Route path="newcollection" element={<NewCollection />} />
