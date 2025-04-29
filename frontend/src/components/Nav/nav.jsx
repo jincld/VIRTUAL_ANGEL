@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";  // Importamos Link desde react-router-dom
+import { NavLink } from "react-router-dom";  // Usamos NavLink en vez de Link
 import './nav.css';
 
 function Nav() {
@@ -16,20 +16,20 @@ function Nav() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  {/* Cambié <a> por <Link> */}
-                  <Link className="nav-link itemnav" to="/clothing">CLOTHING</Link>
+                  {/* Usamos NavLink para poder resaltar el enlace activo */}
+                  <NavLink className="nav-link itemnav" to="/clothing" activeClassName="active">CLOTHING</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link itemnav" to="/news">NEW</Link>
+                  <NavLink className="nav-link itemnav" to="/news" activeClassName="active">NEW</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link itemnav" to="/cart">CART</Link>
+                  <NavLink className="nav-link itemnav" to="/cart" activeClassName="active">CART</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link itemnav" to="/lookbook">LOOKBOOK</Link>
+                  <NavLink className="nav-link itemnav" to="/lookbook" activeClassName="active">LOOKBOOK</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link itemnav" to="/searchpage">SEARCH</Link>
+                  <NavLink className="nav-link itemnav" to="/searchpage" activeClassName="active">SEARCH</NavLink>
                 </li>
               </ul>
             </div>

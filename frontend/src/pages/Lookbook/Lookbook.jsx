@@ -98,6 +98,9 @@ const Lookbook = () => {
         <div className="image-item full-width">
           <img src="/lookbook/lb25.png" alt="Look 25" />
         </div>
+        <div className="image-item full-width">
+          <img src="/lookbook/lb26.png" alt="Look 26" />
+        </div>
       </div>
     </div>
   );
