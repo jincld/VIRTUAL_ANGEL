@@ -75,14 +75,20 @@
     }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1460px) {
   .backlogin {
     background-image: url('/login-bg-medium.png');
   }
 }
 
-@media (max-width: 840px) {
+@media (max-width: 1060px) {
   .backlogin {
     background-image: url('/login-bg-sm.png');
+  }
+}
+
+@media (max-width: 860px) {
+  .backlogin {
+    background-image: url('/login-bg-xs.png');
   }
 }
