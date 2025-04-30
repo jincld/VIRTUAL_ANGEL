@@ -23,30 +23,30 @@ const Login = () => {
   <div className="container d-flex align-items-center justify-content-center min-vh-100 position-relative" style={{ zIndex: 1 }}>
     <div className="w-100" style={{ maxWidth: '400px' }}>
       <div className="text-center mb-4" data-aos="fade-in">
-        <img src="/virtualangelogo.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
+        <img src="/virtualangelogo.png" alt="Logo" className="img-fluid loginlogo"/>
       </div>
 
       <form>
         <div className="mb-3">
-          <label htmlFor="username" className="form-label text-start d-block">Username</label>
-          <input type="text" className="form-control" id="username" placeholder="Enter your username" />
+          <label htmlFor="username" className="form-label text-start d-block label-login">USERNAME</label>
+          <input type="text" className="form-control formlogin" id="username" placeholder="Enter your username" />
         </div>
 
         <div className="mb-2">
-          <label htmlFor="password" className="form-label text-start d-block">Password</label>
-          <input type="password" className="form-control" id="password" placeholder="Enter your password" />
+          <label htmlFor="password" className="form-label text-start d-block label-login">PASSWORD</label>
+          <input type="password" className="form-control formlogin" id="password" placeholder="Enter your password" />
         </div>
 
         <div className="mb-3 text-start">
-          <a href="#" className="text-decoration-underline small">Forgot your password?</a>
+          <a href="#" className="text-decoration-underline small forgotstyle">FORGOT PASSWORD?</a>
         </div>
 
-        <div className="d-grid mb-3">
-          <button type="submit" className="btn btn-primary">Login</button>
-        </div>
+        <div className="d-flex justify-content-center mb-3">
+  <button type="submit" className="btn btn-primary btnlogin">LOGIN</button>
+</div>
 
         <div className="text-center">
-          <a href="#" className="text-decoration-underline small">Don't have an account?</a>
+          <a href="#" className="text-decoration-underline small accountstyle">DON'T HAVE AN ACCOUNT?</a>
         </div>
       </form>
     </div>
