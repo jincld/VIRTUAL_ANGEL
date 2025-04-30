@@ -29,12 +29,12 @@ const Login = () => {
       <form>
         <div className="mb-3">
           <label htmlFor="username" className="form-label text-start d-block label-login">USERNAME</label>
-          <input type="text" className="form-control formlogin" id="username" placeholder="Enter your username" />
+          <input type="text" className="form-control formlogin" id="username" placeholder="" />
         </div>
 
         <div className="mb-2">
           <label htmlFor="password" className="form-label text-start d-block label-login">PASSWORD</label>
-          <input type="password" className="form-control formlogin" id="password" placeholder="Enter your password" />
+          <input type="password" className="form-control formlogin" id="password" placeholder="" />
         </div>
 
         <div className="mb-3 text-start">
@@ -42,7 +42,7 @@ const Login = () => {
         </div>
 
         <div className="d-flex justify-content-center mb-3">
-  <button type="submit" className="btn btn-primary btnlogin">LOGIN</button>
+  <button type="submit" className="btn btnlogin">LOGIN</button>
 </div>
 
         <div className="text-center">
