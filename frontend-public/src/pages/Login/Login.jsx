@@ -38,7 +38,7 @@ const Login = () => {
         </div>
 
         <div className="mb-3 text-start">
-          <a href="#" className="text-decoration-underline small forgotstyle">FORGOT PASSWORD?</a>
+          <a href="/forgotpassword" className="text-decoration-underline small forgotstyle">FORGOT PASSWORD?</a>
         </div>
 
         <div className="d-flex justify-content-center mb-3">
