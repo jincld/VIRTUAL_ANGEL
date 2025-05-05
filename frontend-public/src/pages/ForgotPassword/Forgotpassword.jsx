@@ -16,19 +16,24 @@ const ForgotPassword = () => {
   return (
     <div className="forgot-container ">
       {/* Formulario */}
-      <div className="formforgotpass" data-aos="fade-left">
+      <div className="formforgotpass">
         <form>
-          <h2>Recuperar contraseña</h2>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Correo electrónico</label>
-            <input type="email" id="email" name="email" className="form-control" placeholder="Ingresa tu correo" required />
+          <h2 className="forgot-title">FORGOT <br/> PASSWORD?</h2>
+          <div className="div-forgotinfo">
+          <p className="info-forgot">Write your E-Mail down so we can send you a recover code to get back into your account or change your password.</p>
           </div>
-          <button type="submit" className="btn btn-primary">Enviar código</button>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label-forgot">E-MAIL</label>
+            <input type="email" id="email" name="email" className="form-control formcontrol-forgot" />
+          </div>
+          <div className="center-btnforgot">
+          <button type="submit" className="btn btn-primary">SEND</button>
+          </div>
         </form>
       </div>
 
       {/* Imagen */}
-      <div className="imgforgotpass" data-aos="fade-right">
+      <div className="imgforgotpass" data-aos="fade-in">
         <img src="/forgotpassword-bg.png" alt="Imagen recuperación" />
       </div>
     </div>
