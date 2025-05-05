@@ -22,6 +22,7 @@ import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
 import NewCollection from './pages/NewCollection/NewCollection.jsx';
 import Login from './pages/Login/Login.jsx';
+import ForgotPass from './pages/ForgotPassword/Forgotpassword.jsx';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="cart" element={<CartPage />} />
           <Route path="checkout" element={<CheckoutForm />} />
           <Route path="/" element={<Login />} />
+          <Route path="forgotpassword" element={<ForgotPass />} />
 
           {/* Estas son las rutas de NewCollection */}
           <Route path="newcollection" element={<NewCollection />} />
