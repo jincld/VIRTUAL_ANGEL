@@ -27,8 +27,8 @@ const ForgotPassword = () => {
             <input type="email" id="email" name="email" className="form-control formcontrol-forgot" />
           </div>
           <div className="center-btnforgot">
-            <button type="submit" className="btn btn-forgot">SEND</button>
-          </div>
+  <a href="/verifycode" className="btn btn-forgot">SEND</a>
+</div>
         </form>
       </div>
 
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
           srcSet="/forgotpassword-bg.png 1024w, /forgotpass-sm.png 480w" 
           sizes="(max-width: 975px) 480px, 1024px" 
           src="/forgotpassword-bg.png" 
-          alt="Imagen recuperación" 
+          alt="Image recover" 
         />
       </div>
     </div>
