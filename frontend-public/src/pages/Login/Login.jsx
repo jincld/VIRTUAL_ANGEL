@@ -67,8 +67,9 @@ const togglePasswordVisibility = () => {
 </div>
 
         <div className="text-center">
-          <a href="#" className="text-decoration-underline small accountstyle">DON'T HAVE AN ACCOUNT?</a>
+          <a href="/createaccount" className="text-decoration-underline small accountstyle">DON'T HAVE AN ACCOUNT?</a>
         </div>
+        
       </form>
     </div>
   </div>

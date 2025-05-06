@@ -1,0 +1,99 @@
+.createaccount-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 800px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+
+  .createaccount-card__image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('/createaccount-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #21c94b;
+    width: 100%;
+    min-height: 600px;
+  }
+
+  .createaccount-card__image_two {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('/createaccount-bg-two.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #1de480;
+    width: 100%;
+  }
+
+  .form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de opacidad */
+    border: 2px solid red; /* Borde rojo */
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px; /* Limitar el tamaño del formulario */
+    margin-top: 200px;
+  }
+  
+  .create-account-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group-createaccount {
+    margin-bottom: 15px;
+  }
+  
+  .input-group-createaccount label {
+    font-weight: bold;
+  }
+  
+  .input-group-createaccount input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .button-createaccount {
+    padding: 10px;
+    background-color: #21c94b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .button-createaccount:hover {
+    background-color: #18a747;
+  }
+
+  @media (max-width: 768px) {
+    .createaccount-card {
+      flex-direction: column;
+    }
+
+    .createaccount-card__image_two {
+        width: 100%;
+    }
+
+    .form-container {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        width: 90%;
+      }
+  
+  }
