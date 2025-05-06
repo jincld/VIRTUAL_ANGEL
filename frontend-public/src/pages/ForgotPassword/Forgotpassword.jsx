@@ -15,6 +15,9 @@ const ForgotPassword = () => {
 
   return (
     <div className="forgot-container ">
+            <a href="/" className="back-button-forgotpassword" aria-label="Go back">
+  &lt;
+</a>
       {/* Formulario */}
       <div className="formforgotpass">
         <form>

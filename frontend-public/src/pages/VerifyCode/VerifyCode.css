@@ -84,8 +84,24 @@
     margin-top: 40px;
 }
 
+.back-button-verifycode{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  text-decoration: none;
+  color: #ffffff; /* Ajusta el color según tu diseño */
+  z-index: 10;
+  margin-top: 125px;
+}
+
+.back-button-verifycode:hover {
+  color: #ff0000;
+}
+
 /* Responsive */
-@media (max-width: 975px) {
+@media (max-width: 1025px) {
     /* Para pantallas pequeñas, cambia la imagen */
     .imgverifycode img {
       content: url('/verifycode-sm.png'); /* Cambia esta URL por la ruta de la imagen más pequeña */
