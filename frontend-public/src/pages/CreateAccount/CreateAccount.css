@@ -123,6 +123,23 @@
     padding-top: 7px;
   }
 
+  .show-newpassword-create {
+    background-color: #ff0000; /* Fondo rojo */
+    color: #ffffff; /* Texto blanco */
+    border: none; /* Sin borde */
+    font-size: 12px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px; /* Redondear bordes */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+    margin-top: 20px;
+  }
+  
+  .show-newpassword-create:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+    color: #ffffff;
+  }
+
   @media (max-width: 845px) {
     .createaccount-card {
       flex-direction: column;
