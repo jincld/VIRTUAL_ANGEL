@@ -79,21 +79,16 @@
     background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
     color: #ffffff;
   }
-  .login-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin-top: 120px;
+
+  body{
+    padding-top: 120px;
   }
 
+
   html, body {
-    overflow-x: hidden;
-}
+      overflow-x: hidden;
+  }
+  
   
   @media (max-width: 460px) {
     .loginlogo {

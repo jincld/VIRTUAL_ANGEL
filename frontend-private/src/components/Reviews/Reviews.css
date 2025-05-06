@@ -1,0 +1,75 @@
+/* Contenedor de todas las reseñas */
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaciado entre las tarjetas de reseñas */
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* Estilo de cada tarjeta de reseña */
+.review-box {
+    background-color: rgba(0, 0, 0, 0.719);  /* Fondo negro con transparencia */
+    color: red;  /* Color del texto rojo brillante */
+    border-radius: 10px;  /* Bordes redondeados */
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);  /* Sombra sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 500px; /* Ancho máximo para pantallas grandes */
+    min-width: 500px; /* Ancho mínimo para pantallas grandes */
+    width: 100%; /* Asegura que ocupe el 100% del contenedor hasta el max-width */
+    margin: 0 auto; /* Centra las tarjetas */
+}
+
+/* Efecto al pasar el cursor sobre la tarjeta */
+.review-box:hover {
+    transform: translateY(-5px);  /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);  /* Aumenta la sombra */
+}
+
+/* Estilo para el nombre del usuario */
+.user-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: capitalize;  /* Capitaliza la primera letra del nombre */
+}
+
+/* Estilo para las estrellas de valoración */
+.stars {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Estilo para el comentario */
+.comment {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Estilo para cuando no hay reseñas */
+.no-reviews {
+    background-color: rgba(0, 0, 0, 0.719);  /* Fondo negro con transparencia */
+    color: red;  /* Color del texto rojo brillante */
+    border-radius: 10px;  /* Bordes redondeados */
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);  /* Sombra sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 500px; /* Ancho máximo para pantallas grandes */
+    min-width: 500px; /* Ancho mínimo para pantallas grandes */
+    width: 100%; /* Asegura que ocupe el 100% del contenedor hasta el max-width */
+    margin: 0 auto; /* Centra las tarjetas */
+}
+
+.no-reviews:hover {
+    transform: translateY(-5px);  /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);  /* Aumenta la sombra */
+}
+
+/* Media query para pantallas de 585px o menos */
+@media (max-width: 585px) {
+    .review-box, .no-reviews {
+        max-width: 300px; /* Ancho máximo reducido para pantallas pequeñas */
+        min-width: 300px; /* Ancho mínimo reducido para pantallas pequeñas */
+    }
+}
