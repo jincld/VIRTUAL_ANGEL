@@ -72,7 +72,7 @@ const NewPassword = () => {
             </div>
           </div>
           <div className="center-btnnewpassword">
-            <a href="/home" className="btn btn-newpassword">CONTINUE</a>
+            <a href="/" className="btn btn-newpassword">CONTINUE</a>
           </div>
         </form>
       </div>
