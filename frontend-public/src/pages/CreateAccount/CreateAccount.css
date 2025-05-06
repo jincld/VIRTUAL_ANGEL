@@ -20,7 +20,7 @@
     background-position: center;
     background-color: #21c94b;
     width: 100%;
-    min-height: 600px;
+    min-height: 800px;
   }
 
   .createaccount-card__image_two {
@@ -38,12 +38,12 @@
 
   .form-container {
     background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de opacidad */
-    border: 2px solid red; /* Borde rojo */
+    border: 1px solid red; /* Borde rojo */
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 0px;
     width: 100%;
     max-width: 400px; /* Limitar el tamaño del formulario */
-    margin-top: 200px;
+
   }
   
   .create-account-form {
@@ -63,25 +63,67 @@
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #E3E3E3;
+    background-color: #E3E3E3;
+    border-radius: 2px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+
+  .input-group-createaccount input:focus {
+    outline: none; /* Elimina el borde azul predeterminado del navegador */
+    border: 1px solid #ff0000; /* Cambia el borde al rojo */
+    background-color: #E3E3E3; /* Cambia el fondo a blanco */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.452); /* Efecto sutil de sombra roja */
   }
   
+  
   .button-createaccount {
-    padding: 10px;
-    background-color: #21c94b;
+    padding: 18px;
+    background-color: #000000;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px;
+    width: 200px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 17px;
+    font-weight: normal;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
   }
   
   .button-createaccount:hover {
-    background-color: #18a747;
+    background-color: #ff0000;
+    color: #ffffff;
   }
 
-  @media (max-width: 768px) {
+  .title-createaccount{
+    margin-top: 100px;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .createaccount-label{
+    font-size: 15px;
+    font-weight: normal !important;
+  }
+
+  .createaccount-login{
+    color: #ff0000;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  .createaccount-login:hover{
+    color: #000000;
+  }
+
+  .div-create-to-login{
+    padding-top: 7px;
+  }
+
+  @media (max-width: 845px) {
     .createaccount-card {
       flex-direction: column;
     }
@@ -91,9 +133,12 @@
     }
 
     .form-container {
-        margin-top: 100px;
-        margin-bottom: 100px;
+        margin-top: 0px;
         width: 90%;
+    }
+
+    .div-create-to-login{
+        margin-bottom: 100px;
       }
   
   }
