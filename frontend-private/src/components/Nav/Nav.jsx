@@ -31,6 +31,9 @@ function Nav() {
                 <li className="nav-item">
                   <NavLink className="nav-link itemnav" to="/searchpage" activeClassName="active">SEARCH</NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link itemnav" to="/" activeClassName="active">LOGIN</NavLink>
+                </li>
               </ul>
             </div>
           </div>

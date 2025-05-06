@@ -1,17 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './components/Nav/Nav';  // This should be your Nav component
+import Footer from './components/Footer/Footer.jsx'; 
 import FirstUse from './pages/firstUse/firstuse.jsx';
-import About from './pages/About';
+import Login from './pages/Login/Login.jsx';
 
 function App() {
   return (
-    <Router>
+    <>
+        <Router>
       <Nav />
       <Routes>
       <Route path="/firstuse" element={<FirstUse />} />
-        <Route path="/about" element={<About />} />
+      <Route path="/" element={<Login />} />
       </Routes>
+      <Footer />
     </Router>
+    </>
   );
 }
 
