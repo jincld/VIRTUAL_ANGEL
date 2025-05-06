@@ -25,6 +25,7 @@ import Login from './pages/Login/Login.jsx';
 import ForgotPass from './pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from './pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from './pages/NewPassword/NewPassword.jsx';
+import CreateAccount from './pages/CreateAccount/CreateAccount.jsx';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="forgotpassword" element={<ForgotPass />} />
           <Route path="verifycode" element={<VerifyCode />} />
           <Route path="newpassword" element={<NewPassword />} />
+          <Route path="createaccount" element={<CreateAccount />} />
 
           {/* Estas son las rutas de NewCollection */}
           <Route path="newcollection" element={<NewCollection />} />
