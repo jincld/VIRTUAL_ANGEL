@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Importamos el archivo de estilos de AOS
@@ -13,6 +13,12 @@ const Login = () => {
       offset: 200, // Distancia desde la parte superior para iniciar la animación
     });
   }, []);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
 
   return (
 <>
@@ -34,7 +40,22 @@ const Login = () => {
 
         <div className="mb-2">
           <label htmlFor="password" className="form-label text-start d-block label-login">PASSWORD</label>
-          <input type="password" className="form-control formlogin" id="password" placeholder="" />
+          <div className="password-input-container">
+  <input
+    type={showPassword ? "text" : "password"}
+    className="form-control formlogin"
+    id="password"
+    placeholder=""
+  />
+  <button
+    type="button"
+    className="show-loginpassword"
+    onClick={togglePasswordVisibility}
+  >
+    {showPassword ? "HIDE" : "SHOW"}
+  </button>
+</div>
+
         </div>
 
         <div className="mb-3 text-start">
