@@ -1,0 +1,18 @@
+.carouselo {
+    margin-top: calc(var(--navbar-height, 0px));
+  }
+  
+  
+  .carousel-inner img {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    height: auto; /* Mantiene las proporciones de la imagen */
+  }
+
+  .contenedor {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; /* Asegura que el espaciado se maneje correctamente */
+  }
+  
+  
+  

@@ -26,7 +26,7 @@ const togglePasswordVisibility = () => {
   <div className="backlogin"></div>
 
   {/* Contenido del login */}
-  <div className="login-wrapper">
+  <div className="container d-flex align-items-center justify-content-center min-vh-100 position-relative" style={{ zIndex: 1 }}>
     <div className="w-100" style={{ maxWidth: '400px' }}>
       <div className="text-center mb-4" data-aos="fade-in">
         <img src="/virtualangelogo.png" alt="Logo" className="img-fluid loginlogo"/>
