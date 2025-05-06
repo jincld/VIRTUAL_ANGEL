@@ -25,20 +25,26 @@ const CreateAccount = () => {
             <div className="form-container">
               <form className="create-account-form">
                 <div className="input-group-createaccount">
-                  <label htmlFor="name">NAME:</label>
+                  <label htmlFor="name" className="createaccount-label">NAME</label>
                   <input type="text" id="name" name="name" required />
                 </div>
                 <div className="input-group-createaccount">
-                  <label htmlFor="email">E-MAIL:</label>
+                  <label htmlFor="email" className="createaccount-label">E-MAIL</label>
                   <input type="email" id="email" name="email" required />
                 </div>
                 <div className="input-group-createaccount">
-                  <label htmlFor="password">PASSWORD:</label>
+                  <label htmlFor="password" className="createaccount-label">PASSWORD</label>
                   <input type="password" id="password" name="password" required />
                 </div>
               </form>
             </div>
-            <button className="button-createaccount">REGISTER</button>
+
+            <div>
+            <a href="/" className="btn button-createaccount ">REGISTER</a>
+          </div>
+          <div className="div-create-to-login">
+          <a href="/" className="createaccount-login">ALREADY HAVE ACCOUNT? LOG-IN</a>
+        </div>
           </div>
         </div>
       </div>
