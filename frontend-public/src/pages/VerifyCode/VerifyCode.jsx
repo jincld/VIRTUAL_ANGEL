@@ -23,7 +23,9 @@ const VerifyCode = () => {
 
   return (
     <div className="verify-container ">
-
+            <a href="/forgotpassword" className="back-button-verifycode" aria-label="Go back">
+  &lt;
+</a>
       {/* Imagen */}
       <div className="imgverifycode" data-aos="fade-in">
         <img 
