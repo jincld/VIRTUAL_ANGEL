@@ -26,6 +26,9 @@ const NewPassword = () => {
 
   return (
     <div className="newpassword-container">
+      <a href="/verifycode" className="back-button-newpassword" aria-label="Go back">
+  &lt;
+</a>
       {/* Formulario */}
       <div className="formnewpassword">
         <form>
