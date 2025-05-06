@@ -14,6 +14,13 @@ const CreateAccount = () => {
     });
   }, []);
 
+  const [showPassword, setShowPassword] = useState(false);
+
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
+
+
   return (
     <>
       <div className="container-fluid">
@@ -33,9 +40,24 @@ const CreateAccount = () => {
                   <input type="email" id="email" name="email" required />
                 </div>
                 <div className="input-group-createaccount">
-                  <label htmlFor="password" className="createaccount-label">PASSWORD</label>
-                  <input type="password" id="password" name="password" required />
-                </div>
+  <label htmlFor="password" className="createaccount-label">PASSWORD</label>
+  <div className="password-input-container">
+    <input
+      type={showPassword ? "text" : "password"}
+      id="password"
+      name="password"
+      required
+    />
+    <button
+      type="button"
+      className="show-newpassword-create"
+      onClick={togglePasswordVisibility}
+    >
+      {showPassword ? "HIDE" : "SHOW"}
+    </button>
+  </div>
+</div>
+
               </form>
             </div>
 
