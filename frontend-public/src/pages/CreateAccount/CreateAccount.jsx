@@ -20,25 +20,31 @@ const CreateAccount = () => {
         <div className="createaccount-card">
           <div className="createaccount-card__image"></div>
           <div className="createaccount-card__image_two">
+          <h2 className="title-createaccount">CREATE <br></br> ACCOUNT</h2>
             {/* Formulario centrado */}
             <div className="form-container">
               <form className="create-account-form">
-                <h2>Crear Cuenta</h2>
                 <div className="input-group-createaccount">
-                  <label htmlFor="name">Nombre:</label>
+                  <label htmlFor="name" className="createaccount-label">NAME</label>
                   <input type="text" id="name" name="name" required />
                 </div>
                 <div className="input-group-createaccount">
-                  <label htmlFor="email">Email:</label>
+                  <label htmlFor="email" className="createaccount-label">E-MAIL</label>
                   <input type="email" id="email" name="email" required />
                 </div>
                 <div className="input-group-createaccount">
-                  <label htmlFor="password">Contraseña:</label>
+                  <label htmlFor="password" className="createaccount-label">PASSWORD</label>
                   <input type="password" id="password" name="password" required />
                 </div>
-                <button className="button-createaccount">Crear Cuenta</button>
               </form>
             </div>
+
+            <div>
+            <a href="/" className="btn button-createaccount ">REGISTER</a>
+          </div>
+          <div className="div-create-to-login">
+          <a href="/" className="createaccount-login">ALREADY HAVE ACCOUNT? LOG-IN</a>
+        </div>
           </div>
         </div>
       </div>
