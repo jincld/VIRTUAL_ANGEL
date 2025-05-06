@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";  // Usamos NavLink en vez de Link
-import './Nav.css';
+import './nav.css';
 
 function Nav() {
     return (
       <>
       <nav className="navbar navbary navbar-expand-lg bg-body-tertiary w-100">
         <div className="navbar navbary navbar-expand-lg bg-body-tertiary">
-          <a className="navbar-brand itemnav" aria-current="page" href="/">
+          <a className="navbar-brand itemnav" aria-current="page" href="/home">
               <img src="/virtualangelogo.png" alt="VIRTUAL ANGEL" width="170"/>
             </a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +17,7 @@ function Nav() {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   {/* Usamos NavLink para poder resaltar el enlace activo */}
-                  <NavLink className="nav-link itemnav" to="/firstuse" activeClassName="active">FIRSTUSE</NavLink>
+                  <NavLink className="nav-link itemnav" to="/clothing" activeClassName="active">CLOTHING</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link itemnav" to="/news" activeClassName="active">NEW</NavLink>
