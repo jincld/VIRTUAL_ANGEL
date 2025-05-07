@@ -1,12 +1,12 @@
-.linked{
-    color: #ffffff;
-    font-weight: 400;
-}
-
-.linked:hover{
+.text-footer-private{
     color: #ff0000;  
 }
 
 .footercolor{
     background-color: #000000;
 }
+
+.custom-footer {
+    height: 20px;
+  }
+  
