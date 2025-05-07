@@ -34,7 +34,7 @@ const FirstUse = () => {
                 customers.
               </p>
               <div className="button-wrapper">
-            <a href="/" className="btn btn-danger mt-3 btn-startfirstuse">LET'S START →</a>
+            <a href="/inicio" className="btn btn-danger mt-3 btn-startfirstuse">LET'S START →</a>
           </div>
             </div>
           </div>
