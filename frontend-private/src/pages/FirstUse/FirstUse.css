@@ -1,0 +1,168 @@
+.backfirstuse {
+    background-image: url('/firstuse-bg.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat:repeat-x;
+    width: 100vw;
+    background-color: #000000;
+    top: 120px;
+    left: 0;
+    z-index: 0;
+  }
+  
+  .welcome-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 80px;
+    color: black;
+  }
+  
+  .equal-height-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    min-height: 0;
+  }
+  
+  .image-side {
+    flex: 1 1 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+  
+  .full-height-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  
+  .text-first-container {
+    background-color: #000000 !important;
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .btn-startfirstuse{
+    background-color: #ff0000;
+    color: #ffffff;
+    border-radius: 0%;
+    font-size: 20px;
+    width: fit-content;
+    padding: 15px;
+    border-color: #ff0000;
+  }
+
+  .btn-startfirstuse:hover{
+    background-color: #000000;
+    color: #ff0000;
+    border-radius: 0%;
+    font-size: 20px;
+    width: fit-content;
+    padding: 15px;
+    border-color: #ff0000;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* ❤️ esto centra el botón */
+  }
+  
+  
+  /* RESPONSIVE - Hasta 991px */
+  @media (max-width: 991px) {
+    .equal-height-row {
+      flex-direction: column-reverse;
+    }
+  
+    .full-height-img {
+      height: auto;
+      width: 100%;
+
+      object-fit:contain; /* Esto hace que la imagen cubra todo el espacio sin deformarse */
+    }
+  
+    .text-first-container {
+      min-height: auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .backfirstuse {
+        background-image: url('/firstuse-bg-sm.png');
+        background-size: contain;
+        background-position: top;
+        background-repeat:repeat-y;
+        width: 100vw;
+        background-color: #000000;
+        left: 0;
+        z-index: 0;
+    }
+
+    .equal-height-row{
+        margin-left: 30px;
+        margin-right: 30px;
+
+    }
+
+    .welcome-title {
+        margin-left: 30px;
+      }
+  }
+
+
+
+  @media (max-width: 515px) {
+
+    .backfirstuse {
+        background-image: url('/firstuse-bg-xs.png');
+        background-size: contain;
+        background-position: top;
+        background-repeat:repeat-y;
+        width: 100vw;
+        background-color: #000000;
+        left: 0;
+        z-index: 0;
+    }
+
+    .welcome-title {
+        margin-left: 30px;
+        color: #000000;
+    }
+
+    .info-firstuse{
+        font-size: 14px;
+    }
+
+    .btn-startfirstuse{
+        background-color: #ff0000;
+        color: #ffffff;
+        border-radius: 0%;
+        font-size: 13px;
+        width: fit-content;
+        padding: 15px;
+        border-color: #ff0000;
+      }
+    
+      .btn-startfirstuse:hover{
+        background-color: #000000;
+        color: #ff0000;
+        border-radius: 0%;
+        font-size: 13px;
+        width: fit-content;
+        padding: 15px;
+        border-color: #ff0000;
+      }
+  }
+  

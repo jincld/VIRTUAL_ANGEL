@@ -17,19 +17,19 @@ function Nav() {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   {/* Usamos NavLink para poder resaltar el enlace activo */}
-                  <NavLink className="nav-link itemnav" to="/clothing" activeClassName="active">CLOTHING</NavLink>
+                  <NavLink className="nav-link itemnav" to="/contact" activeClassName="active">CLOTHING</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link itemnav" to="/news" activeClassName="active">NEW</NavLink>
+                  <NavLink className="nav-link itemnav" to="/contact" activeClassName="active">NEW</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link itemnav" to="/cart" activeClassName="active">CART</NavLink>
+                  <NavLink className="nav-link itemnav" to="/contact" activeClassName="active">CART</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link itemnav" to="/lookbook" activeClassName="active">LOOKBOOK</NavLink>
+                  <NavLink className="nav-link itemnav" to="/contact" activeClassName="active">LOOKBOOK</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link itemnav" to="/searchpage" activeClassName="active">SEARCH</NavLink>
+                  <NavLink className="nav-link itemnav" to="/contact" activeClassName="active">SEARCH</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link itemnav" to="/" activeClassName="active">LOGIN</NavLink>
