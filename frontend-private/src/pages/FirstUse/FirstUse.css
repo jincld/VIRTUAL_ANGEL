@@ -45,6 +45,7 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    margin-left: 20px;
   }
   
   .text-wrapper {
@@ -118,6 +119,10 @@
 
     .welcome-title {
         margin-left: 30px;
+      }
+
+      .text-first-container {
+        margin-left: 0px;
       }
   }
 
