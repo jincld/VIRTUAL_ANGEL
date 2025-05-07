@@ -63,7 +63,12 @@ const togglePasswordVisibility = () => {
         </div>
 
         <div className="d-flex justify-content-center mb-3">
-  <button type="submit" className="btn btnlogin">LOGIN</button>
+          
+          <div>
+            <a href="/firstuse" className="btn btnlogin">LOGIN</a>
+          </div>
+
+
 </div>
 
         <div className="text-center">
