@@ -10,6 +10,7 @@ import VerifyCode from './pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from './pages/NewPassword/NewPassword.jsx';
 import CreateAccount from './pages/CreateAccount/CreateAccount.jsx';
 import FirstUse from './pages/FirstUse/FirstUse.jsx';
+import Products from './pages/Products/Products.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="newpassword" element={<NewPassword />} />
           <Route path="createaccount" element={<CreateAccount />} />
           <Route path="firstuse" element={<FirstUse />} />
+          <Route path="products" element={<Products />} />
         </Routes>
         <Footer />
       </Router>
