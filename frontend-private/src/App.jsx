@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Nav from './components/Nav/nav'; 
+import Nav from './components/Nav/Nav.jsx'; 
 import Home from './pages/home.jsx';
 import Footer from './components/Footer/Footer.jsx'; 
 import Contact from './pages/contact/Contact.jsx';
@@ -10,6 +10,7 @@ import VerifyCode from './pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from './pages/NewPassword/NewPassword.jsx';
 import CreateAccount from './pages/CreateAccount/CreateAccount.jsx';
 import FirstUse from './pages/FirstUse/FirstUse.jsx';
+import Inicio from './pages/inicio/inicio.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="newpassword" element={<NewPassword />} />
           <Route path="createaccount" element={<CreateAccount />} />
           <Route path="firstuse" element={<FirstUse />} />
+          <Route path="inicio" element={<Inicio />} />
         </Routes>
         <Footer />
       </Router>

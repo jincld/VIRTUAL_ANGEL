@@ -1,0 +1,123 @@
+.backinicio {
+    background-image: url('/firstuse-bg.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat:repeat-x;
+    width: 100vw;
+    background-color: #000000;
+    top: 120px;
+    left: 0;
+    z-index: 0;
+  }
+
+  .welcome-title-inicio {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 100px;
+    color: black;
+  }
+.dashboard {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    color: #000;
+    max-width: 1000px;
+    margin: auto;
+   }
+   h2 {
+    text-align: left;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.5rem;
+   }
+   .charts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .line-chart, .pie-chart {
+    flex: 1;
+    min-width: 300px;
+    max-width: 48%; /* Esto asegura que estén a la par en pantallas grandes */
+    background-color: #fff;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+   .line-chart h3,
+   .pie-chart h3 {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+   }
+   .details-button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background-color: #750000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+   }
+
+   @media (max-width: 991px) {
+    .equal-height-row {
+      flex-direction: column-reverse;
+    }
+  
+    .full-height-img {
+      height: auto;
+      width: 100%;
+
+      object-fit:contain; /* Esto hace que la imagen cubra todo el espacio sin deformarse */
+    }
+  
+    .text-first-container {
+      min-height: auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .backinicio {
+        background-image: url('/firstuse-bg-sm.png');
+        background-size: contain;
+        background-position: top;
+        background-repeat:repeat-y;
+        width: 100vw;
+        background-color: #000000;
+        left: 0;
+        z-index: 0;
+    }
+
+    .equal-height-row{
+        margin-left: 30px;
+        margin-right: 30px;
+
+    }
+
+    .welcome-title {
+        margin-left: 30px;
+      }
+
+      .text-first-container {
+        margin-left: 0px;
+      }
+
+  }@media (max-width: 515px) {
+
+    .backfirstuse {
+        background-image: url('/firstuse-bg-xs.png');
+        background-size: contain;
+        background-position: top;
+        background-repeat:repeat-y;
+        width: 100vw;
+        background-color: #000000;
+        left: 0;
+        z-index: 0;
+    }
+  }
+
