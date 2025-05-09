@@ -1,11 +1,10 @@
 .backfirstuse {
     background-image: url('/firstuse-bg.png');
     background-size: contain;
-    background-position: center;
+    background-position: top;
     background-repeat:repeat-x;
     width: 100vw;
     background-color: #000000;
-    top: 120px;
     left: 0;
     z-index: 0;
   }
@@ -15,6 +14,7 @@
     font-weight: bold;
     margin-top: 80px;
     color: black;
+    border-bottom: 2px solid #ccc;
   }
   
   .equal-height-row {
@@ -83,7 +83,7 @@
   
   
   /* RESPONSIVE - Hasta 991px */
-  @media (max-width: 991px) {
+  @media (max-width: 1025px) {
     .equal-height-row {
       flex-direction: column-reverse;
     }
