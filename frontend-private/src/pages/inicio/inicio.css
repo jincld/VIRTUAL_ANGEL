@@ -1,11 +1,10 @@
 .backinicio {
     background-image: url('/firstuse-bg.png');
     background-size: contain;
-    background-position: center;
+    background-position: top;
     background-repeat:repeat-x;
     width: 100vw;
     background-color: #000000;
-    top: 120px;
     left: 0;
     z-index: 0;
   }
@@ -13,18 +12,19 @@
   .welcome-title-inicio {
     font-size: 36px;
     font-weight: bold;
-    margin-top: 100px;
+    margin-top: 80px;
     color: black;
   }
 .dashboard {
     background-color: rgba(255, 255, 255, 0);
     padding: 2rem;
-    font-family: 'Arial', sans-serif;
     color: #000;
     max-width: 1000px;
     margin: auto;
    }
-   h2 {
+
+   
+   .h2-inicio {
     text-align: left;
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -45,7 +45,6 @@
     background-color: #fff;
     padding: 1rem;
     border: 1px solid #eee;
-    border-radius: 8px;
     box-sizing: border-box;
   }
   
@@ -65,7 +64,7 @@
     cursor: pointer;
    }
 
-   @media (max-width: 991px) {
+   @media (max-width: 1025px) {
     .equal-height-row {
       flex-direction: column-reverse;
     }
@@ -83,14 +82,14 @@
     }
 
     .backinicio {
-        background-image: url('/firstuse-bg-sm.png');
-        background-size: contain;
-        background-position: top;
-        background-repeat:repeat-y;
-        width: 100vw;
-        background-color: #000000;
-        left: 0;
-        z-index: 0;
+      background-image: url('/firstuse-bg-sm.png');
+      background-size: contain;
+      background-position: top;
+      background-repeat:repeat-y;
+      width: 100vw;
+      background-color: #000000;
+      left: 0;
+      z-index: 0;
     }
 
     .equal-height-row{
@@ -107,17 +106,25 @@
         margin-left: 0px;
       }
 
-  }@media (max-width: 515px) {
+      .charts-container {
+        flex-direction: column;
+        align-items: center; /* Centra las gráficas horizontalmente */
+      }
+
+  }
+  
+  
+  @media (max-width: 515px) {
 
     .backfirstuse {
-        background-image: url('/firstuse-bg-xs.png');
-        background-size: contain;
-        background-position: top;
-        background-repeat:repeat-y;
-        width: 100vw;
-        background-color: #000000;
-        left: 0;
-        z-index: 0;
+      background-image: url('/firstuse-bg-xs.png');
+      background-size: contain;
+      background-position: top;
+      background-repeat:repeat-y;
+      width: 100vw;
+      background-color: #000000;
+      left: 0;
+      z-index: 0;
     }
   }
 

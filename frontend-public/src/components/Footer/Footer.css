@@ -10,3 +10,13 @@
 .footercolor{
     background-color: #000000;
 }
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content-zone {
+    flex: 1;
+  }
