@@ -20,8 +20,12 @@ import PantsDetail from '../../frontend-public/src/pages/pants/PantsDetailAdmin.
 import ShirtsDetail from '../../frontend-public/src/pages/shirts/ShirtsDetailAdmin.jsx';
 import JacketsDetail from '../../frontend-public/src/pages/jackets/JacketsDetailAdmin.jsx';
 import SweatersDetail from '../../frontend-public/src/pages/sweaters/SweatersDetailAdmin.jsx';
-import AddProduct from './pages/AddProduct/AddProduct.jsx';
+import AddProduct from "./pages/AddProduct/AddProduct.jsx";
 import EditProduct from './pages/EditProduct/EditProduct.jsx';
+import Employees from "./pages/Employee/Employee.jsx";
+
+
+
 
 
 function App() {
@@ -41,6 +45,7 @@ function App() {
           <Route path="firstuse" element={<FirstUse />} />
           <Route path="inicio" element={<Inicio />} />
           <Route path="products" element={<Products />} />
+          <Route path="employee" element={<Employees />} />
           <Route path="shirts" element={<Shirts />} />
           <Route path="pants" element={<Pants />} />
           <Route path="jackets" element={<Jacket />} />
