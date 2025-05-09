@@ -1,4 +1,4 @@
-.backshirts {
+.backproducts {
     background-image: url('/shirtsback.png');
     background-size: cover; 
     background-position: center;
@@ -61,7 +61,7 @@
     color: white; 
     transition: background-color 0.3s ease; 
   }
-  
+
   .btn-limpiar:hover {
     background-color: #000000; 
     border-color: #000000;
@@ -83,6 +83,19 @@
     cursor: pointer;
   }
 
+  .btn-addproducts {
+    background-color: #ff0000; 
+    border-color: #ff0000;
+    color: #ffffff; 
+    transition: background-color 0.3s ease; 
+  }
+  
+  .btn-addproducts:hover {
+    background-color: #000000; 
+    border-color: #000000;
+    color: white; 
+    cursor: pointer;
+  }
   /* Para navegadores basados en WebKit (Chrome, Safari, etc.) */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -110,6 +123,17 @@ input[type="range"] {
   background: #ddd;
   border-radius: 5px;
   outline: none;
+}
+
+.search-input {
+  width: 80% !important;
+  max-width: 500px !important;
+  padding: 12px 20px !important;
+  border: 1px solid #000000 !important; /* Borde negro delgado */
+  border-radius: 5px !important;
+  background-color: #ffffff !important; /* Fondo blanco */
+  color: #000000 !important; /* Texto en negro */
+  font-size: 15px !important;
 }
 
 
