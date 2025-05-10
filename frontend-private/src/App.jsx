@@ -23,6 +23,11 @@ import SweatersDetail from '../../frontend-public/src/pages/sweaters/SweatersDet
 import AddProduct from "./pages/AddProduct/AddProduct.jsx";
 import EditProduct from './pages/EditProduct/EditProduct.jsx';
 import Employees from "./pages/Employee/Employee.jsx";
+import EditEmployee from './pages/Employee/EditEmployee.jsx';
+import AddEmployee from './pages/Employee/addEmployee.jsx'; 
+import Orders from './pages/orders/Orders';
+
+
 
 
 
@@ -46,6 +51,9 @@ function App() {
           <Route path="inicio" element={<Inicio />} />
           <Route path="products" element={<Products />} />
           <Route path="employee" element={<Employees />} />
+          <Route path="/editemployee" element={<EditEmployee />} />
+          <Route path="/addemployee" element={<AddEmployee />} />
+          <Route path="orders" element={<Orders />} />      
           <Route path="shirts" element={<Shirts />} />
           <Route path="pants" element={<Pants />} />
           <Route path="jackets" element={<Jacket />} />

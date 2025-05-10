@@ -1,0 +1,165 @@
+/* Orders.css */
+
+.backorders {
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.orders-container {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding: 30px;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.orders-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.orders-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  min-width: 650px;
+}
+
+.orders-table thead {
+  background-color: #c40808;
+  color: white;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 15px;
+}
+
+.orders-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.view-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #333;
+}
+
+.orders-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.orders-pagination button {
+  background-color: #c40808;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.orders-pagination button:disabled {
+  background-color: #ddd;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.orders-pagination button:hover:not(:disabled) {
+  background-color: #a30606;
+}
+
+@media (max-width: 768px) {
+  .orders-header h2 {
+    font-size: 24px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 13px;
+  }
+
+  .view-button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-container {
+    padding: 15px;
+  }
+
+  .orders-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .orders-buttons {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .orders-pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
