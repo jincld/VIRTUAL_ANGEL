@@ -1,4 +1,4 @@
-.backorders {
+.backsales {
   background-image: url('/firstuse-bg.png');
   position: relative;
   top: 0;
@@ -8,7 +8,7 @@
   padding: 40px 0;
 }
 
-.orders-container {
+.sales-container {
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -20,7 +20,7 @@
   overflow-x: hidden; /* Evita scroll horizontal */
 }
 
-.orders-header {
+.sales-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,14 +28,14 @@
   flex-wrap: wrap;
 }
 
-.orders-header h2 {
+.sales-header h2 {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: 1px;
   margin: 0;
 }
 
-.orders-buttons {
+.sales-buttons {
   display: flex;
   gap: 10px;
 }
@@ -48,30 +48,30 @@
   padding: 6px;
 }
 
-.orders-table-wrapper {
+.sales-table-wrapper {
   width: 100%;
 }
 
-.orders-table {
+.sales-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.orders-table thead {
+.sales-table thead {
   background-color: #c40808;
   color: white;
 }
 
-.orders-table th,
-.orders-table td {
+.sales-table th,
+.sales-table td {
   padding: 14px 16px;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
   font-size: 15px;
 }
 
-.orders-table tr:hover {
+.sales-table tr:hover {
   background-color: #f1f1f1;
 }
 
@@ -90,7 +90,7 @@
   background-color: #333;
 }
 
-.orders-pagination {
+.sales-pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,7 +100,7 @@
   margin-top: 10px;
 }
 
-.orders-pagination button {
+.sales-pagination button {
   background-color: #c40808;
   color: white;
   border: none;
@@ -110,24 +110,24 @@
   transition: background-color 0.3s ease;
 }
 
-.orders-pagination button:disabled {
+.sales-pagination button:disabled {
   background-color: #ddd;
   color: #999;
   cursor: not-allowed;
 }
 
-.orders-pagination button:hover:not(:disabled) {
+.sales-pagination button:hover:not(:disabled) {
   background-color: #a30606;
 }
 
 /* Tablet adjustments */
 @media (max-width: 768px) {
-  .orders-header h2 {
+  .sales-header h2 {
     font-size: 24px;
   }
 
-  .orders-table th,
-  .orders-table td {
+  .sales-table th,
+  .sales-table td {
     font-size: 13px;
   }
 
@@ -139,43 +139,43 @@
 
 /* Mobile layout */
 @media (max-width: 600px) {
-  .backorders {
+  .backsales {
     padding: 20px 10px;
   }
 
-  .orders-container {
+  .sales-container {
     padding: 20px 15px;
   }
 
-  .orders-header {
+  .sales-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
 
-  .orders-buttons {
+  .sales-buttons {
     width: 100%;
     justify-content: flex-start;
     gap: 10px;
   }
 
-  .orders-table {
+  .sales-table {
     border: 0;
   }
 
-  .orders-table thead {
+  .sales-table thead {
     display: none;
   }
 
-  .orders-table,
-  .orders-table tbody,
-  .orders-table tr,
-  .orders-table td {
+  .sales-table,
+  .sales-table tbody,
+  .sales-table tr,
+  .sales-table td {
     display: block;
     width: 100%;
   }
 
-  .orders-table tr {
+  .sales-table tr {
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -183,7 +183,7 @@
     background-color: #fff;
   }
 
-  .orders-table td {
+  .sales-table td {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -195,11 +195,11 @@
     position: relative;
   }
 
-  .orders-table td:last-child {
+  .sales-table td:last-child {
     border-bottom: none;
   }
 
-  .orders-table td::before {
+  .sales-table td::before {
     content: attr(data-label);
     font-weight: bold;
     flex: 1;
@@ -207,7 +207,7 @@
     padding-right: 10px;
   }
 
-  .orders-table td {
+  .sales-table td {
     flex: 2;
   }
 
@@ -217,21 +217,15 @@
     font-size: 14px;
   }
 
-  .orders-pagination {
+  .sales-pagination {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
     margin-top: 20px;
   }
 
-  .orders-pagination button {
+  .sales-pagination button {
     width: 100%;
     margin-bottom: 10px;
   }
 }
-
-
-
-
-
-
