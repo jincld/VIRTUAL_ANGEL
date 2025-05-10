@@ -22,7 +22,6 @@ const OrdersTable = () => {
 
   return (
     <div className="backorders">
-      <div className="orders-view">
       <div className="orders-container">
         <div className="orders-header">
           <h2>ORDERS</h2>
@@ -70,7 +69,6 @@ const OrdersTable = () => {
           </button>
         </div>
       </div>
-    </div>
     </div>
   );
 };
