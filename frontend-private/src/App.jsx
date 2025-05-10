@@ -26,6 +26,7 @@ import Employees from "./pages/Employee/Employee.jsx";
 import EditEmployee from './pages/Employee/EditEmployee.jsx';
 import AddEmployee from './pages/Employee/addEmployee.jsx'; 
 import Orders from './pages/orders/Orders';
+import Sales from './pages/sales/Sales.jsx';
 
 
 
@@ -53,7 +54,8 @@ function App() {
           <Route path="employee" element={<Employees />} />
           <Route path="/editemployee" element={<EditEmployee />} />
           <Route path="/addemployee" element={<AddEmployee />} />
-          <Route path="orders" element={<Orders />} />      
+          <Route path="orders" element={<Orders />} />   
+          <Route path="sales" element={<Sales />} />    
           <Route path="shirts" element={<Shirts />} />
           <Route path="pants" element={<Pants />} />
           <Route path="jackets" element={<Jacket />} />
