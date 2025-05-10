@@ -1,0 +1,231 @@
+.backsales {
+  background-image: url('/firstuse-bg.png');
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  padding: 40px 0;
+}
+
+.sales-container {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+.sales-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.sales-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.sales-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.sales-table-wrapper {
+  width: 100%;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.sales-table thead {
+  background-color: #c40808;
+  color: white;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 15px;
+}
+
+.sales-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.view-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #333;
+}
+
+.sales-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.sales-pagination button {
+  background-color: #c40808;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sales-pagination button:disabled {
+  background-color: #ddd;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.sales-pagination button:hover:not(:disabled) {
+  background-color: #a30606;
+}
+
+/* Tablet adjustments */
+@media (max-width: 768px) {
+  .sales-header h2 {
+    font-size: 24px;
+  }
+
+  .sales-table th,
+  .sales-table td {
+    font-size: 13px;
+  }
+
+  .view-button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .backsales {
+    padding: 20px 10px;
+  }
+
+  .sales-container {
+    padding: 20px 15px;
+  }
+
+  .sales-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sales-buttons {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .sales-table {
+    border: 0;
+  }
+
+  .sales-table thead {
+    display: none;
+  }
+
+  .sales-table,
+  .sales-table tbody,
+  .sales-table tr,
+  .sales-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .sales-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .sales-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    position: relative;
+  }
+
+  .sales-table td:last-child {
+    border-bottom: none;
+  }
+
+  .sales-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    flex: 1;
+    color: #444;
+    padding-right: 10px;
+  }
+
+  .sales-table td {
+    flex: 2;
+  }
+
+  .view-button {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .sales-pagination {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .sales-pagination button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
