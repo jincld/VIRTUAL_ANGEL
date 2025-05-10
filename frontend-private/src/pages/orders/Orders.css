@@ -1,13 +1,12 @@
 /* Orders.css */
 
 .backorders {
-  background-color: #000;
-  position: fixed;
+  background-image: url('/firstuse-bg.png');
+  position: relative;
   top: 0;
   left: 0;
   z-index: 0;
   width: 100vw;
-  min-height: 100vh;
   padding: 40px 0;
 }
 
