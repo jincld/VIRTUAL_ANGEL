@@ -1,31 +1,42 @@
 .backsales {
-  background-image: url('/firstuse-bg.png');
-  position: relative;
-  top: 0;
+  background-image: url('/salesbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat-y;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: fixed;
+  top: 120px;
   left: 0;
   z-index: 0;
-  width: 100vw;
-  padding: 40px 0;
 }
 
 .sales-container {
-  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px;
   box-sizing: border-box;
   width: 100%;
-  overflow-x: hidden; /* Evita scroll horizontal */
+  height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .sales-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Título a la izquierda y botones a la derecha */
   align-items: center;
   margin-bottom: 25px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .sales-header h2 {
@@ -33,11 +44,15 @@
   font-weight: 700;
   letter-spacing: 1px;
   margin: 0;
+  flex: 1;
+  text-align: left;
+  color: #000000 !important;
 }
 
 .sales-buttons {
   display: flex;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .icon-button {
@@ -50,6 +65,8 @@
 
 .sales-table-wrapper {
   width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .sales-table {
@@ -61,6 +78,7 @@
 .sales-table thead {
   background-color: #c40808;
   color: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
 
 .sales-table th,
@@ -71,8 +89,8 @@
   font-size: 15px;
 }
 
-.sales-table tr:hover {
-  background-color: #f1f1f1;
+.sales-table tbody tr:hover {
+  background-color: #e7e7e7;
 }
 
 .view-button {
@@ -120,7 +138,7 @@
   background-color: #a30606;
 }
 
-/* Tablet adjustments */
+/* Tablet */
 @media (max-width: 768px) {
   .sales-header h2 {
     font-size: 24px;
@@ -137,30 +155,33 @@
   }
 }
 
-/* Mobile layout */
+/* Mobile */
 @media (max-width: 600px) {
-  .backsales {
-    padding: 20px 10px;
-  }
-
   .sales-container {
+    height: auto;
     padding: 20px 15px;
+    display: block;
   }
 
   .sales-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+  }
+
+  .sales-header h2 {
+    font-size: 22px;
+    flex: 1;
+    text-align: left;
+    color: #ffffff !important;
   }
 
   .sales-buttons {
-    width: 100%;
-    justify-content: flex-start;
     gap: 10px;
-  }
-
-  .sales-table {
-    border: 0;
+    flex-shrink: 0;
   }
 
   .sales-table thead {
@@ -227,5 +248,71 @@
   .sales-pagination button {
     width: 100%;
     margin-bottom: 10px;
+  }
+}
+
+.logo-print {
+  display: none;
+}
+
+@media print {
+  /* Asegurarse de que el logo en el header de SalesTable esté visible durante la impresión */
+  .logo-print {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo-print img {
+    width: 150px;
+    height: auto;
+  }
+
+  /* Ocultar elementos que no deben aparecer en la impresión */
+  .backsales,
+  .sales-buttons,
+  .sales-pagination,
+  .view-button {
+    display: none !important;
+  }
+
+  .sales-container {
+    height: auto !important;
+    box-shadow: none !important;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .sales-header {
+    background: none;
+    color: black;
+    padding: 0;
+  }
+
+  .sales-header h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+  }
+
+  .sales-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .sales-table th,
+  .sales-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .sales-table thead {
+    display: table-header-group;
+  }
+
+  .sales-table tr {
+    page-break-inside: avoid;
   }
 }

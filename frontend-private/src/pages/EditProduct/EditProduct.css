@@ -1,218 +1,212 @@
-.ep-wrapper {
-    background-color: #11111100;
+/* Fondo que cubre el 100% de la pantalla y centra el contenido */
+.ap-wrapper {
+    background-color: #111;
     color: #fff;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* Esto asegura que el título esté arriba */
+    align-items: center;     /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
-    z-index: 5; 
-    position: relative;
-  }
+    z-index: 2;
+    min-height: 100vh;
+}
 
-  .ep-btn-back {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    z-index: 10; /* Eleva el botón por encima de otros elementos */
-  }
-  
-  
-  .ep-btn-back:hover {
-    background-color: #ff0000;
-    color: #ffffff;
-  }
-  
-  
-  .backeditproduct {
+.backeditproduct {
     background-image: url('addproduct-bg.png');
     background-size: cover;
     background-position: center;
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: absolute; /* <- Cambiado a fixed */
     top: 120px;
     left: 0;
-    z-index: 0;
-  }
-  
-  .ep-card {
+    z-index: 0; /* Asegura que quede detrás */
+}
+
+/* Estilo de la tarjeta */
+.ap-card {
     background-color: #000;
-    width: 80%;
-    max-width: 800px;
-    min-height: 400px;
-    height: auto;
+    width: 80%;               /* El formulario ocupará el 80% del ancho de la pantalla */
+    max-width: 800px;         /* Reducción en el ancho máximo */
+    min-height: 400px;        /* Establecer un valor mínimo de altura */
+    height: auto;             /* La altura de la tarjeta se ajusta al contenido */
     padding: 1rem;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: hidden;         /* Evitar cualquier desbordamiento */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    z-index: 5; 
-  }
-  
-  .ep-label {
+    z-index: 2;
+}
+
+/* Etiquetas de los inputs */
+.ap-label {
     color: #ddd;
-    font-size: 0.9rem;
-  }
-  
-  .ep-input {
+    font-size: 0.9rem;   /* Reducir el tamaño de las etiquetas */
+}
+
+/* Estilo de los inputs */
+.ap-input {
     background-color: #1e1e1e;
     color: #fff;
     border: 1px solid #444;
-    font-size: 0.9rem;
-    padding: 0.5rem;
-  }
-  
-  .ep-input::placeholder {
+    font-size: 0.9rem;     /* Reducir el tamaño de la fuente de los inputs */
+    padding: 0.5rem;       /* Reducir el padding de los inputs */
+}
+
+/* Placeholder de los inputs */
+.ap-input::placeholder {
     color: #aaa;
-  }
-  
-  .ep-btn-upload {
+}
+
+.ap-btn-back {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1000;
+transition: background-color 0.3s ease;
+}
+
+.ap-btn-back:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+/* Estilo de los botones */
+.ap-btn-upload {
     background-color: #444;
     color: #fff;
     padding: 0.5rem;
     font-size: 0.9rem;
-  }
-  
-  .ep-btn-clear {
+}
+
+.ap-btn-clear {
     background-color: transparent;
     border: 1px solid #ffffff;
     color: #ffffff;
     padding: 0.5rem;
     font-size: 0.9rem;
     border-radius: 0%;
-  }
-  
-  .ep-btn-clear:hover {
+}
+
+.ap-btn-clear:hover {
     background-color: #fff;
     color: #000;
-  }
-  
-  .ep-btn-save {
-    background-color: #28a745;
+}
+
+.ap-btn-save {
+    background-color: #ff0000;
     color: #fff;
     padding: 0.5rem;
     font-size: 0.9rem;
-  }
-  
-  .ep-img-preview {
+}
+
+.ap-img-preview {
     max-height: 200px;
     object-fit: cover;
     border: 1px solid #333;
-  }
-  
-  form .col-6 {
-    flex: 0 0 50%;
+}
+
+/* Flex para los inputs del formulario */
+form .col-6 {
+    flex: 0 0 50%; /* Campos lado a lado */
     padding: 0.5rem;
-  }
-  
-  form .col-12 {
-    flex: 0 0 100%;
-  }
-  
-  .btnsaveitem {
-    background-color: #ff0000;
+}
+
+form .col-12 {
+    flex: 0 0 100%; /* Campos que ocupan todo el espacio */
+}
+
+.btnsaveitem {
+    background-color: #ff0000 !important;
     border-radius: 0%;
-  }
-  
-  .btnsaveitem:hover {
-    background-color: #000000;
-    color: #ff0000;
-    border-color: #ff0000;
-  }
-  
-  .btnupload-image {
+}
+
+.btnsaveitem:hover {
+    background-color: #000000 !important;
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
+.btnupload-image {
     background-color: #ffffff;
     color: #000000;
     border-radius: 0%;
-  }
-  
-  .btnupload-image:hover {
+}
+
+.btnupload-image:hover {
     background-color: #000000;
     color: #ff0000;
     border-color: #ff0000;
-  }
-  
-  .editproduct-title {
+}
+
+.addproduct-title {
     z-index: 2;
     font-weight: bold;
     background-color: #ffffff;
     color: #000000 !important;
-  }
+}
 
-  .white-wallpaper{
-    background-color: #ffffff;
-  }
-  
-  
-  @media (max-width: 1025px) {
+@media (max-width: 1025px) {
     .backeditproduct {
-      background-image: url('addproduct-bg-2.png');
+        background-image: url('addproduct-bg-2.png');
     }
-  }
-  
-  @media (max-width: 768px) {
-    .ep-card {
-      width: 90%;
-      max-height: none;
-      margin: 0;
-    }
-  
-    .editproduct-title {
-      margin-top: 40px;
-    }
-  
-    .ep-wrapper {
-      padding: 10px;
-      height: auto;
-    }
-  
-    .backeditproduct {
-      background-image: url('addproduct-bg-3.png');
-      background-repeat: repeat-y;
-      z-index: 1;
-    }
-  
-    .ep-img-preview {
-      max-height: 150px;
-    }
-  
-    .ep-btn-upload,
-    .ep-btn-clear,
-    .ep-btn-save {
-      width: 100%;
-      padding: 0.5rem;
-    }
-  
-    form .col-6 {
-      flex: 0 0 100%;
+}
+
+@media (max-width: 768px) {
+    .ap-card {
+        width: 90%;
+        max-height: none;
+        margin: 0;
     }
 
-    .btn-marginpd{
-      margin-bottom: 20px !important;
+    .addproduct-title {
+        margin-top: 40px;
     }
 
-    .ep-btn-back{
-      font-size: 12px;
-    }
-  }
-  
-    /* Hacer que el contenedor no se sobrepase en pantallas pequeñas */
     .ap-wrapper {
-      padding: 10px;     /* Reducir padding alrededor para evitar el desbordamiento */
-      height: auto;      /* Ajustar el tamaño del contenedor según el contenido */
+        padding: 10px;
+        height: auto;
     }
-  
-  
+
+    .backeditproduct {
+        background-image: url('addproduct-bg-3.png');
+        background-repeat: repeat-y;
+        z-index: 1;
+    }
+
+    .ap-img-preview {
+        max-height: 150px;
+    }
+
+    .ap-btn-upload,
+    .ap-btn-clear,
+    .ap-btn-save {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    form .col-6 {
+        flex: 0 0 100%;
+    }
+
+    .btn-marginpd {
+        margin-bottom: 10px !important;
+    }
+
+    .ap-btn-back {
+        font-size: 12px;
+    }
+}
+
