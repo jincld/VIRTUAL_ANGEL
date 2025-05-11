@@ -180,7 +180,7 @@ const Products = () => {
   imagen={item.imagen}
   titulo={item.titulo}
   precio={item.precio}
-  categoria={item.category} // Esto debe coincidir con lo que usas en el componente
+  categoria={item.categoria} // Esto debe coincidir con lo que usas en el componente
   stock={item.stock}
   coleccion={item.coleccion}
   color={item.color}

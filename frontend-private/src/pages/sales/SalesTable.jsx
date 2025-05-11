@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import salesData from "./SalesData.jsx"; // Asegúrate de tener datos de ventas
-import './Sales.css';
+import "./Sales.css";
 
 const SalesTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,10 +21,20 @@ const SalesTable = () => {
   );
 
   return (
-    <div className="backsales">
+    <>
+      <div className="backsales"></div>
       <div className="sales-container">
         <div className="sales-header">
+          <div className="logo-print">
+            <img src="/logo-dark.png" alt="Logo Print" />
+          </div>
           <h2>SALES</h2>
+          <div className="sales-buttons">
+            <button className="icon-button" onClick={() => window.print()}>
+              🖨️
+            </button>
+            <button className="icon-button">⬇️</button>
+          </div>
         </div>
 
         <div className="sales-table-wrapper">
@@ -48,6 +58,12 @@ const SalesTable = () => {
                   <td data-label="TOTAL">${sale.total}</td>
                   <td data-label="ITEMS">{sale.items}</td>
                   <td data-label="">
+                    <button
+                      className="view-button"
+                      onClick={() => window.location.href = `/sales/${sale.id}`}
+                    >
+                      VIEW DETAILS →
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -65,7 +81,7 @@ const SalesTable = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

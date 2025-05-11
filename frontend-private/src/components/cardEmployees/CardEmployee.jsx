@@ -28,14 +28,14 @@ const handleEdit = () => {
       <div className="card-body">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">
-          <strong>Rol:</strong> {rol}<br />
-          <strong>Edad:</strong> {age}<br />
-          <strong>Género:</strong> {gender}<br />
+          <strong>Role:</strong> {rol}<br />
+          <strong>Age:</strong> {age}<br />
+          <strong>Gender:</strong> {gender}<br />
           <strong>Email:</strong> {email}<br />
-          <strong>Teléfono:</strong> {phone}
+          <strong>Phone number:</strong> {phone}
         </p>
         <button onClick={handleEdit} className="btn btn-editemployee">
-          Edit
+          Edit details
         </button>
       </div>
     </div>
