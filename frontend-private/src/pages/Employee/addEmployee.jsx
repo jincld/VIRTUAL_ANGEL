@@ -62,6 +62,9 @@ const AddEmployee = () => {
   return (
     <>
       <div className="backaddemployee"></div>
+                              <div className="btn-marginpd">
+            <a href="/employee" className="ap-btn-back"> ← BACK </a>
+          </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addemployee-title">ADD NEW EMPLOYEE</h2>
         <div className="ap-card container rounded p-4 shadow">

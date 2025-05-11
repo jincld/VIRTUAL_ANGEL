@@ -57,13 +57,16 @@ const AddProduct = () => {
   };
 
   const handleSave = () => {
-    console.log('Producto guardado:', form);
-    alert('Producto guardado en consola.');
+    console.log('Product saved:', form);
+    alert('Product saved in console');
   };
 
   return (
     <>
     <div className="backaddproduct"></div>
+                        <div className="btn-marginpd">
+            <a href="/products" className="ap-btn-back"> ← BACK </a>
+          </div>
     <div className="ap-wrapper">
     <h2 className="text-center text-black mb-4 addproduct-title">ADD NEW PRODUCT</h2>
       <div className="ap-card container rounded p-4 shadow">
@@ -193,7 +196,6 @@ const AddProduct = () => {
                   value={form.categoria}
                   onChange={handleChange}
                 >
-                  <option value="">Seleccionar</option>
                   <option value="Shirts">Shirts</option>
                   <option value="Pants">Pants</option>
                   <option value="Jackets">Jackets</option>
