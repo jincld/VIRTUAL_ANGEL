@@ -27,12 +27,8 @@ import EditEmployee from './pages/Employee/EditEmployee.jsx';
 import AddEmployee from './pages/Employee/addEmployee.jsx'; 
 import Orders from './pages/orders/Orders';
 import Sales from './pages/sales/Sales.jsx';
-
-
-
-
-
-
+import SaleDetail from './pages/sales/SaleDetail.jsx';
+import OrderDetail from './pages/orders/OrderDetail.jsx';
 
 function App() {
   return (
@@ -66,6 +62,8 @@ function App() {
           <Route path="sweaters/:id" element={<SweatersDetail />} />
           <Route path="addproduct" element={<AddProduct />} />
           <Route path="editproduct" element={<EditProduct />} />
+          <Route path="sales/:id" element={<SaleDetail />} />
+          <Route path="orders/:id" element={<OrderDetail />} />
         </Routes>
         <Footer />
       </Router>

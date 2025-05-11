@@ -59,6 +59,7 @@
     min-width: 500px; /* Ancho mínimo para pantallas grandes */
     width: 100%; /* Asegura que ocupe el 100% del contenedor hasta el max-width */
     margin: 0 auto; /* Centra las tarjetas */
+    margin-top: 10px;
 }
 
 .no-reviews:hover {
