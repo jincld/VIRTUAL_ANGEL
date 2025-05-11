@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './EditEmployee.css';
+import './addEmployee.css'; // Usamos el MISMO CSS
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -20,7 +20,6 @@ const EditEmployee = () => {
     rol: ''
   });
 
-  // Inicialización de animaciones y carga de datos del state
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
   }, []);
@@ -77,113 +76,110 @@ const EditEmployee = () => {
 
   return (
     <>
-    <div className="backeditemployee"></div>
-      <div className="white-wallpaper">
-        <div className="ep-wrapper">
-          <div className="btn btn-marginpd">
-          <button className="ep-btn-back" onClick={() => navigate('/employee')}>← BACK</button>
+      <div className="backaddemployee"></div>
+                                    <div className="btn-marginpd">
+            <a href="/employee" className="ap-btn-back"> ← BACK </a>
           </div>
+      <div className="ap-wrapper">
+        <button className="ep-btn-back" onClick={() => navigate(-1)}>← Back</button>
+        <h2 className="text-center text-black mb-4 addemployee-title">EDIT EMPLOYEE</h2>
+        <div className="ap-card container rounded p-4 shadow">
+          <div className="row g-4">
+            <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
+              <div className="mb-3 w-100">
+                <img
+                  src={form.imagen || '/holder-newemployee.png'}
+                  alt="Preview"
+                  className="img-fluid ap-img-preview"
+                />
+              </div>
+              <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
+                <button className="btn ap-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>
+                <button className="btn ap-btn-clear w-50" onClick={handleClear}>Clear Form</button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+              </div>
+              <button className="btn ap-btn-save w-100 btnsaveemployee" onClick={handleSave}>Save Changes</button>
+            </div>
 
-          <h2 className="text-center text-black mb-4 editproduct-title">EDIT EMPLOYEE</h2>
-          <div className="ep-card container rounded p-4 shadow">
-            <div className="row g-4">
-              <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
-                <div className="mb-3 w-100">
-                  <img
-                    src={form.imagen || '/holder-newemployee.png'}
-                    alt="Preview"
-                    className="img-fluid ep-img-preview"
-                  />
-                </div>
-
-                <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
-                  <button className="btn ep-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>
-                  <button className="btn ep-btn-clear w-50" onClick={handleClear}>Clear Form</button>
+            <div className="col-md-7">
+              <form className="row g-3">
+                <div className="col-6">
+                  <label className="form-label ap-label">Name</label>
                   <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
+                    type="text"
+                    className="form-control ap-input"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
                   />
                 </div>
-                <button className="btn ep-btn-save w-100 btnsaveitem" onClick={handleSave}>Save Employee</button>
-              </div>
-
-              <div className="col-md-7">
-                <form className="row g-3">
-                  <div className="col-6">
-                    <label className="form-label ep-label">Name</label>
-                    <input
-                      type="text"
-                      className="form-control ep-input"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-6">
-                    <label className="form-label ep-label">Age</label>
-                    <input
-                      type="text"
-                      className="form-control ep-input"
-                      name="age"
-                      value={form.age}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-6">
-                    <label className="form-label ep-label">Gender</label>
-                    <input
-                      type="text"
-                      className="form-control ep-input"
-                      name="gender"
-                      value={form.gender}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-6">
-                    <label className="form-label ep-label">Phone</label>
-                    <input
-                      type="text"
-                      className="form-control ep-input"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-6">
-                    <label className="form-label ep-label">Email</label>
-                    <input
-                      type="email"
-                      className="form-control ep-input"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-6">
-                    <label className="form-label ep-label">Role</label>
-                    <input
-                      type="text"
-                      className="form-control ep-input"
-                      name="rol"
-                      value={form.rol}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </form>
-              </div>
+                <div className="col-6">
+                  <label className="form-label ap-label">Age</label>
+                  <input
+                    type="text"
+                    className="form-control ap-input"
+                    name="age"
+                    value={form.age}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-6">
+                  <label className="form-label ap-label">Gender</label>
+                  <select
+                    className="form-select ap-input"
+                    name="gender"
+                    value={form.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                  </select>
+                </div>
+                <div className="col-6">
+                  <label className="form-label ap-label">Phone</label>
+                  <input
+                    type="text"
+                    className="form-control ap-input"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-6">
+                  <label className="form-label ap-label">Email</label>
+                  <input
+                    type="email"
+                    className="form-control ap-input"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-6">
+                  <label className="form-label ap-label">Role</label>
+                  <select
+                    className="form-select ap-input"
+                    name="rol"
+                    value={form.rol}
+                    onChange={handleChange}
+                  >
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Employee">Employee</option>
+                  </select>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-</>
+    </>
   );
 };
 

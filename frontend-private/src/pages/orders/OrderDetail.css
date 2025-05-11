@@ -1,0 +1,83 @@
+/* Estilos específicos para la vista de detalle de la orden */
+
+.detail-container {
+  position: relative;
+  padding: 2rem;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 8px;
+  z-index: 10;
+  background: #fff; /* Fondo blanco */
+}
+
+.detail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.detail-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.detail-form input,
+.detail-form select,
+.detail-form textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #080808;      /* Fondo negro */
+  color: #ffffff;                 /* Texto blanco */
+  border: 1px solid #ff0000;      /* Borde rojo oscuro */
+}
+
+.heightfix-order {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.back-orderdetail {
+  background-image: url('/termsbg.png'); /* Imagen de fondo (igual que en SaleDetail) */
+  background-size: cover; 
+  background-position: center;
+  background-repeat: repeat-y;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.back-button-ord{
+    position: relative;
+  top: 20px;
+  left: 20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.back-button-ord:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+@media (max-width: 1000px) {
+  .back-orderdetail {
+    background-image: url('/shirtsbg-small.png'); /* Imagen alternativa para pantallas pequeñas */
+  }
+}

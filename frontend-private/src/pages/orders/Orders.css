@@ -1,23 +1,32 @@
 .backorders {
-  background-image: url('/firstuse-bg.png');
-  position: relative;
-  top: 0;
+  background-image: url('/ordersbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat-y;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: fixed;
+  top: 120px;
   left: 0;
   z-index: 0;
-  width: 100vw;
-  padding: 40px 0;
 }
 
 .orders-container {
-  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px;
   box-sizing: border-box;
   width: 100%;
-  overflow-x: hidden; /* Evita scroll horizontal */
+  height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .orders-header {
@@ -25,7 +34,10 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  padding: 0 10px;
 }
 
 .orders-header h2 {
@@ -33,11 +45,15 @@
   font-weight: 700;
   letter-spacing: 1px;
   margin: 0;
+  flex: 1;
+  text-align: left;
+  color: #000000 !important;
 }
 
 .orders-buttons {
   display: flex;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .icon-button {
@@ -50,6 +66,8 @@
 
 .orders-table-wrapper {
   width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .orders-table {
@@ -61,6 +79,7 @@
 .orders-table thead {
   background-color: #c40808;
   color: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
 
 .orders-table th,
@@ -71,8 +90,8 @@
   font-size: 15px;
 }
 
-.orders-table tr:hover {
-  background-color: #f1f1f1;
+.orders-table tbody tr:hover {
+  background-color: #e7e7e7;
 }
 
 .view-button {
@@ -120,7 +139,7 @@
   background-color: #a30606;
 }
 
-/* Tablet adjustments */
+/* Tablet */
 @media (max-width: 768px) {
   .orders-header h2 {
     font-size: 24px;
@@ -137,30 +156,33 @@
   }
 }
 
-/* Mobile layout */
+/* Mobile */
 @media (max-width: 600px) {
-  .backorders {
-    padding: 20px 10px;
-  }
-
   .orders-container {
+    height: auto;
     padding: 20px 15px;
+    display: block;
   }
 
   .orders-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+  }
+
+  .orders-header h2 {
+    font-size: 22px;
+    flex: 1;
+    text-align: left;
+    color: #ffffff !important;
   }
 
   .orders-buttons {
-    width: 100%;
-    justify-content: flex-start;
     gap: 10px;
-  }
-
-  .orders-table {
-    border: 0;
+    flex-shrink: 0;
   }
 
   .orders-table thead {
@@ -230,8 +252,81 @@
   }
 }
 
+.logo-print {
+  display: none;
+}
 
+@media print {
+  /* Ocultar el logo en la barra de navegación */
+  .navbar .itemnav img {
+    display: none !important;
+  }
 
+  /* Asegurarse de que el logo en el header de OrdersTable esté visible durante la impresión */
+  .logo-print {
+    display: block !important; /* Mostrar el logo */
+    text-align: center;
+    margin-bottom: 20px; /* Ajustar el espaciado según sea necesario */
+  }
 
+  .logo-print img {
+    width: 150px; /* Ajustar el tamaño del logo para la impresión */
+    height: auto;
+  }
 
+  /* Resto de tu CSS de impresión */
+  body {
+    background: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+  }
+
+  .backorders,
+  .orders-buttons,
+  .orders-pagination,
+  .view-button {
+    display: none !important;
+  }
+
+  .orders-container {
+    height: auto !important;
+    box-shadow: none !important;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .orders-header {
+    background: none;
+    color: black;
+    padding: 0;
+  }
+
+  .orders-header h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+  }
+
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .orders-table thead {
+    display: table-header-group;
+  }
+
+  .orders-table tr {
+    page-break-inside: avoid;
+  }
+}
 
