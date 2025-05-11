@@ -21,15 +21,22 @@ const OrdersTable = () => {
   );
 
   return (
-    <div className="backorders">
+    <>
+      <div className="backorders"></div>
       <div className="orders-container">
-        <div className="orders-header">
-          <h2>ORDERS</h2>
-          <div className="orders-buttons">
-            <button className="icon-button">🖨️</button>
-            <button className="icon-button">⬇️</button>
-          </div>
-        </div>
+<div className="orders-header">
+  <div className="logo-print">
+    <img src="/logo-dark.png" alt="Logo Print" />
+  </div>
+  <h2>ORDERS</h2>
+  <div className="orders-buttons">
+    <button className="icon-button" onClick={() => window.print()}>
+      🖨️
+    </button>
+    <button className="icon-button">⬇️</button>
+  </div>
+</div>
+
 
         <div className="orders-table-wrapper">
           <table className="orders-table">
@@ -52,8 +59,13 @@ const OrdersTable = () => {
                   <td data-label="TOTAL">${order.total}</td>
                   <td data-label="ITEMS">{order.items}</td>
                   <td data-label="">
-       <button className="view-button">VIEW DETAILS →</button>
-      </td>
+                    <button
+                      className="view-button"
+                      onClick={() => window.location.href = `/orders/${order.id}`}
+                    >
+                      VIEW DETAILS →
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -70,10 +82,8 @@ const OrdersTable = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default OrdersTable;
-
-

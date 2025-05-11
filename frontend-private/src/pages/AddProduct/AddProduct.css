@@ -63,6 +63,28 @@
   .ap-input::placeholder {
     color: #aaa;
   }
+
+.ap-btn-back {
+  position: relative; /* ← Mejor que absolute para mantenerlo fijo */
+  top: 20px;
+  left: 20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1000; /* ← Súbelo bastante para que nunca quede detrás */
+  transition: background-color 0.3s ease;
+}
+
+  
+  
+  .ap-btn-back:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
   
   /* Estilo de los botones */
   .ap-btn-upload {
@@ -87,7 +109,7 @@
   }
   
   .ap-btn-save {
-    background-color: #28a745;
+    background-color: #ff0000;
     color: #fff;
     padding: 0.5rem;
     font-size: 0.9rem;  /* Reducir tamaño de fuente en los botones */
@@ -110,14 +132,14 @@
   }
 
   .btnsaveitem{
-    background-color: #ff0000;
+    background-color: #ff0000 !important;
     border-radius: 0%;
   }
 
   .btnsaveitem:hover{
-    background-color: #000000;
-    color: #ff0000;
-    border-color: #ff0000;
+    background-color: #000000 !important;
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
   }
 
   .btnupload-image{
@@ -145,46 +167,57 @@
     }
   }
   
-  /* Media query para pantallas pequeñas */
-  @media (max-width: 768px) {
+
+
+ @media (max-width: 768px) {
     .ap-card {
-      width: 90%; /* El formulario ocupará casi todo el ancho en pantallas pequeñas */
-      max-height: none; /* El máximo de altura no se aplica */
-      margin: 0;         /* Eliminar el margen superior que lo desplazaba hacia abajo */
+      width: 90%;
+      max-height: none;
+      margin: 0;
     }
-
-    .addproduct-title{
-        margin-top: 40px;
-      }
-
+  
+    .addproduct-title {
+      margin-top: 40px;
+    }
+  
     .ap-wrapper {
-        background-color: #ffffff;
+      padding: 10px;
+      height: auto;
     }
-
-    .backaddproduct{
-        background-image: url('addproduct-bg-3.png');
-        background-repeat: repeat-y;
+  
+    .backaddproduct {
+      background-image: url('addproduct-bg-3.png');
+      background-repeat: repeat-y;
+      z-index: 1;
     }
   
     .ap-img-preview {
-      max-height: 150px; /* Reducir el tamaño de la imagen */
+      max-height: 150px;
     }
   
     .ap-btn-upload,
     .ap-btn-clear,
     .ap-btn-save {
-      width: 100%; /* Los botones se hacen más anchos en pantallas pequeñas */
-      padding: 0.5rem;  /* Reducir padding en los botones */
+      width: 100%;
+      padding: 0.5rem;
     }
   
     form .col-6 {
-      flex: 0 0 100%; /* En pantallas pequeñas, los campos se apilan */
+      flex: 0 0 100%;
     }
+
+    .btn-marginpd{
+      margin-bottom: 10px !important;
+    }
+
+    .ap-btn-back{
+      font-size: 12px;
+    }
+  }
   
     /* Hacer que el contenedor no se sobrepase en pantallas pequeñas */
     .ap-wrapper {
       padding: 10px;     /* Reducir padding alrededor para evitar el desbordamiento */
       height: auto;      /* Ajustar el tamaño del contenedor según el contenido */
     }
-  }
   
