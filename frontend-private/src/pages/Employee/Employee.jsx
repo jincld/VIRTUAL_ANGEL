@@ -73,8 +73,8 @@ const Employees = () => {
                 <label className="form-label">Gender:</label>
                 <select className="form-select" value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
                   <option value="">All</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
                 </select>
               </div>
 
@@ -82,9 +82,9 @@ const Employees = () => {
                 <label className="form-label">Role:</label>
                 <select className="form-select" value={roleFilter} onChange={(e) => setRoleFilter(e.target.value)}>
                   <option value="">All</option>
-                  <option value="admin">Admin</option>
-                  <option value="manager">Manager</option>
-                  <option value="employee">Employee</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Employee">Employee</option>
                 </select>
               </div>
             </div>
