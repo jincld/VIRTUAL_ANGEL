@@ -1,6 +1,20 @@
-//importar todo de la librería de express
+// importar librerías
 import express from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
+
+// crear app 🔥 PRIMERO
+const app = express();
+
+// middlewares
+app.use(cors({
+  origin: "http://localhost:5173", // dominio del frontend
+  credentials: true                // importante para cookies
+}));
+app.use(express.json());
+app.use(cookieParser());
+
+// importar rutas
 import categoryRoutes from "./src/routes/category.js";
 import contactRoutes from "./src/routes/contact.js";
 import customerRoutes from "./src/routes/customer.js";
@@ -12,15 +26,7 @@ import registerEmployeesRoutes from "./src/routes/registerEmployee.js";
 import loginRoute from "./src/routes/login.js";
 import logoutRoute from "./src/routes/logout.js";
 
-//crear constante que es igual a la libreria que importé y se ejecuta
-const app = express();
-
-//que acepte archivos json
-app.use (express.json());
-//que acepte cookies
-app.use(cookieParser());
-
-//rutas para crud
+// rutas
 app.use("/api/category", categoryRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/customer", customerRoutes);
@@ -30,6 +36,7 @@ app.use("/api/order", orderRoutes);
 app.use("/api/assessment", assessmentRoutes);
 app.use("/api/registerEmployees", registerEmployeesRoutes);
 app.use("/api/login", loginRoute);
-app.use("/api/logout", logoutRoute)
-//importo esta constante para usar express en todos lados
+app.use("/api/logout", logoutRoute);
+
+// exportar la app para usarla en index.js
 export default app;
