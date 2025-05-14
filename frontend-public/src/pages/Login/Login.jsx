@@ -47,6 +47,7 @@ const Login = () => {
   return (
     <>
       <div className="backlogin"></div>
+      <div className="container">
       <div className="container d-flex align-items-center justify-content-center min-vh-100 position-relative" style={{ zIndex: 1 }}>
         <div className="w-100" style={{ maxWidth: '400px' }}>
           <div className="text-center mb-4" data-aos="fade-in">
@@ -90,6 +91,7 @@ const Login = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </>
   );
