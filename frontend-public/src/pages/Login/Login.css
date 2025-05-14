@@ -5,7 +5,7 @@
     width: 100vw;
     height: 100vh;
     position: fixed; /* <- Cambiado a fixed */
-    top: 120px;
+    top: 0px;
     left: 0;
     z-index: 0; /* Asegura que quede detrás */
   }
@@ -13,6 +13,18 @@
   .loginlogo{
     max-width: 300px;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+  
 
   .btnlogin{
     width: 170px;
@@ -109,3 +121,9 @@
     background-image: url('/login-bg-xs.png');
   }
 }
+
+
+
+
+
+

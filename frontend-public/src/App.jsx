@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Nav from './components/Nav/nav'; 
 import Home from './pages/home.jsx';
 import Footer from './components/Footer/Footer.jsx'; 
@@ -27,12 +28,31 @@ import VerifyCode from './pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from './pages/NewPassword/NewPassword.jsx';
 import CreateAccount from './pages/CreateAccount/CreateAccount.jsx';
 
+
+// Componente contenedor que decide si mostrar Nav/Footer
+function LayoutWrapper({ children }) {
+  const location = useLocation();
+  
+  // Rutas donde NO se deben mostrar Nav y Footer
+  const hideLayoutRoutes = ['/', '/forgotpassword', '/verifycode', '/newpassword', '/createaccount'];
+
+  const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
+
+  return (
+    <>
+      <ScrollToTop />
+      {!shouldHideLayout && <Nav />}
+      {children}
+      {!shouldHideLayout && <Footer />}
+    </>
+  );
+}
+
 function App() {
   return (
     <>
       <Router>
-        <ScrollToTop />
-        <Nav />
+      <LayoutWrapper>
         <Routes>
           <Route path="home" element={<Home />} />
           <Route path="about" element={<About />} />
@@ -62,7 +82,7 @@ function App() {
           <Route path="newcollection" element={<NewCollection />} />
           <Route path="newcollection/:collectionName" element={<NewCollection />} />
         </Routes>
-        <Footer />
+        </LayoutWrapper>
       </Router>
     </>
   );
