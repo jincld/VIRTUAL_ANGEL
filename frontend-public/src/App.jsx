@@ -21,7 +21,7 @@ import Lookbook from './pages/Lookbook/Lookbook.jsx';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
 import NewCollection from './pages/NewCollection/NewCollection.jsx';
-import Login from './pages/Login/Login.jsx';
+import Login from '../../frontend-public/src/pages/Login/Login.jsx';
 import ForgotPass from './pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from './pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from './pages/NewPassword/NewPassword.jsx';
