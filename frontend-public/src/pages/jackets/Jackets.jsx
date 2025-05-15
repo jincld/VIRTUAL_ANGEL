@@ -63,7 +63,7 @@ const Jacket = () => {
 
       {/* Contenedor del contenido encima del fondo */}
       <div className="container content-zone py-5">
-        <div className="title-wrapper">
+        <div className="title-wrapper margin-top-global">
           <h1 className="jacketstitle">JACKETS</h1>
         </div>
 

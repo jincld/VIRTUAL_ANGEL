@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FirstUse.css';
 
 const FirstUse = () => {
   return (
-    <div className="backfirstuse text-white">
+    <div className="backfirstuse text-white margin-top-global">
       <div className="container py-5">
         <h2 className="fw-bold mb-3 welcome-title">WELCOME</h2>
         <hr className="border-light mb-4" />
@@ -33,9 +34,9 @@ const FirstUse = () => {
                 up-to-date and ensure a smooth shopping experience for our
                 customers.
               </p>
-              <div className="button-wrapper">
-            <a href="/inicio" className="btn btn-danger mt-3 btn-startfirstuse">LET'S START →</a>
-          </div>
+<div className="button-wrapper">
+  <Link to="/inicio" className="btn btn-danger mt-3 btn-startfirstuse">LET'S START →</Link>
+</div>
             </div>
           </div>
         </div>

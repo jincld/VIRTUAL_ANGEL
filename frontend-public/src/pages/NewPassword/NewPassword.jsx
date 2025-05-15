@@ -78,7 +78,7 @@ const NewPassword = () => {
       </div>
 
       {/* Imagen */}
-      <div className="imgnewpassword" data-aos="fade-in">
+      <div className="imgnewpassword">
         <img 
           srcSet="/newpassword-bg.png 1024w, /newpassword-sm.png 480w" 
           sizes="(max-width: 975px) 480px, 1024px" 

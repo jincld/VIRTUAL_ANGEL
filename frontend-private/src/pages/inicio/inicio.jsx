@@ -25,7 +25,7 @@ const pieData = [
 const COLORS = ['#750000', '#C10000', '#888888', '#1E1E1E'];
 
 const Dashboard = () => (
-  <div className="backinicio text-white">
+  <div className="backinicio text-white margin-top-global">
     <div className="dashboard">
     <h2 className="fw-bold mb-3 welcome-title-inicio h2-inicio">WELCOME</h2>
 

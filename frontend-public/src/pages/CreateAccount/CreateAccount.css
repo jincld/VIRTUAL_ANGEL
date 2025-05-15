@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    min-height: 800px;
+    min-height: 100vh;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -20,7 +20,8 @@
     background-position: center;
     background-color: #21c94b;
     width: 100%;
-    min-height: 800px;
+    min-height: 100vh;
+    margin-top: 0%;
   }
 
   .createaccount-card__image_two {

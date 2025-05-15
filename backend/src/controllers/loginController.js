@@ -30,7 +30,7 @@ loginController.login = async (req, res) => {
         }
 
         if (!userFound) {
-            console.log("❌ Usuario no encontrado");
+            console.log("User not found");
             return res.json({ message: "User not found" });
         }
 
@@ -38,7 +38,7 @@ loginController.login = async (req, res) => {
             const isMatch = await bcrypt.compare(password, userFound.password);
             if (!isMatch) {
                 console.log("❌ Contraseña incorrecta");
-                return res.json({ message: "Contraseña incorrecta" });
+                return res.json({ message: "Wrong credentials" });
             }
         }
 
@@ -49,7 +49,7 @@ loginController.login = async (req, res) => {
             (error, token) => {
                 if (error) {
                     console.log("❌ Error generando token:", error);
-                    return res.json({ message: "Error al generar token" });
+                    return res.json({ message: "Error creating token" });
                 }
 
                 console.log("✅ Login exitoso:", userType);
@@ -58,12 +58,16 @@ loginController.login = async (req, res) => {
                     sameSite: "Lax",
                     // secure: true  // sólo si usas HTTPS
                 });
-                res.json({ message: "Login successful" });
+res.json({
+  message: "Login successful",
+  userType: userType // puede ser: admin, employee, client
+});
+
             }
         );
     } catch (error) {
         console.log("❌ Error general:", error);
-        res.json({ message: "Error interno" });
+        res.json({ message: "Backend error" });
     }
 };
 

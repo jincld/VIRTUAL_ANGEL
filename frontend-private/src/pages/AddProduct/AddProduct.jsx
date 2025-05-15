@@ -64,12 +64,12 @@ const AddProduct = () => {
   return (
     <>
     <div className="backaddproduct"></div>
-                        <div className="btn-marginpd">
+                        <div className="btn-marginpd margin-top-global">
             <a href="/products" className="ap-btn-back"> ← BACK </a>
           </div>
     <div className="ap-wrapper">
     <h2 className="text-center text-black mb-4 addproduct-title">ADD NEW PRODUCT</h2>
-      <div className="ap-card container rounded p-4 shadow">
+      <div className="ap-card  rounded p-4 shadow">
         <div className="row g-4">
           {/* Columna 1 */}
           <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
