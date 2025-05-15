@@ -77,13 +77,13 @@ const EditEmployee = () => {
   return (
     <>
       <div className="backaddemployee"></div>
-                                    <div className="btn-marginpd">
+                                    <div className="btn-marginpd margin-top-global">
             <a href="/employee" className="ap-btn-back"> ← BACK </a>
           </div>
       <div className="ap-wrapper">
         <button className="ep-btn-back" onClick={() => navigate(-1)}>← Back</button>
         <h2 className="text-center text-black mb-4 addemployee-title">EDIT EMPLOYEE</h2>
-        <div className="ap-card container rounded p-4 shadow">
+        <div className="ap-card rounded p-4 shadow">
           <div className="row g-4">
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">

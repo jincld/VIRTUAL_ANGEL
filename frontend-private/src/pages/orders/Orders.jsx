@@ -5,7 +5,7 @@ import './Orders.css';
 const Orders = () => {
   console.log('Rendering Orders Component');
   return (
-    <div className="orders-page">
+    <div className="orders-page ">
       <OrdersTable />
     </div>
   );

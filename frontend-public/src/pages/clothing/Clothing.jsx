@@ -20,10 +20,11 @@ const Clothing = () => {
         <div className="backclothing"></div>
 
         <div className="content-wrapper2">
-          <h2 className="clothingtitle">CLOTHING</h2>
+
 
           <div className="container">
             <div className="row justify-content-center g-3">
+                        <h2 className="clothingtitle margin-top-global">CLOTHING</h2>
             <div className="col-6 col-md-4 d-flex justify-content-center">
   <HoverImage
     src1="/shirts1.png"

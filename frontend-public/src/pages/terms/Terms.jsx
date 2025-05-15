@@ -17,7 +17,7 @@ const Terms = () => {
   return (
     <>
       <div className="container-fluid backterms">
-        <div className="row w-100 justify-content-center">
+        <div className="row w-100 justify-content-center margin-top-global">
           <div className="col-10 col-md-6 colbgterms">
             {/* Título animado */}
             <img 

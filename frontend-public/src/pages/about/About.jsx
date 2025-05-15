@@ -10,8 +10,8 @@ const About = () => {
 
   return (
     <>
-      <div className="container-fluid text-center">
-        <div className="row">
+      <div className="container-fluid text-center ">
+        <div className="row margin-top-global">
           <div className="col-12 col-md-6 info1" data-aos="fade" data-aos-duration="1000" data-aos-delay="100">
             <img src="/about1.png" className="d-block w-100" alt="..." />
           </div>

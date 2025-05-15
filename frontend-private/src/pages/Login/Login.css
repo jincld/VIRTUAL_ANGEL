@@ -80,15 +80,10 @@
     color: #ffffff;
   }
 
-  body{
+  /*body{
     padding-top: 120px;
-  }
+  }*/
 
-
-  html, body {
-      overflow-x: hidden;
-  }
-  
   
   @media (max-width: 460px) {
     .loginlogo {
