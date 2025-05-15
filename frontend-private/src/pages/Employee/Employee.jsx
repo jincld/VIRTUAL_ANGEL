@@ -44,7 +44,7 @@ const Employees = () => {
       <div className="backemployees"></div>
       <div className="container content-zone py-5">
         <div className="title-wrapper text-center">
-          <h1 className="employeestitle">
+          <h1 className="employeestitle margin-top-global">
             {roleFilter ? roleFilter.toUpperCase() : 'ALL EMPLOYEES'}
           </h1>
         </div>

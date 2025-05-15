@@ -3,40 +3,58 @@ import './Login.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../../../AuthToken.jsx'; // ✅ Importamos el AuthContext
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ Obtenemos la función login del AuthContext
+  const [showPassword, setShowPassword] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
   }, []);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
       const response = await fetch('http://localhost:3001/api/login', {
         method: 'POST',
-        credentials: 'include', // Para que se guarden cookies
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       });
 
-      const data = await response.json();
+      const resData = await response.json();
 
-      if (data.message === "Login successful") {
-        navigate('/home'); // Redirige al home después del login
+      if (resData.message === "Login successful") {
+        const { userType } = resData;
+
+        // ✅ Guardamos userType en AuthContext (localStorage incluido)
+        login(userType);
+
+        // ✅ Redirigir según tipo de usuario
+if (userType === 'admin' || userType === 'employee') {
+  navigate('/firstuse'); // ✅ usar navigate en lugar de window.location.href
+} else if (userType === 'client') {
+  navigate('/home');
+} else {
+  setMessage("Unknown user type");
+}
+
+
       } else {
-        setMessage(data.message);
+        setMessage(resData.message || "Invalid credentials");
       }
     } catch (error) {
       console.error("Error en login:", error);
@@ -47,17 +65,28 @@ const Login = () => {
   return (
     <>
       <div className="backlogin"></div>
-      <div className="container">
       <div className="container d-flex align-items-center justify-content-center min-vh-100 position-relative" style={{ zIndex: 1 }}>
         <div className="w-100" style={{ maxWidth: '400px' }}>
           <div className="text-center mb-4" data-aos="fade-in">
             <img src="/virtualangelogo.png" alt="Logo" className="img-fluid loginlogo" />
           </div>
 
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
-              <label htmlFor="username" className="form-label text-start d-block label-login">USERNAME</label>
-              <input type="text" className="form-control formlogin" id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <label htmlFor="email" className="form-label text-start d-block label-login">USERNAME</label>
+              <input
+                type="text"
+                id="email"
+                className="form-control formlogin"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+\.\S+$/,
+                    message: "Invalid email format"
+                  }
+                })}
+              />
+              {errors.email && <small className="text-danger">{errors.email.message}</small>}
             </div>
 
             <div className="mb-2">
@@ -65,15 +94,15 @@ const Login = () => {
               <div className="password-input-container">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="form-control formlogin"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-control formlogin"
+                  {...register("password", { required: "Password is required" })}
                 />
                 <button type="button" className="show-loginpassword" onClick={togglePasswordVisibility}>
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
               </div>
+              {errors.password && <small className="text-danger">{errors.password.message}</small>}
             </div>
 
             {message && <div className="mb-3 text-danger">{message}</div>}
@@ -91,7 +120,6 @@ const Login = () => {
             </div>
           </form>
         </div>
-      </div>
       </div>
     </>
   );

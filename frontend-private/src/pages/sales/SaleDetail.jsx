@@ -17,7 +17,7 @@ const handleBack = () => {
 
   return (
     <>
-    <button className="back-button-sd" onClick={handleBack}>← BACK</button>
+    <button className="back-button-sd margin-top-global" onClick={handleBack}>← BACK</button>
 
           <div className="back-saledetail"></div>
           <div className="heightfix-sale">

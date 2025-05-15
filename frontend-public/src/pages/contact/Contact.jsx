@@ -19,7 +19,9 @@ const Contact = () => {
       <div className="container-fluid">
         <div className="back" data-aos="fade-in"></div>
         <div className="back2"></div>
-        <div className="content-wrapper">
+      </div>
+
+              <div className="content-wrapper">
           <div className="colbg">
             <h1 className='contacttittle'>CONTACT US</h1>
             <br></br>
@@ -37,7 +39,6 @@ const Contact = () => {
             <button type="button" className="custom-send-btn">SEND</button>
           </div>
         </div>
-      </div>
     </>
   );
 };

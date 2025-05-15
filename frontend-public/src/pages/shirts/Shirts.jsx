@@ -61,7 +61,7 @@ const Shirts = () => {
       <div className="container content-zone py-5">
 
         <div className="title-wrapper">
-          <h1 className="shirtstitle">SHIRTS</h1>
+          <h1 className="shirtstitle margin-top-global">SHIRTS</h1>
         </div>
 
         {/* Barra de búsqueda */}

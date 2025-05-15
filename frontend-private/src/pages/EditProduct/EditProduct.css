@@ -30,7 +30,7 @@
 .ap-card {
     background-color: #000;
     width: 80%;               /* El formulario ocupará el 80% del ancho de la pantalla */
-    max-width: 800px;         /* Reducción en el ancho máximo */
+    max-width: 800px !important;         /* Reducción en el ancho máximo */
     min-height: 400px;        /* Establecer un valor mínimo de altura */
     height: auto;             /* La altura de la tarjeta se ajusta al contenido */
     padding: 1rem;

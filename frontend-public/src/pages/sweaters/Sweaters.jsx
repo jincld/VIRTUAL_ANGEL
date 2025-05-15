@@ -64,7 +64,7 @@ const Sweaters = () => {
       {/* Contenedor del contenido encima del fondo */}
       <div className="container content-zone py-5">
         <div className="title-wrapper">
-          <h1 className="sweaterstitle">SWEATERS</h1>
+          <h1 className="sweaterstitle margin-top-global">SWEATERS</h1>
         </div>
 
         {/* Barra de búsqueda */}

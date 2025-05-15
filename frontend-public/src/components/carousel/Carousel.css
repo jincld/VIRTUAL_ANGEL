@@ -1,5 +1,5 @@
 .carouselo {
-    margin-top: calc(var(--navbar-height, 0px));
+    padding-top: 120px;
   }
   
   
