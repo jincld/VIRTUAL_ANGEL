@@ -17,7 +17,7 @@ const Lookbook = () => {
     <div className="lookbook-container">
       {/* Card de Información */}
       <div className="lookbook-info-card">
-        <h1 className='lookbook-title'>LOOKBOOK</h1>
+        <h1 className='lookbook-title margin-top-global'>LOOKBOOK</h1>
         <p>The Lookbook showcases a wide variety of alternative fashion looks, designed to inspire and help you express your unique style. Featuring a range of bold and creative outfits from VIRTUAL ANGEL catalog, this collection of looks highlights the latest trends in alternative fashion. From edgy streetwear to experimental vibes, and everything in between, our curated styles cater to all tastes. Whether you're looking to reinvent your wardrobe or simply want to get inspired, our Lookbook offers endless possibilities to help you find the perfect look that speaks to your individuality and personal style.</p>
       </div>
 

@@ -6,7 +6,7 @@ const Sales = () => {
   console.log('Rendering Sales Component'); 
   return (
     <>
-    <div className="sales-page"> 
+    <div className="sales-page margin-top-global"> 
       <SalesTable /> 
     </div>
     </>

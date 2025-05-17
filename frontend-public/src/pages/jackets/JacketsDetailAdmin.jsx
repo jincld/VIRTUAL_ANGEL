@@ -19,7 +19,7 @@ function JacketsDetail() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid margin-top-global">
       <div className="jackets-card">
         <div className="jackets-card__content">
           {/* Botón que redirige a la última página visitada */}

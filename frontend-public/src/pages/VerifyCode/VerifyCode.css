@@ -3,6 +3,8 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    min-width: 100vw !important;
+    min-height: 100vh !important;
 }
 
 .formverifycode {
@@ -13,20 +15,18 @@
     flex-direction: column; /* Formulario en columna */
     justify-content: center;
     align-items: center;
-    min-width: 300px;
 }
 
 .imgverifycode {
     flex: 1;
     display: flex;
+    background-size: contain;
     align-items: center;
     justify-content: center;
 }
 
 .imgverifycode img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    min-height: 100vh;
 }
 
 .verify-title {
@@ -101,7 +101,7 @@
 }
 
 /* Responsive */
-@media (max-width: 1025px) {
+@media (max-width: 1385px) {
     /* Para pantallas pequeñas, cambia la imagen */
     .imgverifycode img {
       content: url('/verifycode-sm.png'); /* Cambia esta URL por la ruta de la imagen más pequeña */
@@ -121,8 +121,14 @@
       order: 2; /* La imagen debe estar después del formulario */
     }
 
+    .imgverifycode img {
+     min-height: 10px;
+     width: 100%;
+  }
+
     .verify-title {
       font-size: 2.5rem;  /* Cambia el tamaño de la fuente */
+      margin-top: 120px;
     }
 
     .btn-verify {

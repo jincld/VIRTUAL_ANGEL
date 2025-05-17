@@ -1,6 +1,6 @@
 /* Fondo principal */
 .back {
-    background-image: url('/contactbg.png');
+    background-image: url('/contactbg2.png');
     background-position: top center;
     background-size: 100% auto;
     background-repeat: no-repeat;
@@ -9,7 +9,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 3;
+    z-index: 1;
     margin-top: 120px;
 }
 
@@ -25,7 +25,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 0;
     margin-top: 120px;
 }
 
@@ -54,6 +54,7 @@
     font-size: 1.5rem;
     padding: 20px;
     z-index: 4;
+    margin-top: 250px;
 }
 
 .contacttittle{

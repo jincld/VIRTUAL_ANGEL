@@ -8,7 +8,7 @@ import "../Cart/Checkout.css";
   };
 
   return (
-    <div className="position-relative min-vh-100 bg-black">
+    <div className="position-relative min-vh-100 bg-black margin-top-global">
 
       {/* Fondo oscuro fijo */}
       <div className="backcartsCheckout"></div>

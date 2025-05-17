@@ -18,7 +18,7 @@ function PantsDetail() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid margin-top-global">
       <div className="pants-card">
         <div className="pants-card__content">
           {/* Botón que redirige a la última página visitada */}

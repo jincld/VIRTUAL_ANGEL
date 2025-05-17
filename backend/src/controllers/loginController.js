@@ -1,70 +1,84 @@
-//Importar tablas de users
-import clientModel from "../models/customers.js";
+import clientModel from "../models/clients.js";
 import employeeModel from "../models/employee.js";
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
-import {config} from "../config.js";
+import { config } from "../config.js";
 
 const loginController = {};
 
 loginController.login = async (req, res) => {
     const { email, password } = req.body;
-    console.log("🔐 Intento de login:", email, password); // 👈
+    console.log("🔐 Intento de login:", email);
 
     try {
-        let userFound;
-        let userType;
-
+        // Verificar si es admin
         if (email === config.emailAdmin.email && password === config.emailAdmin.password) {
-            userType = "admin";
-            userFound = { _id: "admin" };
             console.log("➡️ Usuario admin");
-        } else {
-            userFound = await employeeModel.findOne({ email });
-            userType = "employee";
+            const token = jsonwebtoken.sign(
+                { id: "admin", userType: "admin" },
+                config.JWT.secret,
+                { expiresIn: config.JWT.expiresIn }
+            );
 
-            if (!userFound) {
-                userFound = await clientModel.findOne({ email });
-                userType = "client";
-            }
+            res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+            return res.json({ message: "Login successful", userType: "admin" });
+        }
+
+        // Buscar simultáneamente en employee y client
+        const [employeeFound, clientFound] = await Promise.all([
+            employeeModel.findOne({ email }),
+            clientModel.findOne({ email })
+        ]);
+
+        // Detección de conflicto
+        if (employeeFound && clientFound) {
+            console.log("⚠️ Conflicto: email duplicado en ambos modelos");
+            return res.status(409).json({
+                message: "Email exists as both employee and client. Contact support."
+            });
+        }
+
+        let userFound = null;
+        let userType = null;
+
+        if (employeeFound) {
+            console.log("🔍 Encontrado como EMPLOYEE");
+            userFound = employeeFound;
+            userType = userFound.rol || "employee";
+        } else if (clientFound) {
+            console.log("🔍 Encontrado como CLIENT");
+            userFound = clientFound;
+            userType = userFound.rol || "client";
         }
 
         if (!userFound) {
             console.log("❌ Usuario no encontrado");
-            return res.json({ message: "User not found" });
+            return res.status(404).json({ message: "User not found" });
         }
 
-        if (userType !== "admin") {
-            const isMatch = await bcrypt.compare(password, userFound.password);
-            if (!isMatch) {
-                console.log("❌ Contraseña incorrecta");
-                return res.json({ message: "Contraseña incorrecta" });
-            }
+        // Validar contraseña
+        const isMatch = await bcrypt.compare(password, userFound.password);
+        if (!isMatch) {
+            console.log("❌ Contraseña incorrecta");
+            return res.status(401).json({ message: "Wrong credentials" });
         }
 
-        jsonwebtoken.sign(
-            { id: userFound._id },
+        // Generar token
+        const token = jsonwebtoken.sign(
+            { id: userFound._id, userType },
             config.JWT.secret,
-            { expiresIn: config.JWT.expiresIn },
-            (error, token) => {
-                if (error) {
-                    console.log("❌ Error generando token:", error);
-                    return res.json({ message: "Error al generar token" });
-                }
-
-                console.log("✅ Login exitoso:", userType);
-                res.cookie("authToken", token, {
-                    httpOnly: true,
-                    sameSite: "Lax",
-                    // secure: true  // sólo si usas HTTPS
-                });
-                res.json({ message: "Login successful" });
-            }
+            { expiresIn: config.JWT.expiresIn }
         );
+
+        res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+        console.log("✅ Login exitoso:", userType);
+
+        res.json({ message: "Login successful", userType });
+
     } catch (error) {
         console.log("❌ Error general:", error);
-        res.json({ message: "Error interno" });
+        res.status(500).json({ message: "Backend error" });
     }
 };
 
- export default loginController;
+export default loginController;

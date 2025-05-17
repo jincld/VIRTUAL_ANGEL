@@ -64,7 +64,7 @@ function CartPage() {
       {/* Contenido encima */}
       <div className="container py-5 content-zone">
         {/* Título principal del carrito */}
-        <h1 className="text-start mb-5 fw-bold fs-1">CART</h1>
+        <h1 className="text-start mb-5 fw-bold fs-1 margin-top-global">CART</h1>
 
         {/* Productos */}
         <div className="row g-4">

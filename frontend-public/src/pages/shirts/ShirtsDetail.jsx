@@ -42,7 +42,7 @@ const [reviewForm, setReviewForm] = useState({
 
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid margin-top-global">
       <div className="shirts-card">
         <div className="shirts-card__content">
           {/* Cambiar Link por un botón que use navigate */}

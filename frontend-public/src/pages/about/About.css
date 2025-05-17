@@ -15,8 +15,12 @@
     justify-content: center; /* Centra horizontalmente */
 }
 
-body {
-    padding-top: 120px; /* Ajusta según la altura del navbar */
+/*body {
+    padding-top: 120px;
+}*/
+
+.margin-top-global{
+    padding-top: 120px !important;
 }
 
 .text1{

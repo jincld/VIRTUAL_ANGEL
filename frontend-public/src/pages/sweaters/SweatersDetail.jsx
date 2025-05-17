@@ -36,7 +36,7 @@ function SweatersDetail() {
       };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid margin-top-global">
       <div className="sweaters-card">
         <div className="sweaters-card__content">
           {/* Botón para regresar a la última página visitada */}

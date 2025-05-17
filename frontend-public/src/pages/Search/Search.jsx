@@ -82,7 +82,7 @@ const SearchPage = () => {
   return (
     <>
       <div className="backsearch"></div>
-      <div className="container content-zone py-5">
+      <div className="container content-zone py-5 margin-top-global">
       <div className="search-container">
         <h1 className="search-title">SEARCH PRODUCTS</h1>
 
@@ -192,7 +192,7 @@ const SearchPage = () => {
                     imagen={item.imagen}
                     titulo={item.titulo}
                     precio={item.precio}
-                    category={item.category}
+                    categoria={item.categoria}
                   />
                 </div>
               ))}

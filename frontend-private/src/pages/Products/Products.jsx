@@ -70,7 +70,7 @@ const Products = () => {
     <>
       <div className="backproducts"></div>
       <div className="container content-zone py-5">
-        <div className="title-wrapper text-center">
+        <div className="title-wrapper text-center margin-top-global">
           <h1 className="shirtstitle">
             {categoryFilter ? categoryFilter.toUpperCase() : 'ALL PRODUCTS'}
           </h1>
