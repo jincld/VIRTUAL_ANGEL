@@ -14,6 +14,33 @@
     max-width: 300px;
   }
 
+  @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.alert-custom-error {
+  background-color: #000;    /* Fondo negro */
+  color: #ff0000;            /* Texto rojo */
+  border: 1px solid #ff0000; /* Borde rojo */
+  font-weight: normal;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards; /* Aplica la animación */
+  border-radius: 0px;
+  padding: 12px;
+}
+
+.text-login-format-error{
+  color: #ffffff;        
+}
+
+
   .container {
     display: flex;
     flex-direction: column;
@@ -38,6 +65,7 @@
     padding: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 18px;
+    transition: background-color 0.5s ease; 
   }
 
   .btnlogin:hover{
@@ -48,6 +76,7 @@
 
   .forgotstyle{
     color: #ff0000;
+    transition: color 0.5s ease; 
   }
 
   .forgotstyle:hover{
@@ -57,6 +86,7 @@
   .accountstyle{
     color: #ffffff;
     font-weight: light;
+    transition: color 0.5s ease; 
   }
 
   .accountstyle:hover{
@@ -79,18 +109,19 @@
   .show-loginpassword {
     background-color: #ff0000; /* Fondo rojo */
     color: #ffffff; /* Texto blanco */
-    border: none; /* Sin borde */
+    border: 1px solid #000000;
     font-size: 12px;
     padding: 8px 16px;
     cursor: pointer;
-    border-radius: 5px; /* Redondear bordes */
+    border-radius: 0px; /* Redondear bordes */
     transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
     margin-top: 20px;
   }
   
   .show-loginpassword:hover {
-    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
-    color: #ffffff;
+    background-color: #00000000; /* Fondo rojo oscuro al pasar el mouse */
+    color: #ff0000;
+    border: 1px solid #ff0000;
   }
   
 

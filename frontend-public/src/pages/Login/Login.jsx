@@ -4,11 +4,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../../AuthToken.jsx'; // ✅ Importamos el AuthContext
+import { useAuth } from '../../../AuthToken.jsx';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ Obtenemos la función login del AuthContext
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -39,26 +39,41 @@ const Login = () => {
 
       if (resData.message === "Login successful") {
         const { userType } = resData;
-
-        // ✅ Guardamos userType en AuthContext (localStorage incluido)
         login(userType);
 
-        // ✅ Redirigir según tipo de usuario
-if (userType === 'admin' || userType === 'employee') {
-  navigate('/firstuse'); // ✅ usar navigate en lugar de window.location.href
-} else if (userType === 'client') {
-  navigate('/home');
-} else {
-  setMessage("Unknown user type");
-}
+        const currentPort = window.location.port;
+        let wrongAppMessage = '';
 
+        if ((userType === 'admin' || userType === 'employee') && currentPort !== "5174") {
+          wrongAppMessage = "You are in the wrong application. Please access the employee portal at http://localhost:5174";
+        } else if (userType === 'client' && currentPort !== "5173") {
+          wrongAppMessage = "You are in the wrong application. Please access the client portal at http://localhost:5173";
+        }
+
+        if (wrongAppMessage) {
+          setMessage(wrongAppMessage);
+
+          // Auto cerrar el mensaje después de 5 segundos
+          setTimeout(() => {
+            setMessage('');
+          }, 5000);
+
+        } else {
+          if (userType === 'admin' || userType === 'employee') {
+            navigate('/firstuse');
+          } else if (userType === 'client') {
+            navigate('/home');
+          } else {
+            setMessage("Unknown user type");
+          }
+        }
 
       } else {
         setMessage(resData.message || "Invalid credentials");
       }
     } catch (error) {
       console.error("Error en login:", error);
-      setMessage("Ocurrió un error al intentar iniciar sesión.");
+      setMessage("An error occurred while trying to login.");
     }
   };
 
@@ -86,7 +101,7 @@ if (userType === 'admin' || userType === 'employee') {
                   }
                 })}
               />
-              {errors.email && <small className="text-danger">{errors.email.message}</small>}
+              {errors.email && <small className="text-login-format-error">{errors.email.message}</small>}
             </div>
 
             <div className="mb-2">
@@ -98,14 +113,18 @@ if (userType === 'admin' || userType === 'employee') {
                   className="form-control formlogin"
                   {...register("password", { required: "Password is required" })}
                 />
-                <button type="button" className="show-loginpassword" onClick={togglePasswordVisibility}>
+                                      <button type="button" className="show-loginpassword" onClick={togglePasswordVisibility}>
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
               </div>
-              {errors.password && <small className="text-danger">{errors.password.message}</small>}
+              {errors.password && <small className="text-login-format-error">{errors.password.message}</small>}
             </div>
 
-            {message && <div className="mb-3 text-danger">{message}</div>}
+            {message && (
+  <div className="alert alert-custom-error mt-3" role="alert">
+                {message}
+              </div>
+            )}
 
             <div className="mb-3 text-start">
               <a href="/forgotpassword" className="text-decoration-underline small forgotstyle">FORGOT PASSWORD?</a>
