@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 import Home from './pages/home.jsx';
 import Contact from './pages/contact/Contact.jsx';
-import Login from '../../frontend-public/src/pages/Login/Login.jsx';
+import Login from './pages/Login/Login.jsx';
 import ForgotPass from '../../frontend-public/src/pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from '../../frontend-public/src/pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from '../../frontend-public/src/pages/NewPassword/NewPassword.jsx';
