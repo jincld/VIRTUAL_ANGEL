@@ -114,6 +114,7 @@
     color: #ff0000;
     text-decoration: underline;
     font-size: 14px;
+    transition: color 0.5s ease; 
   }
 
   .createaccount-login:hover{
@@ -131,13 +132,13 @@
     font-size: 12px;
     padding: 8px 16px;
     cursor: pointer;
-    border-radius: 5px; /* Redondear bordes */
+    border-radius: 0px; /* Redondear bordes */
     transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
     margin-top: 20px;
   }
   
   .show-newpassword-create:hover {
-    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+    background-color: #000000; /* Fondo rojo oscuro al pasar el mouse */
     color: #ffffff;
   }
 
