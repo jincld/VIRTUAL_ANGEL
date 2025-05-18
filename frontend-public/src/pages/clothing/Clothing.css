@@ -2,7 +2,7 @@
     background-image: url('/clothingbg.png');
     background-size: cover; 
     background-position: center;
-    background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
+    background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño ok */
     width: 100vw;
     min-height: 100vh;
     background-color: #000000;
