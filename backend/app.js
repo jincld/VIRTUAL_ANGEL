@@ -35,6 +35,7 @@ import registerEmployeesRoutes from "./src/routes/registerEmployee.js";
 import registerClientsRoutes from "./src/routes/registerClients.js";
 import loginRoute from "./src/routes/login.js";
 import logoutRoute from "./src/routes/logout.js";
+import passwordRecoveryRoutes from "./src/routes/passwordRecovery.js";
 
 // rutas
 app.use("/api/category", categoryRoutes);
@@ -48,6 +49,7 @@ app.use("/api/registerEmployees", registerEmployeesRoutes);
 app.use("/api/registerClients", registerClientsRoutes);
 app.use("/api/login", loginRoute);
 app.use("/api/logout", logoutRoute);
+app.use("/api/passwordRecovery", passwordRecoveryRoutes);
 
 // exportar la app para usarla en index.js
 export default app;
