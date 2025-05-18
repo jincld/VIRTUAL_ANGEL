@@ -1,23 +1,23 @@
 const customersController = {};
-import customersModel from "../models/customers.js";
+import clientsModel from "../models/clients.js";
 
 // SELECT
 customersController.getCustomers = async (req, res) => {
-  const Customers = await customersModel.find();
+  const Customers = await clientsModel.find();
   res.json(Customers);
 };
 
 // INSERT
 customersController.createCustomers = async (req, res) => {
   const { name, password, age, gender, cardNumber, address, phone, email } = req.body;
-  const newCustomers = new customersModel({ name, password, age, gender, cardNumber, address, phone, email });
+  const newCustomers = new clientsModel({ name, password, age, gender, cardNumber, address, phone, email });
   await newCustomers.save();
   res.json({ message: "Customer saved" });
 };
 
 // DELETE
 customersController.deleteCustomers = async (req, res) => {
-  const deletedcustomers = await customersModel.findByIdAndDelete(req.params.id);
+  const deletedcustomers = await clientsModel.findByIdAndDelete(req.params.id);
   if (!deletedcustomers) {
     return res.status(404).json({ message: "Customers not found" });
   }
@@ -29,7 +29,7 @@ customersController.updateCustomers = async (req, res) => {
   // Solicito todos los valores
   const { name, password, age, gender, cardNumber, address, phone, email } = req.body;
   // Actualizo
-  await customersModel.findByIdAndUpdate(
+  await clientsModel.findByIdAndUpdate(
     req.params.id,
     {
       name,

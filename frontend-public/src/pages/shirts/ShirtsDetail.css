@@ -132,6 +132,99 @@
   margin-top: 10px;
 }
 
+/*Style for making reviews*/
+.review-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.05); /* más claro para combinar con blur */
+  backdrop-filter: invert(1) grayscale(1) blur(8px); /* invertido, blanco y negro y con blur */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+.fade-in-c {
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+
+.review-popup-content {
+  background: #000;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  animation: fadeInPopup 0.4s ease-out;
+}
+
+.review-popup-content h3 {
+  color: #fff; /* Título blanco */
+  margin-bottom: 0.5rem;
+}
+
+.review-popup-content input,
+.review-popup-content textarea,
+.review-popup-content select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #222; /* Fondo más oscuro */
+  color: #fff;             /* Texto blanco */
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+.review-popup-content input::placeholder,
+.review-popup-content textarea::placeholder {
+  color: #aaa; /* Placeholder más claro */
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.popup-buttons .btn {
+  background-color: #e60000;
+  color: #fff !important;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 48%;
+  text-align: center;
+}
+
+.popup-buttons .btn:hover {
+  background-color: #cc0000;
+}
+
+.btn-review-popup{
+  background-color: #e60000;
+  font-weight: bold;
+  color: #000000;
+  border-radius: 0%;
+  transition: background-color 0.3s ease; 
+}
+
+.btn-review-popup:hover{
+  background-color: #ff000000;
+  font-weight: bold;
+  border-color: #e60000;
+  color: #e60000;
+  border-radius: 0%;
+}
+
 
 @media (max-width: 768px) {
 
@@ -210,3 +303,29 @@
     width: 100%;
   }
 }
+
+@keyframes fadeInPopup {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out-c {
+  animation: fadeOutOverlay 0.3s ease-out forwards;
+}
+
+

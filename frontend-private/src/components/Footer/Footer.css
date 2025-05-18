@@ -1,0 +1,22 @@
+.text-footer-private{
+    color: #ff0000;  
+}
+
+.footercolor{
+    background-color: #000000;
+}
+
+.custom-footer {
+    height: 150px;
+  }
+  
+
+  .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content-zone {
+    flex: 1;
+  }

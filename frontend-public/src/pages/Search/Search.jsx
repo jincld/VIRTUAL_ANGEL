@@ -14,6 +14,7 @@ const SearchPage = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [collectionFilter, setCollectionFilter] = useState('');
   const [colorFilter, setColorFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
   const [sortOrder, setSortOrder] = useState('');
   const [results, setResults] = useState([]);
@@ -43,12 +44,14 @@ const SearchPage = () => {
       const matchTitle = item.titulo.toLowerCase().includes(searchTerm);
       const matchColor = item.color?.toLowerCase().includes(searchTerm);
       const matchCollection = item.coleccion?.toLowerCase().includes(searchTerm);
+      const matchCategory = item.category?.toLowerCase().includes(searchTerm);
       const matchPrice = !isNaN(searchTerm) && Math.abs(item.precio - parseFloat(searchTerm)) < 5;
-
-      const matchesSearch = matchTitle || matchColor || matchCollection || matchPrice;
+      
+      const matchesSearch = matchTitle || matchColor || matchCollection || matchCategory || matchPrice;      
       const matchesFilters =
         (collectionFilter ? item.coleccion === collectionFilter : true) &&
         (colorFilter ? item.color === colorFilter : true) &&
+        (categoryFilter ? item.category === categoryFilter : true) &&
         item.precio <= maxPrice;
 
       return matchesSearch && matchesFilters;
@@ -66,26 +69,27 @@ const SearchPage = () => {
   const clearFilters = () => {
     setCollectionFilter('');
     setColorFilter('');
+    setCategoryFilter('');
     setSortOrder('');
     setMaxPrice(200);
     filterAndSetResults(query);
   };
 
   useEffect(() => {
-    filterAndSetResults(query); // Aplicar filtros y búsqueda cuando la página se carga
-  }, [query, collectionFilter, colorFilter, maxPrice, sortOrder]);
+    filterAndSetResults(query);
+  }, [query, collectionFilter, colorFilter, categoryFilter, maxPrice, sortOrder]);
 
   return (
     <>
       <div className="backsearch"></div>
-      
+      <div className="container content-zone py-5 margin-top-global">
       <div className="search-container">
         <h1 className="search-title">SEARCH PRODUCTS</h1>
 
         <div className="d-flex justify-content-center align-items-center mb-4 gap-3">
           <input
             type="text"
-            placeholder="Search by name, color, collection, or price..."
+            placeholder="Look for your perfect item..."
             value={query}
             onChange={handleSearch}
             className="search-input form-control input-style"
@@ -99,7 +103,7 @@ const SearchPage = () => {
         {showFilters && (
           <div className="filter-menu p-4 mt-3 rounded shadow-sm">
             <div className="row">
-              <div className="col-md-4 mb-3">
+              <div className="col-md-3 mb-3">
                 <label className="form-label">Collection:</label>
                 <select className="form-select" value={collectionFilter} onChange={(e) => {
                   setCollectionFilter(e.target.value);
@@ -107,28 +111,42 @@ const SearchPage = () => {
                 }}>
                   <option value="">All</option>
                   <option value="ANGEL OR CRAZY">ANGEL OR CRAZY</option>
-            <option value="This Is Eclipse">This Is Eclipse</option>
-            <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
+                  <option value="This Is Eclipse">This Is Eclipse</option>
+                  <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
                 </select>
               </div>
 
-              <div className="col-md-4 mb-3">
+              <div className="col-md-3 mb-3">
                 <label className="form-label">Color:</label>
                 <select className="form-select" value={colorFilter} onChange={(e) => {
                   setColorFilter(e.target.value);
                   filterAndSetResults(query);
                 }}>
-            <option value="">All</option>
-            <option value="black">Black</option>
-            <option value="white">White</option>
-            <option value="gray">Gray</option>
-            <option value="red">Red</option>
-            <option value="blue">Blue</option>
-            <option value="brown">Brown</option>
+                  <option value="">All</option>
+                  <option value="black">Black</option>
+                  <option value="white">White</option>
+                  <option value="gray">Gray</option>
+                  <option value="red">Red</option>
+                  <option value="blue">Blue</option>
+                  <option value="brown">Brown</option>
                 </select>
               </div>
 
-              <div className="col-md-4 mb-3">
+              <div className="col-md-3 mb-3">
+                <label className="form-label">Category:</label>
+                <select className="form-select" value={categoryFilter} onChange={(e) => {
+                  setCategoryFilter(e.target.value);
+                  filterAndSetResults(query);
+                }}>
+                  <option value="">All</option>
+                  <option value="shirts">Shirts</option>
+                  <option value="pants">Pants</option>
+                  <option value="jackets">Jackets</option>
+                  <option value="sweaters">Sweaters</option>
+                </select>
+              </div>
+
+              <div className="col-md-3 mb-3">
                 <label className="form-label">Sort by price:</label>
                 <select className="form-select" value={sortOrder} onChange={(e) => {
                   setSortOrder(e.target.value);
@@ -174,7 +192,7 @@ const SearchPage = () => {
                     imagen={item.imagen}
                     titulo={item.titulo}
                     precio={item.precio}
-                    category={item.category}
+                    categoria={item.categoria}
                   />
                 </div>
               ))}
@@ -203,6 +221,7 @@ const SearchPage = () => {
             )}
           </>
         )}
+      </div>
       </div>
     </>
   );

@@ -1,0 +1,154 @@
+
+
+/* Contenedor centrado verticalmente */
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    z-index: 3;
+}
+
+/* Caja del contenido */
+.colbg {
+    background-color: rgba(0, 0, 0, 0.712);
+    border-radius: 10px;
+    width: 50vw;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    padding: 20px;
+    z-index: 4;
+}
+
+.contacttittle{
+    font-size: 60px;
+    color: #ffffff;
+    margin: 20px;
+}
+
+/* Reset básico para contenedor Bootstrap */
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+}
+
+
+input.form-control,
+textarea.form-control {
+    transition: all 0.3s ease;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    border-color: #ffffff;
+}
+
+/* Estilo para inputs y textareas en modo oscuro */
+input.form-control,
+textarea.form-control {
+    background-color: #1d1d1d;
+    color: #ffffff;
+    border: 1px solid #272727;
+    transition: all 0.3s ease;
+}
+
+/* Cuando están enfocados */
+input.form-control:focus,
+textarea.form-control:focus {
+    box-shadow: 0 0 10px #ff00008f;
+    border-color: #141414;
+    background-color: #141414; /* Un poco más claro para el enfoque */
+    color: #ffffff;
+}
+
+/* Limitar el tamaño del textarea y evitar desbordes */
+textarea.form-control {
+    max-height: 200px;
+    min-height: 120px;
+    resize: vertical; /* Solo permite agrandarlo verticalmente */
+    overflow-y: auto;
+}
+
+.input-group-text {
+    background-color: #000000 !important; 
+    color: #ff0000 !important;           
+    border: 1px solid #000000;      
+    font-weight:normal;                 
+}
+
+.custom-send-btn {
+    background-color: black;
+    color: #ff0000;
+    border: 2px solid #ff0000;
+    padding: 12px 24px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 200px;
+}
+  
+.custom-send-btn:hover {
+    background-color: #ff0000;
+    color: #000000;
+    border-color: #ff0000;
+}
+  
+
+/* Media query para pantallas de 950px o menos */
+@media (max-width: 950px) {
+    .contacttittle {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 630px) {
+    .contacttittle {
+        font-size: 30px;
+    }
+
+
+}
+
+@media (max-width: 540px) {
+    .contacttittle {
+        font-size: 20px;
+    }
+
+    .colbg {
+        background-color: #0f0f0f;
+        width: 80%;
+    }
+}
+
+@media (max-width: 400px) {
+    .contacttittle {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 1020px) {
+
+    .back {
+        background-image: url('/contactbgsm.png');
+    }
+}
+
+@media (max-width: 800px) {
+    .custom-send-btn {
+        width: 150px;
+        font-size: 15px;
+    }
+}
+
+

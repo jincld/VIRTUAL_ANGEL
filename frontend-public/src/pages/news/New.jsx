@@ -16,7 +16,7 @@ const News = () => {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid margin-top-global">
       <div>
         <NewsCard
           title="ANGEL OR CRAZY"

@@ -59,11 +59,23 @@
     min-width: 500px; /* Ancho mínimo para pantallas grandes */
     width: 100%; /* Asegura que ocupe el 100% del contenedor hasta el max-width */
     margin: 0 auto; /* Centra las tarjetas */
+    margin-top: 10px;
 }
 
 .no-reviews:hover {
     transform: translateY(-5px);  /* Mueve ligeramente hacia arriba */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);  /* Aumenta la sombra */
+}
+
+.btndeletereview{
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.btndeletereview:hover{
+    background-color: #00000000;
+    color: #ff0000;
+    border-color: #ff0000;
 }
 
 /* Media query para pantallas de 585px o menos */

@@ -1,68 +1,84 @@
-//Importar tablas de users
-import clientModel from "../models/customers.js";
+import clientModel from "../models/clients.js";
 import employeeModel from "../models/employee.js";
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
-import {config} from "../config.js";
+import { config } from "../config.js";
 
 const loginController = {};
 
 loginController.login = async (req, res) => {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
+    console.log("🔐 Intento de login:", email);
 
     try {
-        let userFound; //Guardar usuario encontrado
-        let userType; //Guardar tipo de usuario
+        // Verificar si es admin
+        if (email === config.emailAdmin.email && password === config.emailAdmin.password) {
+            console.log("➡️ Usuario admin");
+            const token = jsonwebtoken.sign(
+                { id: "admin", userType: "admin" },
+                config.JWT.secret,
+                { expiresIn: config.JWT.expiresIn }
+            );
 
-        //Cuenta admin
-        if(email === config.emailAdmin.email && password === config.emailAdmin.password){
-            userType = "admin",
-            userFound ={_id: "admin"}
-        }else{ 
-            //Cuenta empleado
-            userFound = await employeeModel.findOne({email})
-            userType = "employee"
-
-            //Cuenta cliente
-            if(!userFound){
-                userFound = await clientModel.findOne({email})
-                userType = "client"
-            }
+            res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+            return res.json({ message: "Login successful", userType: "admin" });
         }
 
-        if(!userFound){
-            console.log("Cuenta no encontrada")
-            return res.json({message: "User not found"})
+        // Buscar simultáneamente en employee y client
+        const [employeeFound, clientFound] = await Promise.all([
+            employeeModel.findOne({ email }),
+            clientModel.findOne({ email })
+        ]);
+
+        // Detección de conflicto
+        if (employeeFound && clientFound) {
+            console.log("⚠️ Conflicto: email duplicado en ambos modelos");
+            return res.status(409).json({
+                message: "Email exists as both employee and client. Contact support."
+            });
         }
 
-        //Validar la contraseña, solo si no es admin
-        if(userType !== "admin"){
-            //Ver si la contraseña escrita en el login es la misma que la base de datos
-            const isMatch = await bcrypt.compare(password, userFound.password)
-            if(!isMatch){
-                return res.json({message: "Contraseña incorrecta"})
-            }
+        let userFound = null;
+        let userType = null;
+
+        if (employeeFound) {
+            console.log("🔍 Encontrado como EMPLOYEE");
+            userFound = employeeFound;
+            userType = userFound.rol || "employee";
+        } else if (clientFound) {
+            console.log("🔍 Encontrado como CLIENT");
+            userFound = clientFound;
+            userType = userFound.rol || "client";
         }
 
-        //TOKEN
-        jsonwebtoken.sign(
-            //Que voy a guardar
-            {id: userFound._id},
-            //Secreto
+        if (!userFound) {
+            console.log("❌ Usuario no encontrado");
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Validar contraseña
+        const isMatch = await bcrypt.compare(password, userFound.password);
+        if (!isMatch) {
+            console.log("❌ Contraseña incorrecta");
+            return res.status(401).json({ message: "Wrong credentials" });
+        }
+
+        // Generar token
+        const token = jsonwebtoken.sign(
+            { id: userFound._id, userType },
             config.JWT.secret,
-            //Expiración
-            {expiresIn: config.JWT.expiresIn},
-            //Función flecha
-            (error, token) => {
-                if(error) console.log(error)
-                
-                res.cookie("authToken", token)
-                res.json({message: "Login successful"})
-            }
-        )
-    } catch (error) {
-        res.json({message: "Error"})
-    }
- }
+            { expiresIn: config.JWT.expiresIn }
+        );
 
- export default loginController;
+        res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+        console.log("✅ Login exitoso:", userType);
+
+        res.json({ message: "Login successful", userType });
+
+    } catch (error) {
+        console.log("❌ Error general:", error);
+        res.status(500).json({ message: "Backend error" });
+    }
+};
+
+export default loginController;

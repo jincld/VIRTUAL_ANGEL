@@ -1,0 +1,14 @@
+.btn-dark:hover {
+    background-color: #ff0000 !important;
+  }
+
+  .btn-editclothing{
+    background-color: #ff0000 !important;
+    color: #ffffff;
+    margin-left: 5px;
+  }
+
+  .btn-editclothing:hover {
+    background-color: #000000 !important;
+    color: #ffffff;
+  }
