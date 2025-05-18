@@ -1,11 +1,19 @@
-import React, { useEffect } from 'react'; 
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate
-import './VerifyCode.css'; 
-import AOS from 'aos'; 
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './VerifyCode.css';
+import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useForm } from 'react-hook-form';
 
 const VerifyCode = () => {
-  const navigate = useNavigate();  // Inicializa el hook useNavigate
+  const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     AOS.init({
@@ -14,18 +22,34 @@ const VerifyCode = () => {
       once: true,
       offset: 200,
     });
+
+    // Protección de ruta: si no vino de /forgotpassword, redirige
+    if (!sessionStorage.getItem("canAccessVerifyCode")) {
+      navigate("/forgotpassword");
+    }
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();  // Evita el comportamiento predeterminado del formulario
-    navigate('/about');  // Redirige a /about (puedes cambiar la ruta de destino si es necesario)
+  const onSubmit = async ({ code }) => {
+    try {
+      await axios.post(
+        "http://localhost:3001/api/passwordRecovery/verifyCode",
+        { code },
+        { withCredentials: true }
+      );
+      sessionStorage.removeItem("canAccessVerifyCode");
+      sessionStorage.setItem("canAccessNewPassword", "true");
+      navigate("/newpassword");
+    } catch (error) {
+      console.error("Error verifying code", error);
+      setMessage("Invalid or expired verification code.");
+      setTimeout(() => setMessage(''), 5000);
+    }
   };
 
   return (
-    <div className="verify-container ">
-            <a href="/forgotpassword" className="back-button-verifycode" aria-label="Go back">
-  &lt;
-</a>
+    <div className="verify-container">
+      <a href="/forgotpassword" className="back-button-verifycode" aria-label="Go back">&lt;</a>
+
       {/* Imagen */}
       <div className="imgverifycode" data-aos="fade-in">
         <img 
@@ -36,20 +60,39 @@ const VerifyCode = () => {
         />
       </div>
 
-            {/* Formulario */}
-            <div className="formverifycode">
-        <form onSubmit={handleSubmit}>
-          <h2 className="verify-title">VERIFY YOUR<br/> CODE</h2>
+      {/* Formulario */}
+      <div className="formverifycode">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h2 className="verify-title">VERIFY YOUR<br /> CODE</h2>
           <div className="div-verifyinfo">
             <p className="info-verify">Please enter the verification code sent to your email to proceed.</p>
           </div>
           <div className="mb-3">
             <label htmlFor="code" className="form-label-verify">VERIFICATION CODE</label>
-            <input type="text" id="code" name="code" className="form-control formcontrol-verify" />
+            <input
+              type="text"
+              id="code"
+              className="form-control formcontrol-verify"
+              {...register("code", {
+                required: "Verification code is required",
+                pattern: {
+                  value: /^[0-9]{4,6}$/,
+                  message: "Code must be 4 to 6 digits"
+                }
+              })}
+            />
+            {errors.code && <small className="text-login-format-error">{errors.code.message}</small>}
           </div>
+
+          {message && (
+            <div className="alert alert-custom-error mt-3" role="alert">
+              {message}
+            </div>
+          )}
+
           <div className="center-btnverify">
-  <a href="/newpassword" className="btn btn-verify">VERIFY</a>
-</div>
+            <button type="submit" className="btn btn-verify">VERIFY</button>
+          </div>
         </form>
       </div>
     </div>

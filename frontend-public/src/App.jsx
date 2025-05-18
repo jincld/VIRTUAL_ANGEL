@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer.jsx';
 import ClientNav from './components/Nav/nav.jsx';
 import { AuthProvider, useAuth } from '../../frontend-public/AuthToken.jsx';
 
-// Pages (cliente)
+// Pages
 import Home from './pages/home.jsx';
 import About from './pages/about/About.jsx';
 import Terms from './pages/terms/Terms.jsx';
@@ -37,7 +37,6 @@ function LayoutWrapper({ children }) {
   const { userType } = useAuth();
 
   const hideLayoutRoutes = ['/', '/forgotpassword', '/verifycode', '/newpassword', '/createaccount'];
-
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   const renderNav = () => {
@@ -56,20 +55,29 @@ function LayoutWrapper({ children }) {
   );
 }
 
+const ProtectedRoute = ({ element, storageKey, redirectTo = "/" }) => {
+  const hasAccess = sessionStorage.getItem(storageKey);
+  return hasAccess ? element : <Navigate to="/forgotpassword" replace />;
+};
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <LayoutWrapper>
           <Routes>
-            {/* Public Auth Pages */}
+            {/* Auth Pages */}
             <Route path="/" element={<Login />} />
             <Route path="forgotpassword" element={<ForgotPass />} />
-            <Route path="verifycode" element={<VerifyCode />} />
-            <Route path="newpassword" element={<NewPassword />} />
+            <Route path="verifycode" element={
+              <ProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />
+            } />
+            <Route path="newpassword" element={
+              <ProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />
+            } />
             <Route path="createaccount" element={<CreateAccount />} />
 
-            {/* Client Pages */}
+            {/* Cliente Pages */}
             <Route path="home" element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="terms" element={<Terms />} />

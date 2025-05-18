@@ -24,6 +24,27 @@
     margin-top: 0%;
   }
 
+
+
+
+
+  .alert-custom-error {
+  background-color: #000;
+  color: #ff0000;
+  border: 1px solid #ff0000;
+  font-weight: normal;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+  border-radius: 0px;
+  padding: 12px;
+}
+
+.text-login-format-error {
+  color: #ff0000;
+  font-size: 0.85rem;
+}
+
+
   .createaccount-card__image_two {
     flex: 1;
     display: flex;
@@ -66,6 +87,7 @@
     margin-top: 5px;
     border: 1px solid #E3E3E3;
     background-color: #E3E3E3;
+    color: #000000;
     border-radius: 2px;
     font-size: 14px;
     transition: background-color 0.3s ease;
@@ -91,6 +113,8 @@
     font-weight: normal;
     margin-top: 20px;
     transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0 auto;
   }
   
   .button-createaccount:hover {

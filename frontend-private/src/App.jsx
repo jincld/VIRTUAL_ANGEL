@@ -1,16 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import Nav from './components/Nav/Nav.jsx';
-import Footer from './components/Footer/Footer.jsx';
+import { useAuth, AuthProvider } from '../../frontend-public/AuthToken.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
-import Home from './pages/home.jsx';
-import Contact from './pages/contact/Contact.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import ClientNav from '../../frontend-public/src/components/Nav/nav.jsx';
+import AdminNav from './components/Nav/Nav.jsx';
+
+// Públicas
 import Login from './pages/Login/Login.jsx';
 import ForgotPass from '../../frontend-public/src/pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from '../../frontend-public/src/pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from '../../frontend-public/src/pages/NewPassword/NewPassword.jsx';
-import CreateAccount from '../../frontend-public/src/pages/CreateAccount/CreateAccount.jsx';
+import Home from './pages/home.jsx';
+import Contact from './pages/contact/Contact.jsx';
 import FirstUse from './pages/FirstUse/FirstUse.jsx';
+
+// Protegidas
 import Inicio from './pages/inicio/inicio.jsx';
 import Products from './pages/Products/Products.jsx';
 import Shirts from '../../frontend-public/src/pages/shirts/Shirts.jsx';
@@ -30,28 +34,25 @@ import Orders from './pages/orders/Orders';
 import Sales from './pages/sales/Sales.jsx';
 import SaleDetail from './pages/sales/SaleDetail.jsx';
 import OrderDetail from './pages/orders/OrderDetail.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import PasswordProtectedRoutes from './components/PasswordProtectedRoute';
 
-import ClientNav from '../../frontend-public/src/components/Nav/nav.jsx';
-import AdminNav from './components/Nav/Nav.jsx';
-import { useAuth, AuthProvider } from '../../frontend-public/AuthToken.jsx'; // <-- este es el fix importante ✅
+// Protege las rutas de recuperación de contraseña
+const PasswordProtectedRoute = ({ element, storageKey }) => {
+  const hasAccess = sessionStorage.getItem(storageKey);
+  return hasAccess ? element : <Navigate to="/forgotpassword" replace />;
+};
 
 function LayoutWrapper({ children }) {
   const location = useLocation();
   const { userType } = useAuth();
 
-  const hideLayoutRoutes = [
-    '/', '/forgotpassword', '/verifycode', '/newpassword', '/createaccount'
-  ];
-
+  const hideLayoutRoutes = ['/', '/forgotpassword', '/verifycode', '/newpassword'];
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   const renderNav = () => {
     if (shouldHideLayout) return null;
-
-    if (!userType) {
-      return <Navigate to="/" />;
-    }
-
+    if (!userType) return <Navigate to="/" />;
     if (userType === 'client') return <ClientNav />;
     if (userType === 'employee' || userType === 'admin') return <AdminNav />;
     return null;
@@ -73,33 +74,41 @@ function App() {
       <Router>
         <LayoutWrapper>
           <Routes>
-            <Route path="startpage" element={<Home />} />
-            <Route path="contact" element={<Contact />} />
+            {/* Rutas públicas */}
             <Route path="/" element={<Login />} />
             <Route path="forgotpassword" element={<ForgotPass />} />
-            <Route path="verifycode" element={<VerifyCode />} />
-            <Route path="newpassword" element={<NewPassword />} />
-            <Route path="createaccount" element={<CreateAccount />} />
+<Route
+  path="verifycode"
+  element={<PasswordProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />}
+/>
+<Route
+  path="newpassword"
+  element={<PasswordProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />}
+/>
+            <Route path="startpage" element={<Home />} />
+            <Route path="contact" element={<Contact />} />
             <Route path="firstuse" element={<FirstUse />} />
-            <Route path="inicio" element={<Inicio />} />
-            <Route path="products" element={<Products />} />
-            <Route path="employee" element={<Employees />} />
-            <Route path="/editemployee" element={<EditEmployee />} />
-            <Route path="/addemployee" element={<AddEmployee />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="sales" element={<Sales />} />
-            <Route path="shirts" element={<Shirts />} />
-            <Route path="pants" element={<Pants />} />
-            <Route path="jackets" element={<Jacket />} />
-            <Route path="sweaters" element={<Sweaters />} />
-            <Route path="shirts/:id" element={<ShirtsDetail />} />
-            <Route path="pants/:id" element={<PantsDetail />} />
-            <Route path="jackets/:id" element={<JacketsDetail />} />
-            <Route path="sweaters/:id" element={<SweatersDetail />} />
-            <Route path="addproduct" element={<AddProduct />} />
-            <Route path="editproduct" element={<EditProduct />} />
-            <Route path="sales/:id" element={<SaleDetail />} />
-            <Route path="orders/:id" element={<OrderDetail />} />
+
+            {/* Rutas protegidas */}
+            <Route path="inicio" element={<ProtectedRoute element={<Inicio />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="products" element={<ProtectedRoute element={<Products />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="employee" element={<ProtectedRoute element={<Employees />} allowedRoles={['admin']} />} />
+            <Route path="/editemployee" element={<ProtectedRoute element={<EditEmployee />} allowedRoles={['admin']} />} />
+            <Route path="/addemployee" element={<ProtectedRoute element={<AddEmployee />} allowedRoles={['admin']} />} />
+            <Route path="orders" element={<ProtectedRoute element={<Orders />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="sales" element={<ProtectedRoute element={<Sales />} allowedRoles={['admin']} />} />
+            <Route path="shirts" element={<ProtectedRoute element={<Shirts />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="pants" element={<ProtectedRoute element={<Pants />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="jackets" element={<ProtectedRoute element={<Jacket />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="sweaters" element={<ProtectedRoute element={<Sweaters />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="shirts/:id" element={<ProtectedRoute element={<ShirtsDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="pants/:id" element={<ProtectedRoute element={<PantsDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="jackets/:id" element={<ProtectedRoute element={<JacketsDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="sweaters/:id" element={<ProtectedRoute element={<SweatersDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="editproduct" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin']} />} />
+            <Route path="orders/:id" element={<ProtectedRoute element={<OrderDetail />} allowedRoles={['admin', 'employee']} />} />
           </Routes>
         </LayoutWrapper>
       </Router>

@@ -12,7 +12,6 @@ const clientsSchema = new Schema(
     },
     age: {
       type: Number,
-      required: true,
       min: 0,
     },
     gender: {
@@ -20,7 +19,6 @@ const clientsSchema = new Schema(
     },
     cardNumber: {
       type: Number,
-      required: true,
       min: 0,
     },
     address: {
@@ -28,7 +26,6 @@ const clientsSchema = new Schema(
     },
     phone: {
       type: Number,
-      required: true,
       min: 8,
     },
     email: {
