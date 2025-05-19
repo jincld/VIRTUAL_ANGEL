@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import ordersData from './ordersData';
 import './Orders.css';
 
@@ -59,12 +60,11 @@ const OrdersTable = () => {
                   <td data-label="TOTAL">${order.total}</td>
                   <td data-label="ITEMS">{order.items}</td>
                   <td data-label="">
-                    <button
-                      className="view-button"
-                      onClick={() => window.location.href = `/orders/${order.id}`}
-                    >
-                      VIEW DETAILS →
-                    </button>
+        
+
+                  <Link to={`/orders/${order.id}`} className="view-button">VIEW DETAILS →</Link>
+
+                    
                   </td>
                 </tr>
               ))}

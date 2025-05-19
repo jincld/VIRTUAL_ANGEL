@@ -63,7 +63,7 @@ const Employees = () => {
           </button>
           <div>
 
-            <Link to={"/addemployee"}><p className="btn btn-addemployees"> + Add Employee</p></Link>
+            <Link to={"/addemployee"} className="btn btn-addemployees">+ Add Employee</Link>
           </div>
         </div>
 

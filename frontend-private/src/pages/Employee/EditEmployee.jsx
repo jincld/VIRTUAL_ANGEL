@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import './addEmployee.css'; // Usamos el MISMO CSS
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -78,10 +78,11 @@ const EditEmployee = () => {
     <>
       <div className="backaddemployee"></div>
                                     <div className="btn-marginpd margin-top-global">
-            <a href="/employee" className="ap-btn-back"> ← BACK </a>
+
+            <Link to={"/employee"} className="ap-btn-back">← BACK</Link>
           </div>
       <div className="ap-wrapper">
-        <button className="ep-btn-back" onClick={() => navigate(-1)}>← Back</button>
+
         <h2 className="text-center text-black mb-4 addemployee-title">EDIT EMPLOYEE</h2>
         <div className="ap-card rounded p-4 shadow">
           <div className="row g-4">

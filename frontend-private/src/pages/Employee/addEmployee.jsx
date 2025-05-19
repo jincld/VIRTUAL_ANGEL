@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './addEmployee.css'; // usa el mismo CSS con clases adaptadas
+import { useNavigate, Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -63,7 +64,8 @@ const AddEmployee = () => {
     <>
       <div className="backaddemployee"></div>
                               <div className="btn-marginpd margin-top-global">
-            <a href="/employee" className="ap-btn-back"> ← BACK </a>
+
+            <Link to={"/employee"} className="ap-btn-back">← BACK </Link>
           </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addemployee-title">ADD NEW EMPLOYEE</h2>

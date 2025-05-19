@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from 'react-router-dom';
 import salesData from "./SalesData.jsx"; // Asegúrate de tener datos de ventas
 import "./Sales.css";
 
@@ -58,12 +59,9 @@ const SalesTable = () => {
                   <td data-label="TOTAL">${sale.total}</td>
                   <td data-label="ITEMS">{sale.items}</td>
                   <td data-label="">
-                    <button
-                      className="view-button"
-                      onClick={() => window.location.href = `/sales/${sale.id}`}
-                    >
-                      VIEW DETAILS →
-                    </button>
+
+                    
+                  <Link to={`/sales/${sale.id}`} className="view-button">VIEW DETAILS →</Link>
                   </td>
                 </tr>
               ))}

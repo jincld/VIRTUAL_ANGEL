@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { useNavigate, Link } from 'react-router-dom'; // Importar useNavigate
 import './Products.css';
 import AOS from 'aos';
 import { NavLink } from 'react-router-dom';
@@ -90,7 +90,9 @@ const Products = () => {
             {showFilters ? 'Hide filters' : 'Show filters'}
           </button>
           <div>
-            <a href="/addproduct" className="btn btn-addproducts"> + Add products</a>
+
+
+            <Link to={"/addproduct"} className="btn btn-addproducts">+ Add products</Link>
           </div>
         </div>
 
