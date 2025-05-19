@@ -1,5 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import { useNavigate, Link } from 'react-router-dom';
+import ordersData from './ordersData';
+
 import './Orders.css';
 
 const OrdersTable = () => {
@@ -40,11 +45,55 @@ const OrdersTable = () => {
 
   return (
     <>
-    <div className="backorders"></div>
-    <div className="orders-container">
-      <div className="orders-header">
-        <div className="logo-print">
-          <img src="/logo-dark.png" alt="Logo Print" />
+
+      <div className="backorders"></div>
+      <div className="orders-container">
+<div className="orders-header">
+  <div className="logo-print">
+    <img src="/logo-dark.png" alt="Logo Print" />
+  </div>
+  <h2>ORDERS</h2>
+  <div className="orders-buttons">
+    <button className="icon-button" onClick={() => window.print()}>
+      🖨️
+    </button>
+    <button className="icon-button">⬇️</button>
+  </div>
+</div>
+
+
+        <div className="orders-table-wrapper">
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th>ORDER</th>
+                <th>DATE</th>
+                <th>STATUS</th>
+                <th>TOTAL</th>
+                <th>ITEMS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentData.map((order) => (
+                <tr key={order.id}>
+                  <td data-label="ORDER">#{order.id}</td>
+                  <td data-label="DATE">{order.fecha}</td>
+                  <td data-label="STATUS">{order.estado}</td>
+                  <td data-label="TOTAL">${order.total}</td>
+                  <td data-label="ITEMS">{order.items}</td>
+                  <td data-label="">
+        
+
+                  <Link to={`/orders/${order.id}`} className="view-button">VIEW DETAILS →</Link>
+
+                    
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
         </div>
         <h2>ORDERS</h2>
         <div className="orders-buttons">

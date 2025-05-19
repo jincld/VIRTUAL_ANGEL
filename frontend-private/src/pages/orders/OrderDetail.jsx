@@ -1,6 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import ordersData from './ordersData';
+
 import './OrderDetail.css';
 
 const OrderDetail = () => {
@@ -26,7 +30,9 @@ const OrderDetail = () => {
 
   return (
     <>
+
       <button className="back-button-ord margin-top-global" onClick={() => window.history.back()}>← BACK</button>
+
       <div className="back-orderdetail"></div>
       <div className="heightfix-order">
         <div className="detail-container">

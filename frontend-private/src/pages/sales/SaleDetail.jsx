@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import salesData from './SalesData';
 import './SaleDetail.css';
 
