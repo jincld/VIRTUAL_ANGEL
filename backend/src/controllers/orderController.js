@@ -33,17 +33,27 @@ orderController.deleteOrder = async (req, res) => {
     }
 };
 
-// Update (Update Order)
+// En controllers/orderController.js
 orderController.updateOrder = async (req, res) => {
-    const { idCustomer, idProducts, total, address } = req.body;
+    const { status } = req.body;
+  
     try {
-        const updatedOrder = await orderModel.findByIdAndUpdate(req.params.id, 
-            { idCustomer, idProducts, total, address }, { new: true });
-        res.json({ message: "Order updated", order: updatedOrder });
+      const updatedOrder = await orderModel.findByIdAndUpdate(
+        req.params.id,
+        { status }, // solo actualiza el status
+        { new: true }
+      );
+  
+      if (!updatedOrder) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+  
+      res.json({ message: "Order status updated", order: updatedOrder });
     } catch (error) {
-        res.status(500).json({ message: "Error updating order", error: error.message });
+      res.status(500).json({ message: "Error updating order", error: error.message });
     }
-};
+  };
+  
 // Get One Order by ID
 orderController.getOrderById = async (req, res) => {
     try {
