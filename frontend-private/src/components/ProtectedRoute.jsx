@@ -1,25 +1,23 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../../frontend-public/AuthToken';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-/**
- * Componente para proteger rutas según los roles de usuario permitidos.
- * @param {JSX.Element} element - El componente a renderizar si el usuario tiene acceso.
- * @param {string[]} allowedRoles - Lista de tipos de usuario permitidos (por ejemplo: ['admin', 'employee']).
- */
+
 const ProtectedRoute = ({ element, allowedRoles }) => {
-  const { userType } = useAuth();
+  const { userType, isLoading } = useAuth();
 
-  // Si no está autenticado, redirige al login
+  if (isLoading) {
+    return <div>Loading...</div>; // o un spinner bonito
+  }
+
   if (!userType) {
     return <Navigate to="/" replace />;
   }
 
-  // Si el tipo de usuario no está en la lista de roles permitidos, redirige al login
   if (!allowedRoles.includes(userType)) {
     return <Navigate to="/" replace />;
   }
 
-  // Si tiene permiso, renderiza el componente
   return element;
 };
 
