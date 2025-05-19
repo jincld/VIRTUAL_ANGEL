@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './EditProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -68,7 +69,8 @@ const EditProduct = () => {
     <>
       <div className="backeditproduct"></div>
       <div className="btn-marginpd margin-top-global">
-        <a href="/products" className="ap-btn-back"> ← BACK </a>
+
+        <Link to={"/products"} className="ap-btn-back">← BACK</Link>
       </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addproduct-title">EDIT PRODUCT</h2>

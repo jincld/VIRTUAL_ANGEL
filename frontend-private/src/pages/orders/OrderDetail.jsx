@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import ordersData from './ordersData';
 import './OrderDetail.css';
 
@@ -16,7 +16,8 @@ const handleBack = () => {
 
   return (
     <>
-        <button className="back-button-ord margin-top-global" onClick={handleBack}>← BACK</button>
+
+<button className="back-button-sd margin-top-global" onClick={handleBack}>← BACK</button>
       <div className="back-orderdetail"></div>
       <div className="heightfix-order">
         <div className="detail-container">
