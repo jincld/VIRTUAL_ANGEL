@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Employees.css';
 import AOS from 'aos';
 import { NavLink } from 'react-router-dom';
@@ -62,7 +62,8 @@ const Employees = () => {
             {showFilters ? 'Hide filters' : 'Show filters'}
           </button>
           <div>
-            <a href="/addemployee" className="btn btn-addemployees"> + Add Employee</a>
+
+            <Link to={"/addemployee"}><p className="btn btn-addemployees"> + Add Employee</p></Link>
           </div>
         </div>
 
