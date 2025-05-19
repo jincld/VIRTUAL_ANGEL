@@ -1,15 +1,17 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUserType = localStorage.getItem('userType');
     if (storedUserType) {
       setUserType(storedUserType);
     }
+    setIsLoading(false);
   }, []);
 
   const login = (type) => {
@@ -23,10 +25,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userType, login, logout }}>
+    <AuthContext.Provider value={{ userType, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// ✅ Exporta el hook personalizado
 export const useAuth = () => useContext(AuthContext);
