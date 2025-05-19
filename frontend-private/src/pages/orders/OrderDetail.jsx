@@ -1,22 +1,32 @@
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import ordersData from './ordersData';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './OrderDetail.css';
 
 const OrderDetail = () => {
   const { id } = useParams();
-  const order = ordersData.find(o => o.id === id);
+  const [order, setOrder] = useState(null);
 
-  if (!order) return <p>Order not found</p>;
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = fetch(`http://localhost:3001/api/order`); 
+        console.log(response) // Asegúrate de tener la URL correcta
+        alert("en fetch")
+        setOrder(response);
+      } catch (error) {
+        console.error("Error fetching order details:", error);
+      }
+    };
 
-    const navigate = useNavigate();
-const handleBack = () => {
-  navigate(-1); // Esto te regresa a la página anterior
-};
+    fetchOrder();
+  }, [id]);
+
+  if (!order) return <p>Loading...</p>;
 
   return (
     <>
-        <button className="back-button-ord margin-top-global" onClick={handleBack}>← BACK</button>
+      <button className="back-button-ord margin-top-global" onClick={() => window.history.back()}>← BACK</button>
       <div className="back-orderdetail"></div>
       <div className="heightfix-order">
         <div className="detail-container">
@@ -28,7 +38,7 @@ const handleBack = () => {
             </label>
             <label>
               Status:
-              <select defaultValue={order.estado}>
+              <select value={order.estado}>
                 <option>In progress</option>
                 <option>Processing</option>
                 <option>Delivered</option>
@@ -42,21 +52,23 @@ const handleBack = () => {
             </label>
             <label>
               Items:
-              <input type="number" value={order.items} readOnly />
-            </label>
-            <label>
-              User:
-              <input type="text" value={order.usuario} readOnly />
-            </label>
-            <label>
-              Address:
-              <textarea value={order.direccion} readOnly />
-            </label>
-          </form>
-        </div>
-      </div>
-    </>
-  );
+              <input type="number" value={order.idProducts.length} readOnly />
+              </label>
+        <label>
+          User:
+          <input type="text" value={order.idCustomer?.email || ''} readOnly />
+        </label>
+        <label>
+          Address:
+          <textarea value={order.address} readOnly />
+        </label>
+      </form>
+    </div>
+  </div>
+</>
+);
 };
-
 export default OrderDetail;
+
+ 
+
