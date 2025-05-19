@@ -5,7 +5,10 @@ import Footer from './components/Footer/Footer.jsx';
 import ClientNav from '../../frontend-public/src/components/Nav/nav.jsx';
 import AdminNav from './components/Nav/Nav.jsx';
 
-// Públicas
+import { useEffect } from 'react';
+import axios from 'axios';
+
+// Rutas públicas
 import Login from './pages/Login/Login.jsx';
 import ForgotPass from '../../frontend-public/src/pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from '../../frontend-public/src/pages/VerifyCode/VerifyCode.jsx';
@@ -14,7 +17,7 @@ import Home from './pages/home.jsx';
 import Contact from './pages/contact/Contact.jsx';
 import FirstUse from './pages/FirstUse/FirstUse.jsx';
 
-// Protegidas
+// Rutas protegidas
 import Inicio from './pages/inicio/inicio.jsx';
 import Products from './pages/Products/Products.jsx';
 import Shirts from '../../frontend-public/src/pages/shirts/Shirts.jsx';
@@ -35,28 +38,49 @@ import Sales from './pages/sales/Sales.jsx';
 import SaleDetail from './pages/sales/SaleDetail.jsx';
 import OrderDetail from './pages/orders/OrderDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import PasswordProtectedRoutes from './components/PasswordProtectedRoute';
 
-// Protege las rutas de recuperación de contraseña
+// 🔐 Protege rutas temporales como recuperación de contraseña
 const PasswordProtectedRoute = ({ element, storageKey }) => {
   const hasAccess = sessionStorage.getItem(storageKey);
   return hasAccess ? element : <Navigate to="/forgotpassword" replace />;
 };
 
+// 📦 Axios para mantener cookies en todas las peticiones
+axios.defaults.withCredentials = true;
+
 function LayoutWrapper({ children }) {
   const location = useLocation();
-  const { userType } = useAuth();
+  const { userType, login, isLoading } = useAuth();
 
+  // 🔁 Verificar la cookie al cargar la app
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await axios.get('http://localhost:3001/api/me'); // asegúrate de tener esta ruta
+        if (res.data.userType) {
+          login(res.data.userType); // actualiza contexto si cookie existe
+        }
+      } catch (err) {
+        console.log("No session found:", err.response?.data?.message || err.message);
+      }
+    };
+
+    fetchSession();
+  }, [login]);
+
+  // 🧭 Qué rutas no deben mostrar navbar/footer
   const hideLayoutRoutes = ['/', '/forgotpassword', '/verifycode', '/newpassword'];
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   const renderNav = () => {
     if (shouldHideLayout) return null;
-    if (!userType) return <Navigate to="/" />;
+    if (!userType) return null;
     if (userType === 'client') return <ClientNav />;
     if (userType === 'employee' || userType === 'admin') return <AdminNav />;
     return null;
   };
+
+  if (isLoading) return null; // o puedes poner un spinner
 
   return (
     <>
@@ -77,14 +101,8 @@ function App() {
             {/* Rutas públicas */}
             <Route path="/" element={<Login />} />
             <Route path="forgotpassword" element={<ForgotPass />} />
-<Route
-  path="verifycode"
-  element={<PasswordProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />}
-/>
-<Route
-  path="newpassword"
-  element={<PasswordProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />}
-/>
+            <Route path="verifycode" element={<PasswordProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />} />
+            <Route path="newpassword" element={<PasswordProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />} />
             <Route path="startpage" element={<Home />} />
             <Route path="contact" element={<Contact />} />
             <Route path="firstuse" element={<FirstUse />} />
@@ -96,7 +114,7 @@ function App() {
             <Route path="/editemployee" element={<ProtectedRoute element={<EditEmployee />} allowedRoles={['admin']} />} />
             <Route path="/addemployee" element={<ProtectedRoute element={<AddEmployee />} allowedRoles={['admin']} />} />
             <Route path="orders" element={<ProtectedRoute element={<Orders />} allowedRoles={['admin', 'employee']} />} />
-            <Route path="sales" element={<ProtectedRoute element={<Sales />} allowedRoles={['admin']} />} />
+            <Route path="sales" element={<ProtectedRoute element={<Sales />} allowedRoles={['admin', 'employee']} />} />
             <Route path="shirts" element={<ProtectedRoute element={<Shirts />} allowedRoles={['admin', 'employee']} />} />
             <Route path="pants" element={<ProtectedRoute element={<Pants />} allowedRoles={['admin', 'employee']} />} />
             <Route path="jackets" element={<ProtectedRoute element={<Jacket />} allowedRoles={['admin', 'employee']} />} />
@@ -105,18 +123,9 @@ function App() {
             <Route path="pants/:id" element={<ProtectedRoute element={<PantsDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="jackets/:id" element={<ProtectedRoute element={<JacketsDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="sweaters/:id" element={<ProtectedRoute element={<SweatersDetail />} allowedRoles={['admin', 'employee']} />} />
-<Route
-  path="/addproduct"
-  element={
-    <ProtectedRoute
-      element={<AddProduct />}
-      allowedRoles={['admin', 'employee']}
-    />
-  }
-/>
-
+            <Route path="/addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
             <Route path="editproduct" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
-            <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin']} />} />
+            <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="orders/:id" element={<ProtectedRoute element={<OrderDetail />} allowedRoles={['admin', 'employee']} />} />
           </Routes>
         </LayoutWrapper>

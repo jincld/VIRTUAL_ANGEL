@@ -20,7 +20,12 @@ loginController.login = async (req, res) => {
                 { expiresIn: config.JWT.expiresIn }
             );
 
-            res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+            res.cookie("authToken", token, {
+                httpOnly: true,
+                sameSite: "Lax",
+                secure: process.env.NODE_ENV === "production", // Solo en producción
+                maxAge: 60 * 60 * 1000 // 1 hora
+            });
             return res.json({ message: "Login successful", userType: "admin" });
         }
 
@@ -70,7 +75,12 @@ loginController.login = async (req, res) => {
             { expiresIn: config.JWT.expiresIn }
         );
 
-        res.cookie("authToken", token, { httpOnly: true, sameSite: "Lax" });
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            sameSite: "Lax",
+            secure: process.env.NODE_ENV === "production", // Solo en producción
+            maxAge: 60 * 60 * 1000 // 1 hora
+        });
         console.log("✅ Login exitoso:", userType);
 
         res.json({ message: "Login successful", userType });

@@ -147,7 +147,6 @@ const OrdersTable = () => {
           Next
         </button>
       </div>
-    </div>
     </>
   );
 };
