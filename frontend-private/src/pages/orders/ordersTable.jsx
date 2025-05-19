@@ -77,9 +77,9 @@ const OrdersTable = () => {
             <tbody>
               {currentData.map((order) => (
                 <tr key={order.id}>
-                  <td data-label="ORDER">#{order.id}</td>
-                  <td data-label="DATE">{order.fecha}</td>
-                  <td data-label="STATUS">{order.estado}</td>
+                  <td data-label="ORDER">#{order._id}</td>
+                  <td data-label="DATE">{order.date}</td>
+                  <td data-label="STATUS">{order.status}</td>
                   <td data-label="TOTAL">${order.total}</td>
                   <td data-label="ITEMS">{order.items}</td>
                   <td data-label="">
@@ -95,48 +95,9 @@ const OrdersTable = () => {
           </table>
 
         </div>
-        <h2>ORDERS</h2>
-        <div className="orders-buttons">
-          <button className="icon-button" onClick={() => window.print()}>
-            🖨️
-          </button>
-          <button className="icon-button">⬇️</button>
-        </div>
-      </div>
 
-      <div className="orders-table-wrapper">
-        <table className="orders-table">
-          <thead>
-            <tr>
-              <th>ORDER</th>
-              <th>DATE</th>
-              <th>STATUS</th>
-              <th>TOTAL</th>
-              <th>ITEMS</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentData?.map((order) => (
-              <tr key={order.id}>
-                <td data-label="ORDER">#{order._id}</td>
-                <td data-label="DATE">{order.date}</td>
-                <td data-label="STATUS">{order.status}</td>
-                <td data-label="TOTAL">${order.total}</td>
-                <td data-label="ITEMS">{order.items}</td>
-                <td data-label="">
-                  <button
-                    className="view-button"
-                    onClick={() => window.location.href = `/orders/${order.id}`}
-                  >
-                    VIEW DETAILS →
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+
 
       <div className="orders-pagination">
         <button onClick={handlePrevPage} disabled={currentPage === 1}>
@@ -147,7 +108,7 @@ const OrdersTable = () => {
           Next
         </button>
       </div>
-    </div>
+      </div>
     </>
   );
 };

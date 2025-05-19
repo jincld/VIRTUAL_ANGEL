@@ -44,5 +44,22 @@ orderController.updateOrder = async (req, res) => {
         res.status(500).json({ message: "Error updating order", error: error.message });
     }
 };
+// Get One Order by ID
+orderController.getOrderById = async (req, res) => {
+    try {
+        const order = await orderModel
+            .findById(req.params.id)
+            .populate("idCustomer")
+            .populate("idProducts");
+
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        res.json(order);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching order", error: error.message });
+    }
+};
 
 export default orderController;

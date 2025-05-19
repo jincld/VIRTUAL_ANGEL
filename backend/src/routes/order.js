@@ -1,7 +1,6 @@
 import express from "express";
 import orderController from "../controllers/orderController.js";
-// Router() nos ayuda a colocar los metodos
-// que tendra mi ruta
+
 const router = express.Router();
 
 router
@@ -11,6 +10,7 @@ router
 
 router
   .route("/:id")
+  .get(orderController.getOrderById) // ✅ ESTO FALTABA
   .put(orderController.updateOrder)
   .delete(orderController.deleteOrder);
 
