@@ -9,7 +9,7 @@ function Nav() {
   return (
     <nav className="navbar navbary navbar-expand-lg bg-body-tertiary w-100">
       <div className="navbar navbary navbar-expand-lg bg-body-tertiary">
-        <Link className="navbar-brand itemnav" to="/startpage">
+        <Link className="navbar-brand itemnav" to="/inicio">
           <img src="/virtualangelogo.png" alt="VIRTUAL ANGEL" width="170" />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
