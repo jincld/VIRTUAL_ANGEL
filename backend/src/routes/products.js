@@ -1,17 +1,18 @@
 import express from "express";
 import productsController from "../controllers/productsController.js";
-// Router() nos ayuda a colocar los metodos
-// que tendra mi ruta
+import multer from "multer";
+
 const router = express.Router();
+const upload = multer({ dest: "public/" });
 
 router
   .route("/")
   .get(productsController.getProduct)
-  .post(productsController.insertProduct);
+  .post(upload.single("image"), productsController.insertProduct);
 
 router
   .route("/:id")
-  .put(productsController.updateProduct)
+  .put(upload.single("image"), productsController.updateProduct)
   .delete(productsController.deleteProduct);
 
 export default router;
