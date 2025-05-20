@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -7,11 +8,23 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUserType = localStorage.getItem('userType');
-    if (storedUserType) {
-      setUserType(storedUserType);
-    }
-    setIsLoading(false);
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/me', {
+          withCredentials: true
+        });
+        setUserType(response.data.userType);
+        localStorage.setItem('userType', response.data.userType);
+      } catch (error) {
+        console.warn("Not authenticated or token expired.");
+        setUserType(null);
+        localStorage.removeItem('userType');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const login = (type) => {
@@ -22,14 +35,15 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUserType(null);
     localStorage.removeItem('userType');
+    // Opcional: También puedes llamar a tu backend para eliminar la cookie
+    axios.post('http://localhost:3001/api/logout', {}, { withCredentials: true });
   };
 
   return (
     <AuthContext.Provider value={{ userType, login, logout, isLoading }}>
-      {children}
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 };
 
-// ✅ Exporta el hook personalizado
 export const useAuth = () => useContext(AuthContext);

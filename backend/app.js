@@ -36,20 +36,23 @@ import registerClientsRoutes from "./src/routes/registerClients.js";
 import loginRoute from "./src/routes/login.js";
 import logoutRoute from "./src/routes/logout.js";
 import passwordRecoveryRoutes from "./src/routes/passwordRecovery.js";
+import validateAuthToken from "./src/middlewares/validateAuthToken.js"
+import meRoute from './src/routes/me.js';
 
 // rutas
-app.use("/api/category", categoryRoutes);
-app.use("/api/contact", contactRoutes);
-app.use("/api/clients", clientRoutes);
-app.use("/api/employee", employeeRoutes);
-app.use("/api/product", productsRoutes);
-app.use("/api/order", orderRoutes);
-app.use("/api/assessment", assessmentRoutes);
-app.use("/api/registerEmployees", registerEmployeesRoutes);
-app.use("/api/registerClients", registerClientsRoutes);
+app.use("/api/category", validateAuthToken(["admin"]), categoryRoutes);
+app.use("/api/contact", validateAuthToken(["employee", "admin", "client"]), contactRoutes);
+app.use("/api/clients", validateAuthToken(["employee", "admin"]), clientRoutes);
+app.use("/api/employee", validateAuthToken(["admin"]), employeeRoutes);
+app.use("/api/product", validateAuthToken(["employee", "admin"]), productsRoutes);
+app.use("/api/order", validateAuthToken(["employee", "admin"]), orderRoutes);
+app.use("/api/assessment", validateAuthToken(["employee", "admin"]), assessmentRoutes);
+app.use("/api/registerEmployees", validateAuthToken(["admin"]), registerEmployeesRoutes);
+app.use("/api/registerClients", validateAuthToken(["employee", "admin"]), registerClientsRoutes);
 app.use("/api/login", loginRoute);
 app.use("/api/logout", logoutRoute);
 app.use("/api/passwordRecovery", passwordRecoveryRoutes);
+app.use("/api/me", meRoute);
 
 // exportar la app para usarla en index.js
 export default app;
