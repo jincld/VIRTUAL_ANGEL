@@ -9,11 +9,21 @@ productsController.getProduct = async (req, res) => {
 
 //insert
 productsController.insertProduct = async (req, res) => {
-    const {name, description, idCategory, sizes, prices, stock, image, color} = req.body;
-    const newProduct = new productsModel ({name, description, idCategory, sizes, prices, stock, image, color})
-    await newProduct.save()
-    res.json({message: "Product saved"})
-}
+    const { name, description, idCategory, sizes, prices, stock, image, color } = req.body;
+
+    console.log("Recibido en el backend:", { name, description, idCategory, sizes, prices, stock, image, color });
+
+    const newProduct = new productsModel({ name, description, idCategory, sizes, prices, stock, image, color });
+
+    try {
+        await newProduct.save();
+        res.json({ message: "Product saved" });
+    } catch (error) {
+        console.error("Error guardando el producto:", error);
+        res.status(500).json({ message: "Error al guardar el producto" });
+    }
+};
+
 
 //delete
 productsController.deleteProduct = async (req, res) => {

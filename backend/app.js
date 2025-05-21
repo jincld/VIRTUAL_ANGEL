@@ -20,8 +20,11 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json());
+
 app.use(cookieParser());
+
+app.use(express.json({ limit: '40mb' })); // Aumentar el límite según sea necesario
+app.use(express.urlencoded({ limit: '40mb', extended: true })); // Para formularios con archivos
 
 // importar rutas
 import categoryRoutes from "./src/routes/category.js";
