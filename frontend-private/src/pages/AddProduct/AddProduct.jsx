@@ -50,36 +50,46 @@ const AddProduct = () => {
   };
 
   // Función para guardar el producto
-  const onSubmit = async (data) => {
-    try {
-      const response = await fetch('http://localhost:3001/api/product', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.titulo,
-          description: data.coleccion,
-          idCategory: data.categoria,
-          sizes: data.sizes,
-          prices: data.precio,
-          stock: data.stock,
-          image: form.imagen,
-          color: data.color,
-        }),
-      });
+const onSubmit = async (data) => {
+  if (!form.imagen) {
+    alert("Please upload an image.");
+    return;
+  }
 
-      if (response.ok) {
-        alert('Product saved successfully');
-        navigate('/products'); // Redirigir a la página de productos
-      } else {
-        alert('Failed to save product');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('There was an error saving the product.');
-    }
+  const payload = {
+    name: data.titulo,
+    description: data.coleccion,
+    idCategory: data.categoria,
+    sizes: data.sizes || "",
+    prices: parseFloat(data.precio),
+    stock: parseInt(data.stock),
+    image: form.imagen,
+    color: data.color,
   };
+
+  console.log("🟢 Enviando al backend:", payload);
+
+try {
+  const response = await fetch('http://localhost:3001/api/product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include', // 🔥 ESTO ES CLAVE
+    body: JSON.stringify(payload),
+  });
+
+  if (response.ok) {
+    alert('Product saved successfully');
+    navigate('/products');
+  } else {
+    const errorData = await response.json();
+    alert('Failed to save product: ' + (errorData.message || 'Unknown error'));
+  }
+} catch (error) {
+  console.error('Error:', error);
+  alert('There was an error saving the product.');
+}
+}
+
 
   return (
     <>

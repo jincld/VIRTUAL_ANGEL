@@ -23,6 +23,7 @@ app.use(cors({
 
 app.use(cookieParser());
 
+
 app.use(express.json({ limit: '40mb' })); // Aumentar el límite según sea necesario
 app.use(express.urlencoded({ limit: '40mb', extended: true })); // Para formularios con archivos
 
