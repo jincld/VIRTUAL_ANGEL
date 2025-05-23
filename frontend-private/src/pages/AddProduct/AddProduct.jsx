@@ -38,16 +38,13 @@ const AddProduct = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm(prev => ({ ...prev, imagen: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setForm(prev => ({ ...prev, imagen: file }));
+  }
+};
+
 
   // Función para guardar el producto
 const onSubmit = async (data) => {
@@ -56,39 +53,37 @@ const onSubmit = async (data) => {
     return;
   }
 
-  const payload = {
-    name: data.titulo,
-    description: data.coleccion,
-    idCategory: data.categoria,
-    sizes: data.sizes || "",
-    prices: parseFloat(data.precio),
-    stock: parseInt(data.stock),
-    image: form.imagen,
-    color: data.color,
-  };
+  const payload = new FormData();
+  payload.append('name', data.titulo);
+  payload.append('description', data.coleccion);
+  payload.append('idCategory', data.categoria);
+  payload.append('sizes', data.sizes || '');
+  payload.append('prices', parseFloat(data.precio));
+  payload.append('stock', parseInt(data.stock));
+  payload.append('color', data.color);
+  payload.append('colorcode', data.colorcode);
+  payload.append('imagen', form.imagen); // archivo
 
-  console.log("🟢 Enviando al backend:", payload);
+  try {
+    const response = await fetch('http://localhost:3001/api/product', {
+      method: 'POST',
+      credentials: 'include',
+      body: payload,
+    });
 
-try {
-  const response = await fetch('http://localhost:3001/api/product', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include', // 🔥 ESTO ES CLAVE
-    body: JSON.stringify(payload),
-  });
-
-  if (response.ok) {
-    alert('Product saved successfully');
-    navigate('/products');
-  } else {
-    const errorData = await response.json();
-    alert('Failed to save product: ' + (errorData.message || 'Unknown error'));
+    if (response.ok) {
+      alert('Product saved successfully');
+      navigate('/products');
+    } else {
+      const errorData = await response.json();
+      alert('Failed to save product: ' + (errorData.message || 'Unknown error'));
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('There was an error saving the product.');
   }
-} catch (error) {
-  console.error('Error:', error);
-  alert('There was an error saving the product.');
-}
-}
+};
+
 
 
   return (
@@ -104,11 +99,12 @@ try {
             {/* Columna 1 */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
-                <img
-                  src={form.imagen || '/holder-newitem.png'}
-                  alt="Preview"
-                  className="img-fluid ap-img-preview"
-                />
+<img
+  src={form.imagen ? URL.createObjectURL(form.imagen) : '/holder-newitem.png'}
+  alt="Preview"
+  className="img-fluid ap-img-preview"
+/>
+
               </div>
               <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
                 <button className="btn ap-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>

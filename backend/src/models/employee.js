@@ -1,14 +1,3 @@
-/*
-    fields:
-        name
-        password
-        age
-        gender
-        phone
-        email
-        rol
-*/
-
 import { Schema, model } from "mongoose";
 
 const employeeSchema = new Schema(
@@ -45,7 +34,10 @@ const employeeSchema = new Schema(
       rol: {
         type: String,
         require: true,
-      }
+      },
+      imagen: {
+        type: String
+      },
   },
   {
     timestamps: true,
