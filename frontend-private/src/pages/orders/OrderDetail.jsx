@@ -5,6 +5,7 @@ import './OrderDetail.css';
 
 const OrderDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [status, setStatus] = useState('');
 
@@ -13,7 +14,7 @@ const OrderDetail = () => {
       try {
         const response = await axios.get(`http://localhost:3001/api/order/${id}`);
         setOrder(response.data);
-        setStatus(response.data.status); // Inicializa el estado editable
+        setStatus(response.data.status);
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
@@ -31,6 +32,7 @@ const OrderDetail = () => {
       const updatedOrder = { ...order, status };
       await axios.put(`http://localhost:3001/api/order/${id}`, updatedOrder);
       alert("Order status updated successfully.");
+      navigate('/orders');
     } catch (error) {
       console.error("Error updating order:", error);
       alert("Failed to update order.");
@@ -62,6 +64,7 @@ const OrderDetail = () => {
                 <option>Delivered</option>
                 <option>Shipped</option>
                 <option>Canceled</option>
+                <option>Finished</option>  {/* <-- Nueva opción agregada */}
               </select>
             </label>
             <label>
@@ -92,4 +95,3 @@ const OrderDetail = () => {
 };
 
 export default OrderDetail;
-

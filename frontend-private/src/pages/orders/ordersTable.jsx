@@ -1,3 +1,4 @@
+// OrdersTable.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -14,17 +15,17 @@ const OrdersTable = () => {
       const response = await axios.get('http://localhost:3001/api/order');
       console.log('Orders API response:', response.data);
 
-      // Asumiendo que la respuesta viene en la forma { orders: [...] }
       if (Array.isArray(response.data)) {
         setOrders(response.data);
       } else if (Array.isArray(response.data.orders)) {
         setOrders(response.data.orders);
       } else {
         console.error("La respuesta no contiene un array de órdenes.");
+        setOrders([]);
       }
-
     } catch (error) {
       console.error("Error fetching orders:", error);
+      setOrders([]);
     }
   };
 
@@ -33,9 +34,7 @@ const OrdersTable = () => {
   }, []);
 
   useEffect(() => {
-    if (!Array.isArray(orders)) {
-      console.error("🚨 'orders' no es un array:", orders);
-    }
+    console.log('Orders state:', orders);
   }, [orders]);
 
   const totalPages = Math.ceil(orders.length / itemsPerPage);
@@ -70,20 +69,26 @@ const OrdersTable = () => {
               </tr>
             </thead>
             <tbody>
-              {currentData.map((order) => (
-                <tr key={order._id || order.id}>
-                  <td data-label="ORDER">#{order._id || order.id}</td>
-                  <td data-label="DATE">{order.fecha || order.date}</td>
-                  <td data-label="STATUS">{order.estado || order.status}</td>
-                  <td data-label="TOTAL">${order.total}</td>
-                  <td data-label="ITEMS">{order.items}</td>
-                  <td data-label="">
-                    <Link to={`/orders/${order._id || order.id}`} className="view-button">
-                      VIEW DETAILS →
-                    </Link>
-                  </td>
+              {currentData.length === 0 ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center' }}>No orders found.</td>
                 </tr>
-              ))}
+              ) : (
+                currentData.map((order) => (
+                  <tr key={order._id || order.id}>
+                    <td data-label="ORDER">#{order._id || order.id}</td>
+                    <td data-label="DATE">{order.fecha || order.date || '—'}</td>
+                    <td data-label="STATUS">{order.estado || order.status || '—'}</td>
+                    <td data-label="TOTAL">${order.total ?? 0}</td>
+                    <td data-label="ITEMS">{order.items ?? 0}</td>
+                    <td data-label="">
+                      <Link to={`/orders/${order._id || order.id}`} className="view-button">
+                        VIEW DETAILS →
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -112,6 +117,8 @@ const OrdersTable = () => {
 };
 
 export default OrdersTable;
+
+
 
 
 
