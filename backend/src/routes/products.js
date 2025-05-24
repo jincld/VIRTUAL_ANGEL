@@ -14,6 +14,7 @@ router
 
 router
   .route("/:id")
+  .get(productsController.getProductById) 
   .put(upload.single("imagen"), productsController.updateProduct)
   .delete(productsController.deleteProduct);
 

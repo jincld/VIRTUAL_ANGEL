@@ -1,31 +1,63 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import './EditProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useLocation } from 'react-router-dom'; // para acceder al estado de la ruta
 
 const EditProduct = () => {
-  const { state } = useLocation(); // Recibe los datos del producto
-  const { id, imagen, titulo, precio, coleccion, color, colorcode, stock, categoria } = state;
-
-  useEffect(() => {
-    AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
-  }, []);
-
+  const { id } = useParams(); // obtener id desde la url
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
-    id,
-    imagen,
-    titulo,
-    precio,
-    coleccion,
-    color,
-    colorcode,
-    stock,
-    categoria,
+    _id: '',
+    imagen: '',
+    titulo: '',
+    precio: '',
+    coleccion: '',
+    color: '',
+    colorcode: '#000000',
+    stock: '',
+    categoria: '',
   });
+
+useEffect(() => {
+  AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
+  
+  console.log('Fetching product with id:', id);
+  
+  async function fetchProduct() {
+    try {
+const res = await fetch(`http://localhost:3001/api/product/${id}`, {
+  credentials: 'include'
+});
+
+      console.log('Fetch response status:', res.status);
+      if (!res.ok) throw new Error('Producto no encontrado');
+      const data = await res.json();
+      console.log('Fetched product data:', data);
+
+      setForm({
+        _id: data._id,
+        imagen: data.image,
+        titulo: data.name,
+        precio: data.price,
+        coleccion: data.coleccion,
+        color: data.color,
+        colorcode: data.colorcode || '#000000',
+        stock: data.stock,
+        categoria: data.category,
+      });
+    } catch (error) {
+      console.error(error);
+      alert('Error al cargar el producto');
+      navigate('/products');
+    }
+  }
+
+  fetchProduct();
+}, [id, navigate]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,19 +66,20 @@ const EditProduct = () => {
 
   const handleClear = () => {
     setForm({
+      _id: '',
       imagen: '',
       titulo: '',
       precio: '',
       coleccion: '',
       color: '',
-      colorcode: '#000000', 
+      colorcode: '#000000',
       stock: '',
       categoria: '',
     });
   };
 
   const handleUpload = () => {
-    fileInputRef.current.click(); 
+    fileInputRef.current.click();
   };
 
   const handleFileChange = (e) => {
@@ -60,17 +93,61 @@ const EditProduct = () => {
     }
   };
 
-  const handleSave = () => {
-    console.log('Product updated:', form);
-    alert('Product updated successfully!');
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/product/${form._id}`, {
+        method: 'DELETE',
+        credentials: 'include', // para que envíe cookies junto con la petición
+      });
+
+      if (!response.ok) throw new Error('Error deleting product');
+
+      alert('Producto eliminado correctamente');
+      navigate('/products');
+    } catch (error) {
+      console.error('Error eliminando producto:', error);
+      alert('Error al eliminar producto');
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('titulo', form.titulo);
+      formData.append('coleccion', form.coleccion);
+      formData.append('categoria', form.categoria);
+      formData.append('precio', form.precio);
+      formData.append('stock', form.stock);
+      formData.append('color', form.color);
+      formData.append('colorcode', form.colorcode);
+
+      if (fileInputRef.current.files[0]) {
+        formData.append('imagen', fileInputRef.current.files[0]);
+      }
+
+      const response = await fetch(`http://localhost:3001/api/product/${form._id}`, {
+        method: 'PUT',
+        credentials: 'include', // para que envíe cookies junto con la petición
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Error al actualizar producto');
+
+      alert('Producto actualizado correctamente');
+      navigate('/products');
+    } catch (error) {
+      console.error('Error actualizando producto:', error);
+      alert('Error al actualizar producto');
+    }
   };
 
   return (
     <>
       <div className="backeditproduct"></div>
       <div className="btn-marginpd margin-top-global">
-
-        <Link to={"/products"} className="ap-btn-back">← BACK</Link>
+        <Link to="/products" className="ap-btn-back">← BACK</Link>
       </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addproduct-title">EDIT PRODUCT</h2>
@@ -96,22 +173,21 @@ const EditProduct = () => {
                   onChange={handleFileChange}
                 />
               </div>
+              <button className="btn ap-btn-save w-100 btnsaveitem" onClick={handleDelete}>Delete item</button>
               <button className="btn ap-btn-save w-100 btnsaveitem" onClick={handleSave}>Save Changes</button>
             </div>
 
             {/* Columna 2 - Formulario */}
             <div className="col-md-7">
               <form className="row g-3">
-                {/* Fila de campos */}
                 <div className="col-6">
-                  <label className="form-label ap-label">ID</label>
+                  <label className="form-label ap-label">ID (MongoDB)</label>
                   <input
                     type="text"
-                    className="form-control ap-input"
-                    name="id"
-                    value={form.id}
-                    onChange={handleChange}
-                    placeholder="Start ID with SH, P, J or SW"
+                    className="form-control ap-input idinput"
+                    name="_id"
+                    value={form._id}
+                    disabled
                   />
                 </div>
                 <div className="col-6">

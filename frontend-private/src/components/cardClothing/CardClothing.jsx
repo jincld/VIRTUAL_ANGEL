@@ -7,26 +7,14 @@ function CardClothing({
 }) {
   const navigate = useNavigate();
 
-  const handleEdit = () => {
-    navigate('/editproduct', {
-      state: { 
-        id, 
-        imagen, 
-        titulo, 
-        precio, 
-        categoria, 
-        stock, 
-        coleccion, 
-        color, 
-        colorcode 
-      }
-    });
-  };
+const handleEdit = () => {
+  navigate(`/editproduct/${id}`);
+};
+
 
   const handleView = () => {
     navigate(`/${categoria.toLowerCase()}/${id}`);
   };
-  
 
   return (
     <div className="card" style={{ width: '18rem', padding: '1.5rem' }}>
@@ -36,7 +24,6 @@ function CardClothing({
         <p className="card-text">${precio}</p>
 
         <Link to={`/${categoria.toLowerCase()}/${id}`} className="btn btn-dark">View</Link>
-
 
         <button onClick={handleEdit} className="btn btn-editclothing">Edit</button>
       </div>
