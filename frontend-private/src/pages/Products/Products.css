@@ -3,7 +3,7 @@
     background-size: cover; 
     background-position: center;
     background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
-    width: 100vw;
+    min-width: 100vw;
     min-height: 100vh;
     background-color: #000000;
     position: fixed;
@@ -16,25 +16,13 @@
   .content-zone {
     position: relative;
     z-index: 1;
+    
+  }
+
+  pr-wi{
+    min-width: 100vw;
   }
   
-  .card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card-img-top {
-    object-fit: cover; /* Asegura que la imagen cubra bien el espacio */
-    height: 200px; /* Ajusta el tamaño de las imágenes */
-  }
   
   .shirtstitle {
     color: red; /* Letras rojas */

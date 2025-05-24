@@ -1,18 +1,15 @@
+// routes/productRoutes.js
 import express from "express";
 import productsController from "../controllers/productsController.js";
-import multer from "multer";
 
 const router = express.Router();
-const upload = multer({ dest: "public/" });
 
-router
-  .route("/")
-  .get(productsController.getProduct)
-  .post(upload.single("image"), productsController.insertProduct);
+// PUT con middleware de multer
+router.put("/product/:id", upload.single("image"), productsController.updateProduct);
 
-router
-  .route("/:id")
-  .put(upload.single("image"), productsController.updateProduct)
-  .delete(productsController.deleteProduct);
+// Otras rutas si las tienes
+router.get("/product", productsController.getProduct);
+router.post("/product", upload.single("image"), productsController.insertProduct);
+router.delete("/product/:id", productsController.deleteProduct);
 
 export default router;

@@ -13,7 +13,7 @@ const Products = () => {
   const [collectionFilter, setCollectionFilter] = useState('');
   const [colorFilter, setColorFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
+  const [sortOrder, setSortOrder] = useState('')
   const [maxPrice, setMaxPrice] = useState(200);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/products"); // Ajusta la URL si es necesario
+      const res = await fetch("http://localhost:3001/api/product"); // Ajusta la URL si es necesario
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -46,8 +46,7 @@ const Products = () => {
     setMaxPrice(200);
   };
 
-  const filteredClothes = products
-    .filter(item => {
+  const filteredClothes = products?.filter(item => {
       const matchSearch =
         item.name.toLowerCase().includes(query.toLowerCase()) ||
         item.description?.toLowerCase().includes(query.toLowerCase()) ||
@@ -72,7 +71,7 @@ const Products = () => {
   return (
     <>
       <div className="backproducts"></div>
-      <div className="container content-zone py-5">
+      <div className="container content-zone py-5 pr-wi">
         <div className="title-wrapper text-center margin-top-global">
           <h1 className="shirtstitle">
             {categoryFilter ? categoryFilter.toUpperCase() : 'ALL PRODUCTS'}
@@ -114,7 +113,7 @@ const Products = () => {
             <h5>No clothes found with the selected filters or search.</h5>
           </div>
         ) : (
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+          <div className="row justify-content-center">
             {filteredClothes.map((item) => (
               <div className="col d-flex justify-content-center" data-aos="fade-up" key={item._id}>
                 <CardClothing

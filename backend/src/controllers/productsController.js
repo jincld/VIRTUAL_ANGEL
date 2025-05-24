@@ -79,6 +79,7 @@ productsController.updateProduct = async (req, res) => {
     const { name, description, idCategory, sizes, prices, stock, color } = req.body;
     let imageUrl = req.body.image;
 
+    // Verificar si se sube una nueva imagen
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "products",
@@ -87,19 +88,38 @@ productsController.updateProduct = async (req, res) => {
       imageUrl = result.secure_url;
     }
 
+    // Validar precios y stock
+    const pricesNum = parseFloat(prices);
+    const stockNum = parseInt(stock);
+
+    if (isNaN(pricesNum) || isNaN(stockNum)) {
+      return res.status(400).json({ message: "Precio o stock inválido" });
+    }
+
     const updated = await productsModel.findByIdAndUpdate(
       req.params.id,
-      { name, description, idCategory, sizes, prices, stock, image: imageUrl, color },
+      {
+        name,
+        description,
+        idCategory,
+        sizes,
+        prices: pricesNum,
+        stock: stockNum,
+        image: imageUrl,
+        color,
+      },
       { new: true }
     );
 
     if (!updated) return res.status(404).json({ message: "Producto no encontrado" });
 
-    res.json({ message: "Product updated" });
+    res.json({ message: "Producto actualizado correctamente", product: updated });
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar el producto", error });
+    console.error("Error al actualizar producto:", error);
+    res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
   }
 };
+
 
 // DELETE
 productsController.deleteProduct = async (req, res) => {
