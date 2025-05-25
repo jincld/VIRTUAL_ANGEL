@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Reviews from "../../components/Reviews/ReviewsAdmin"; 
+import Reviews from "../../../components/Reviews/ReviewsAdmin"; 
 import './SweatersDetail.css';
 
 function SweatersDetail() {
