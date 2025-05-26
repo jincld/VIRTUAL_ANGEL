@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useAuth, AuthProvider } from '../../frontend-public/AuthToken.jsx';
+import { useAuth, AuthProvider } from '../AuthToken.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ClientNav from '../../frontend-public/src/components/Nav/nav.jsx';
@@ -13,11 +13,13 @@ import Login from './pages/Login/Login.jsx';
 import ForgotPass from '../../frontend-public/src/pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from '../../frontend-public/src/pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from '../../frontend-public/src/pages/NewPassword/NewPassword.jsx';
-import Home from './pages/home.jsx';
+
 import Contact from './pages/contact/Contact.jsx';
-import FirstUse from './pages/FirstUse/FirstUse.jsx';
+
 
 // Rutas protegidas
+import Home from './pages/home.jsx';
+import FirstUse from './pages/FirstUse/FirstUse.jsx';
 import Inicio from './pages/inicio/inicio.jsx';
 import Products from './pages/Products/Products.jsx';
 import Shirts from '../../frontend-public/src/pages/shirts/Shirts.jsx';
@@ -38,6 +40,8 @@ import Sales from './pages/sales/Sales.jsx';
 import SaleDetail from './pages/sales/SaleDetail.jsx';
 import OrderDetail from './pages/orders/OrderDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ProfileAdmin from './pages/ProfileAdmin/ProfileAdmin.jsx';
+import ProfileEmployee from './pages/ProfileEmployee/ProfileEmployee.jsx';
 
 // 🔐 Protege rutas temporales como recuperación de contraseña
 const PasswordProtectedRoute = ({ element, storageKey }) => {
@@ -103,11 +107,13 @@ function App() {
             <Route path="forgotpassword" element={<ForgotPass />} />
             <Route path="verifycode" element={<PasswordProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />} />
             <Route path="newpassword" element={<PasswordProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />} />
-            <Route path="startpage" element={<Home />} />
+
             <Route path="contact" element={<Contact />} />
-            <Route path="firstuse" element={<FirstUse />} />
+
 
             {/* Rutas protegidas */}
+            <Route path="startpage" element={<ProtectedRoute element={<Home />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="firstuse" element={<ProtectedRoute element={<FirstUse />} allowedRoles={['admin', 'employee']} />} />
             <Route path="inicio" element={<ProtectedRoute element={<Inicio />} allowedRoles={['admin', 'employee']} />} />
             <Route path="products" element={<ProtectedRoute element={<Products />} allowedRoles={['admin', 'employee']} />} />
             <Route path="employee" element={<ProtectedRoute element={<Employees />} allowedRoles={['admin']} />} />
@@ -123,11 +129,12 @@ function App() {
             <Route path="pants/:id" element={<ProtectedRoute element={<PantsDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="jackets/:id" element={<ProtectedRoute element={<JacketsDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="sweaters/:id" element={<ProtectedRoute element={<SweatersDetail />} allowedRoles={['admin', 'employee']} />} />
-<Route path="/addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
-<Route path="editproduct/:id" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
-
+            <Route path="/addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="editproduct/:id" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
             <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="orders/:id" element={<ProtectedRoute element={<OrderDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="profileadmin" element={<ProtectedRoute element={<ProfileAdmin />} allowedRoles={['admin']} />} />
+            <Route path="profileemployee" element={<ProtectedRoute element={<ProfileEmployee />} allowedRoles={['employee']} />} />
           </Routes>
         </LayoutWrapper>
       </Router>

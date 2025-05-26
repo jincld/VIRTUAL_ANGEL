@@ -196,7 +196,7 @@ const AddEmployee = () => {
                 <div className="col-12">
                   <label className="form-label ap-label">Password</label>
                   <input
-                    type="password"
+                    type="text"
                     className={`form-control ap-input ${errors.password ? 'is-invalid' : ''}`}
                     {...register('password', {
                       required: 'Password is required',

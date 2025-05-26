@@ -1,0 +1,134 @@
+.profile-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Mantén el fondo detrás */
+.backadminprofile {
+  background-image: url('/backprofile.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat-y;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  z-index: 0;
+}
+
+/* Contenido por encima */
+.admin-profile-container {
+  position: relative;
+  z-index: 10;
+  max-width: 500px;
+  width: 420px;
+  padding: 20px;
+  border-radius: 0px;
+  background-color: #000000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.admin-info {
+  margin: 0;
+  text-align: left;
+  z-index: 10;
+}
+
+.admin-info p {
+padding: 5px;
+  z-index: 10;
+  color: #ffffff;
+}
+
+.infoprofilead{
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #444;
+    font-size: 0.9rem;     /* Reducir el tamaño de la fuente de los inputs */
+    padding: 0.5rem;       /* Reducir el padding de los inputs */
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap; /* Para que se apile en pantallas pequeñas */
+  justify-content: center;
+  margin-top: 120px;
+}
+
+.admin-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+}
+
+.admin-image {
+  width: 550px;
+  max-width: 550px;
+  border-radius: 0px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.btn-showing{
+    background-color: #000000;
+    border-color: #ffffff;
+    color: #ffffff;
+    border-radius: 0%;
+    margin: 0px;
+}
+
+.btn-showing:hover{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+    border-radius: 0%;
+    margin: 0px;
+}
+
+.btn-logout{
+    margin-top: 30px;
+    background-color: #ff0000;
+    border-color: #ff0000;
+    color: #ffffff;
+    border-radius: 0%;
+    font-size: 17px;
+    padding: 10px;
+    width: 140px;
+}
+
+.btn-logout:hover{
+    margin-top: 30px;
+    background-color: #000000;
+    border-color: #ff0000;
+    color: #ff0000;
+    border-radius: 0%;
+}
+
+.profiletitle{
+    color: #ff0000;
+}
+
+/* Responsive: apila en columnas cuando el ancho es menor */
+@media (max-width: 768px) {
+  .profile-content {
+    flex-direction: column;
+    margin-top: 300px;
+  }
+
+  .admin-image {
+    max-width: 420px;
+  }
+}
+
