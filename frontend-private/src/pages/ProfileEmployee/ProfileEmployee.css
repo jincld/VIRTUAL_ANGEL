@@ -112,6 +112,7 @@
   .btnsaveemployee{
     background-color: #ff0000;
     border-radius: 0%;
+    font-size: 15px;
   }
 
   .btnsaveemployee:hover{
@@ -137,6 +138,13 @@
     font-weight: bold;
     background-color: #ffffff;
     color: #000000 !important;
+  }
+
+  .btn-logout{
+    background-color: #ff0000;
+    color: #ffffff;
+    border-radius: 0%;
+    font-size: 15px;
   }
 
   @media (max-width: 1025px) {

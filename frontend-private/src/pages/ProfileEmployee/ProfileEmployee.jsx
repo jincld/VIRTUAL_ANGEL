@@ -172,14 +172,10 @@ const noChanges =
     <>
       <div className="backaddemployee"></div>
       <div className="btn-marginpd margin-top-global">
-        <Link to="/employee" className="ap-btn-back">
-          ← BACK
-        </Link>
       </div>
-
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addemployee-title">
-          {isEditing ? 'Edit Profile' : 'Profile'}
+          {isEditing ? 'EDIT PROFILE' : 'PROFILE'}
         </h2>
         <div className="ap-card rounded p-4 shadow">
           <form className="row g-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -230,20 +226,20 @@ const noChanges =
   className="btn ap-btn-save w-100 btnsaveemployee"
   onClick={() => setIsEditing(true)}
 >
-  Edit Profile
+  EDIT PROFILE
 </button>
 
-                  <button type="button" className="btn btn-logout w-100 mt-2" onClick={handleLogout}>
-                    Logout
+                  <button type="button" className="btn ap-btn-save btn-logout w-100 mt-2" onClick={handleLogout}>
+                    LOGOUT
                   </button>
                 </>
               ) : (
                 <>
                   <button type="submit" className="btn ap-btn-save w-100 btnsaveemployee">
-                    Save Changes
+                    SAVE CHANGES
                   </button>
-                  <button type="button" className="btn btn-cancel w-100 mt-2" onClick={handleCancelEdit}>
-                    Cancel Edit
+                  <button type="button" className="btn ap-btn-save w-100 btnsaveemployee mt-2" onClick={handleCancelEdit}>
+                    CANCEL EDIT
                   </button>
                 </>
               )}
@@ -332,7 +328,7 @@ const noChanges =
                   </p>
                 </div>
 
-                <div className="col-6">
+                <div className="col-12">
                   <label className="form-label ap-label">Password</label>
                   <div className="input-group">
                     <input
