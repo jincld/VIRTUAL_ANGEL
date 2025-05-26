@@ -15,49 +15,80 @@ const Products = () => {
   const [sortOrder, setSortOrder] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
   const [products, setProducts] = useState([]);
+  const [collections, setCollections] = useState([]); // Estado para las colecciones únicas
+  const [colors, setColors] = useState([]); // Estado para los colores únicos
+  const [categories, setCategories] = useState([]); // Estado para las categorías únicas
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
 
     fetch('http://localhost:3001/api/product', {
-      credentials: 'include'
+      credentials: 'include',
     })
       .then(res => {
         if (!res.ok) throw new Error('Error fetching products: ' + res.status);
         return res.json();
       })
-      .then(data => setProducts(data))
+      .then(data => {
+        setProducts(data);
+
+        // Extraemos las colecciones únicas
+        const uniqueCollections = [
+          ...new Set(data.map(product => product.coleccion).filter(Boolean)),
+        ];
+        setCollections(uniqueCollections);
+
+        // Extraemos los colores únicos
+        const uniqueColors = [
+          ...new Set(data.map(product => product.color).filter(Boolean)),
+        ];
+        setColors(uniqueColors);
+
+        // Extraemos las categorías únicas
+        const uniqueCategories = [
+          ...new Set(data.map(product => product.category).filter(Boolean)),
+        ];
+        setCategories(uniqueCategories);
+      })
       .catch(err => console.error(err));
   }, []);
 
-  // filtro y búsqueda...
-
+  // Filtrado y búsqueda
   const filteredClothes = products
     .filter(item => {
       const q = query.toLowerCase();
-const matchSearch =
-  (item.name && item.name.toLowerCase().includes(q)) ||
-  (item.coleccion && item.coleccion.toLowerCase().includes(q)) ||
-  (item.color && item.color.toLowerCase().includes(q)) ||
-  (item.category && item.category.toLowerCase().includes(q)) ||
-  (!isNaN(query) && Math.abs(item.price - parseFloat(query)) < 5);
+      const matchSearch =
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.coleccion && item.coleccion.toLowerCase().includes(q)) ||
+        (item.color && item.color.toLowerCase().includes(q)) ||
+        (item.category && item.category.toLowerCase().includes(q)) ||
+        (!isNaN(query) && Math.abs(item.price - parseFloat(query)) < 5);
 
-const matchFilters =
-  (collectionFilter ? item.coleccion === collectionFilter : true) &&
-  (colorFilter ? item.color === colorFilter : true) &&
-  (categoryFilter ? item.category === categoryFilter : true) &&
-  item.price <= maxPrice;
-
-
+      const matchFilters =
+        (collectionFilter
+          ? item.coleccion && item.coleccion.toLowerCase() === collectionFilter.toLowerCase()
+          : true) && // Comprobamos si item.coleccion existe antes de hacer toLowerCase()
+        (colorFilter ? item.color.toLowerCase() === colorFilter.toLowerCase() : true) &&
+        (categoryFilter
+          ? item.category && item.category.toLowerCase() === categoryFilter.toLowerCase()
+          : true) &&
+        item.price <= maxPrice;
 
       return matchSearch && matchFilters;
     })
-.sort((a, b) => {
-  if (sortOrder === 'asc') return a.precio - b.precio;
-  if (sortOrder === 'desc') return b.precio - a.precio;
-  return 0;
-});
+    .sort((a, b) => {
+      if (sortOrder === 'asc') return a.precio - b.precio;
+      if (sortOrder === 'desc') return b.precio - a.precio;
+      return 0;
+    });
 
+  // Función para limpiar filtros
+  const clearFilters = () => {
+    setCollectionFilter('');
+    setColorFilter('');
+    setCategoryFilter('');
+    setMaxPrice(200);
+  };
 
   return (
     <>
@@ -82,15 +113,89 @@ const matchFilters =
             {showFilters ? 'Hide filters' : 'Show filters'}
           </button>
           <div>
-            <Link to={"/addproduct"} className="btn btn-addproducts">+ Add products</Link>
+            <Link to="/addproduct" className="btn btn-addproducts">
+              + Add products
+            </Link>
           </div>
         </div>
 
         {showFilters && (
-          <div className="filter-menu p-4 mt-3 rounded shadow-sm">
-            {/* filtros... */}
-          </div>
-        )}
+  <div className="filter-menu p-4 mt-3 rounded shadow-sm">
+    {/* Filtros con Bootstrap Grid */}
+    <div className="row">
+      {/* Filtro: Collection */}
+      <div className="col-md-6 mb-3">
+        <label>Collection</label>
+        <select
+          value={collectionFilter}
+          onChange={(e) => setCollectionFilter(e.target.value)}
+          className="form-control"
+        >
+          <option value="">All</option>
+          {collections.map((collection) => (
+            <option key={collection} value={collection}>
+              {collection}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Filtro: Color */}
+      <div className="col-md-6 mb-3">
+        <label>Color</label>
+        <select
+          value={colorFilter}
+          onChange={(e) => setColorFilter(e.target.value)}
+          className="form-control"
+        >
+          <option value="">All</option>
+          {colors.map((color) => (
+            <option key={color} value={color}>
+              {color}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Filtro: Category */}
+      <div className="col-md-6 mb-3">
+        <label>Category</label>
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="form-control"
+        >
+          <option value="">All</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Filtro: Max Price */}
+      <div className="col-md-6 mb-3">
+        <label>Max Price</label>
+        <input
+          type="number"
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+          min="0"
+          className="form-control"
+        />
+      </div>
+    </div>
+
+    {/* Botón Clear Filters */}
+    <div className="d-flex justify-content-end">
+      <button className="btn btn-dark" onClick={clearFilters}>
+        Clear Filters
+      </button>
+    </div>
+  </div>
+)}
+
 
         {filteredClothes.length === 0 && (
           <div className="text-center text-light bg-dark p-4 rounded my-4 shadow">
@@ -117,18 +222,17 @@ const matchFilters =
                 justifyContent: 'center',
               }}
             >
-<CardClothing
-  id={item._id}
-  imagen={item.image}        // antes: item.imagen
-  titulo={item.name}         // antes: item.titulo
-  precio={item.price}        // antes: item.precio
-  categoria={item.category}  // antes: item.categoria
-  stock={item.stock}
-  coleccion={item.coleccion}
-  color={item.color}
-  colorcode={item.colorcode}
-/>
-
+              <CardClothing
+                id={item._id}
+                imagen={item.image} // antes: item.imagen
+                titulo={item.name} // antes: item.titulo
+                precio={item.price} // antes: item.precio
+                categoria={item.category} // antes: item.categoria
+                stock={item.stock}
+                coleccion={item.coleccion}
+                color={item.color}
+                colorcode={item.colorcode}
+              />
             </div>
           ))}
         </div>

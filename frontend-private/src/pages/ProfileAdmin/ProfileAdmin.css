@@ -120,6 +120,11 @@ padding: 5px;
     color: #ff0000;
 }
 
+.disc-ad{
+  font-size: 12px;
+  color: #c5c5c5 !important;
+}
+
 /* Responsive: apila en columnas cuando el ancho es menor */
 @media (max-width: 768px) {
   .profile-content {

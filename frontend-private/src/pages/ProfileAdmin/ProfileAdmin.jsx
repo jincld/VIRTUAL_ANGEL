@@ -55,6 +55,7 @@ return (
         <p className="infoprofilead">
           {showPassword ? adminInfo.password : "••••••••••••••"}
         </p>
+        <p className="disc-ad">*If you need to change these credentials, do it in the backend.</p>
       </div>
       <button className="btn btn-logout" onClick={handleLogout}>LOGOUT</button>
     </div>
