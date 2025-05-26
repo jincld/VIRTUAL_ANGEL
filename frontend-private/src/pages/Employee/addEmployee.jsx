@@ -171,8 +171,8 @@ const AddEmployee = () => {
                     {...register('gender', { required: 'Gender is required' })}
                   >
                     <option value="">Select</option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
                   </select>
                   {errors.gender && <div className="invalid-feedback">{errors.gender.message}</div>}
                 </div>
@@ -184,8 +184,8 @@ const AddEmployee = () => {
                     {...register('rol', { required: 'Role is required' })}
                   >
                     <option value="">Select</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
+                    <option value="employee">Admin</option>
+                    <option value="employee">Manager</option>
                     <option value="employee">Employee</option>
                   </select>
                   {errors.rol && <div className="invalid-feedback">{errors.rol.message}</div>}
