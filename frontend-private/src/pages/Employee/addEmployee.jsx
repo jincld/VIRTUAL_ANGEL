@@ -64,10 +64,6 @@ const AddEmployee = () => {
         reset();
         setImageFile(null);
         setImagePreview('');
-<<<<<<< HEAD
-        navigate('/employee'); // ✅ Redirección al listado
-=======
->>>>>>> 3990243ea780e6f1bada45150ae66c868041bda2
       } else {
         alert(resData.message || 'Error al registrar empleado');
       }
@@ -99,25 +95,11 @@ const AddEmployee = () => {
               </div>
               <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
                 <button type="button" className="btn ap-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>
-<<<<<<< HEAD
-                <button
-                  type="button"
-                  className="btn ap-btn-clear w-50"
-                  onClick={() => {
-                    reset();
-                    setImageFile(null);
-                    setImagePreview('');
-                  }}
-                >
-                  Clear Form
-                </button>
-=======
                 <button type="button" className="btn ap-btn-clear w-50" onClick={() => {
                   reset();
                   setImageFile(null);
                   setImagePreview('');
                 }}>Clear Form</button>
->>>>>>> 3990243ea780e6f1bada45150ae66c868041bda2
                 <input
                   type="file"
                   accept="image/*"
@@ -132,10 +114,6 @@ const AddEmployee = () => {
             {/* Formulario */}
             <div className="col-md-7">
               <div className="row g-3">
-<<<<<<< HEAD
-=======
-                {/* Campos como antes... */}
->>>>>>> 3990243ea780e6f1bada45150ae66c868041bda2
                 <div className="col-6">
                   <label className="form-label ap-label">Name</label>
                   <input
@@ -146,10 +124,6 @@ const AddEmployee = () => {
                   {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
                 </div>
 
-<<<<<<< HEAD
-=======
-                {/* Email */}
->>>>>>> 3990243ea780e6f1bada45150ae66c868041bda2
                 <div className="col-6">
                   <label className="form-label ap-label">Email</label>
                   <input
