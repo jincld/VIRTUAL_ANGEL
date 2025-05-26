@@ -43,6 +43,7 @@ import passwordRecoveryRoutes from "./src/routes/passwordRecovery.js";
 import validateAuthToken from "./src/middlewares/validateAuthToken.js"
 import meRoute from './src/routes/me.js';
 import adminRoutes from "./src/routes/adminRoutes.js";
+import dashboardRoutes from './src/routes/dashboardRoutes.js';
 
 // rutas
 app.use("/api/category", validateAuthToken(["admin"]), categoryRoutes);
@@ -59,6 +60,8 @@ app.use("/api/login", loginRoute);
 app.use("/api/logout", logoutRoute);
 app.use("/api/passwordRecovery", passwordRecoveryRoutes);
 app.use("/api/me", meRoute);
+app.use("/api/dashboard", dashboardRoutes);
+
 
 // exportar la app para usarla en index.js
 export default app;
