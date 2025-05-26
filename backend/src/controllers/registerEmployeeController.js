@@ -13,7 +13,7 @@ registerEmployeesController.register = async (req, res) => {
 
   try {
     const existEmployee = await EmployeeModel.findOne({ email });
-    if (existEmployee) return res.json({ message: "El empleado ya existe" });
+    if (existEmployee) return res.status(400).json({ message: "El empleado ya existe" });
 
     const passwordHash = await bcryptjs.hash(password, 10);
 
@@ -39,20 +39,13 @@ registerEmployeesController.register = async (req, res) => {
 
     await newEmployee.save();
 
-    jsonwebtoken.sign(
-      { id: newEmployee._id },
-      config.JWT.secret,
-      { expiresIn: config.JWT.expiresIn },
-      (error, token) => {
-        if (error) console.log(error);
-        res.cookie("authToken", token);
-        res.json({ message: "Employee saved" });
-      }
-    );
+    // No tocar la cookie authToken ni generar token acá
+    res.status(201).json({ message: "Empleado guardado correctamente" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error on the register" });
+    res.status(500).json({ message: "Error en el registro" });
   }
 };
+
 
 export default registerEmployeesController;

@@ -1,5 +1,15 @@
-const employeeController = {};
 import employeeModel from "../models/employee.js";
+import { v2 as cloudinary } from "cloudinary";
+import bcryptjs from "bcryptjs";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const employeeController = {};
+
 
 // SELECT
 employeeController.getemployee = async (req, res) => {
@@ -50,7 +60,22 @@ employeeController.deleteEmployee = async (req, res) => {
   res.json({ message: "Employee Customers" });
 };
 
-// UPDATE
+//OBTENER POR ID
+employeeController.getEmployeeById = async (req, res) => {
+  try {
+    const employee = await employeeModel.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    res.json(employee);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+
+//UPDATE
+
 employeeController.updateEmployee = async (req, res) => {
   try {
     const { name, password, age, gender, phone, email, rol } = req.body;
@@ -59,35 +84,40 @@ employeeController.updateEmployee = async (req, res) => {
     const employee = await employeeModel.findById(req.params.id);
     if (!employee) return res.status(404).json({ message: "Empleado no encontrado" });
 
-    let imageUrl = employee.imagen; // imagen actual
+    let imageUrl = employee.imagen;
 
-    // Si se sube nueva imagen, subirla a Cloudinary
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "employees",
         allowed_formats: ["jpg", "png", "jpeg"],
       });
       imageUrl = result.secure_url;
-
-      // Si deseas, puedes eliminar la imagen anterior de Cloudinary aquí,
-      // pero necesitas guardar el `public_id` para hacerlo.
     }
 
-    // Actualizar el empleado
-    await employeeModel.findByIdAndUpdate(req.params.id, {
-      name,
-      password,
-      age,
-      gender,
-      phone,
-      email,
-      rol,
-      imagen: imageUrl,
-    });
+    // Hashear password solo si viene y no está vacío
+    let passwordHash = employee.password;
+    if (password && password.trim() !== "") {
+      passwordHash = await bcryptjs.hash(password, 10);
+    }
+
+    await employeeModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        password: passwordHash,
+        age,
+        gender,
+        phone,
+        email,
+        rol,
+        imagen: imageUrl,
+      },
+      { new: true }
+    );
 
     res.json({ message: "Empleado actualizado correctamente" });
   } catch (error) {
-    console.log("Error al actualizar empleado:", error);
+    console.error("Error al actualizar empleado:", error);
     res.status(500).json({ message: "Error al actualizar empleado" });
   }
 };

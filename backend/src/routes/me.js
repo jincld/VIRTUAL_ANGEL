@@ -1,4 +1,3 @@
-// src/routes/me.js
 import express from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 import { config } from '../config.js';
@@ -14,7 +13,12 @@ router.get('/', (req, res) => {
 
   try {
     const decoded = jsonwebtoken.verify(authToken, config.JWT.secret);
-    return res.json({ userType: decoded.userType });
+
+    // ⚠️ Asegúrate que el token incluya userId y userType al generarlo en login
+    return res.json({
+      userType: decoded.userType,
+      userId: decoded.id, // <-- Agregar esta línea
+    });
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
   }

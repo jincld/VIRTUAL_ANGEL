@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import './nav.css';
-import { useAuth } from '../../../../frontend-public/AuthToken'; // ajusta la ruta si es necesario
+import { useAuth } from '../../../AuthToken.jsx'; // ajusta la ruta si es necesario
 
 function Nav() {
   const { userType } = useAuth(); // <-- acceso al tipo de usuario
@@ -34,10 +34,17 @@ function Nav() {
               </li>
             )}
 
-            {/* Siempre visible */}
-            <li className="nav-item">
-              <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/">LOGIN</NavLink>
-            </li>
+            {userType === 'admin' && (
+              <li className="nav-item">
+                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileadmin">PROFILE ADMIN</NavLink>
+              </li>
+            )}
+
+            {userType === 'employee' && (
+              <li className="nav-item">
+                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileemployee">PROFILE EMPLOYEE</NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -13,7 +13,9 @@ router
 
 router
   .route("/:id")
+  .get(employeeController.getEmployeeById)   // <--- agregar esta línea
   .put(upload.single("imagen"), employeeController.updateEmployee)
   .delete(employeeController.deleteEmployee);
+
 
 export default router;
