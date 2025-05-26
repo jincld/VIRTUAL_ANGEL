@@ -60,16 +60,16 @@ const AddEmployee = () => {
       const resData = await response.json();
 
       if (response.ok) {
-        alert(resData.message || 'Empleado registrado correctamente');
+        alert(resData.message || 'Employee registered successfully');
         reset();
         setImageFile(null);
         setImagePreview('');
       } else {
-        alert(resData.message || 'Error al registrar empleado');
+        alert(resData.message || 'Failed to register employee');
       }
     } catch (error) {
-      console.error('❌ Error al guardar el empleado:', error);
-      alert('Ocurrió un error al guardar el empleado');
+      console.error('❌ Error saving employee:', error);
+      alert('An error occurred while saving the employee');
     }
   };
 
@@ -84,7 +84,7 @@ const AddEmployee = () => {
         <h2 className="text-center text-black mb-4 addemployee-title">ADD NEW EMPLOYEE</h2>
         <div className="ap-card rounded p-4 shadow">
           <form className="row g-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-            {/* Imagen */}
+            {/* Image section */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
                 <img
@@ -111,10 +111,9 @@ const AddEmployee = () => {
               <button type="submit" className="btn ap-btn-save w-100 btnsaveemployee">Save Employee</button>
             </div>
 
-            {/* Formulario */}
+            {/* Form section */}
             <div className="col-md-7">
               <div className="row g-3">
-                {/* Campos como antes... */}
                 <div className="col-6">
                   <label className="form-label ap-label">Name</label>
                   <input
@@ -125,7 +124,6 @@ const AddEmployee = () => {
                   {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
                 </div>
 
-                {/* Email */}
                 <div className="col-6">
                   <label className="form-label ap-label">Email</label>
                   <input

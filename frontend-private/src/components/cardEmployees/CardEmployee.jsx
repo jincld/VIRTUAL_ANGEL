@@ -6,21 +6,13 @@ import './CardEmployee.css';
 function CardEmployee({ id, imagen, name, age, gender, email, phone, rol }) {
   const navigate = useNavigate();
 
-const handleEdit = () => {
-  navigate(`/editemployee`, {
-    state: { 
-      id, 
-      imagen, 
-      name, 
-      age, 
-      gender, 
-      email, 
-      phone, 
-      rol 
-    }
-  });
-};
+  const handleEdit = () => {
+    navigate(`/editemployee/${id}`);
+  };
 
+  const handleView = () => {
+    navigate(`/employee/${id}`);
+  };
 
   return (
     <div className="card" style={{ width: '18rem', padding: '1.5rem' }}>
@@ -34,7 +26,7 @@ const handleEdit = () => {
           <strong>Email:</strong> {email}<br />
           <strong>Phone number:</strong> {phone}
         </p>
-        <button onClick={handleEdit} className="btn btn-editemployee">
+        <button onClick={handleEdit} className="btn btn-editemployee" style={{ marginLeft: '0.5rem' }}>
           Edit details
         </button>
       </div>
@@ -43,4 +35,5 @@ const handleEdit = () => {
 }
 
 export default CardEmployee;
+
 

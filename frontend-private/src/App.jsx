@@ -131,6 +131,7 @@ function App() {
             <Route path="sweaters/:id" element={<ProtectedRoute element={<SweatersDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="/addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
             <Route path="editproduct/:id" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="editemployee/:id" element={<ProtectedRoute element={<EditEmployee />} allowedRoles={['admin', 'employee']} />}/>
             <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="orders/:id" element={<ProtectedRoute element={<OrderDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="profileadmin" element={<ProtectedRoute element={<ProfileAdmin />} allowedRoles={['admin']} />} />

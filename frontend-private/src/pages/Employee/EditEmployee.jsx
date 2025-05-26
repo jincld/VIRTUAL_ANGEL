@@ -1,39 +1,58 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import './addEmployee.css'; // Usamos el MISMO CSS
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import './addEmployee.css'; // We use the same CSS you have
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const EditEmployee = () => {
-  const location = useLocation();
+  const { id } = useParams(); // Get id from URL
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
-    id: '',
-    imagen: '',
+    _id: '',
+    image: '',
     name: '',
     age: '',
     gender: '',
     phone: '',
     email: '',
-    rol: ''
+    role: '',
   });
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
-  }, []);
 
-  useEffect(() => {
-    if (!location.state) {
-      alert('No employee data found to edit!');
-      navigate('/employees');
-      return;
+    async function fetchEmployee() {
+      try {
+        const res = await fetch(`http://localhost:3001/api/employee/${id}`, {
+          credentials: 'include',
+        });
+        if (!res.ok) throw new Error('Employee not found');
+        const data = await res.json();
+
+        setForm({
+          _id: data._id,
+          image: data.imagen || '',
+          name: data.name || '',
+          age: data.age || '',
+          gender: data.gender || 'Female',
+          phone: data.phone || '',
+          email: data.email || '',
+          role: data.rol || 'Employee',
+        });
+      } catch (error) {
+        alert('Error loading employee');
+        navigate('/employees');
+      }
     }
 
-    const { id, imagen, name, age, gender, phone, email, rol } = location.state;
-    setForm({ id, imagen, name, age, gender, phone, email, rol });
-  }, [location.state, navigate]);
+    if (id) fetchEmployee();
+    else {
+      alert('No employee ID provided');
+      navigate('/employees');
+    }
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,14 +61,14 @@ const EditEmployee = () => {
 
   const handleClear = () => {
     setForm({
-      id: '',
-      imagen: '',
+      _id: '',
+      image: '',
       name: '',
       age: '',
       gender: '',
       phone: '',
       email: '',
-      rol: ''
+      role: '',
     });
   };
 
@@ -62,34 +81,74 @@ const EditEmployee = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setForm(prev => ({ ...prev, imagen: reader.result }));
+        setForm(prev => ({ ...prev, image: reader.result }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSave = () => {
-    console.log('Employee updated:', form);
-    alert('Employee data saved in the console.');
-    navigate('/employees');
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this employee?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/employee/${form._id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (!response.ok) throw new Error('Error deleting employee');
+
+      alert('Employee deleted successfully');
+      navigate('/employees');
+    } catch (error) {
+      alert('Error deleting employee');
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('age', form.age);
+      formData.append('gender', form.gender);
+      formData.append('phone', form.phone);
+      formData.append('email', form.email);
+      formData.append('rol', form.role);
+
+      if (fileInputRef.current.files[0]) {
+        formData.append('imagen', fileInputRef.current.files[0]);
+      }
+
+      const response = await fetch(`http://localhost:3001/api/employee/${form._id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Error updating employee');
+
+      alert('Employee updated successfully');
+      navigate('/employee');
+    } catch (error) {
+      alert('Error updating employee');
+    }
   };
 
   return (
     <>
       <div className="backaddemployee"></div>
-                                    <div className="btn-marginpd margin-top-global">
-
-            <Link to={"/employee"} className="ap-btn-back">← BACK</Link>
-          </div>
+      <div className="btn-marginpd margin-top-global">
+        <Link to="/employees" className="ap-btn-back">← BACK</Link>
+      </div>
       <div className="ap-wrapper">
-
         <h2 className="text-center text-black mb-4 addemployee-title">EDIT EMPLOYEE</h2>
         <div className="ap-card rounded p-4 shadow">
           <div className="row g-4">
+            {/* Left column - Image and buttons */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
                 <img
-                  src={form.imagen || '/holder-newemployee.png'}
+                  src={form.image || '/holder-newemployee.png'}
                   alt="Preview"
                   className="img-fluid ap-img-preview"
                 />
@@ -105,11 +164,23 @@ const EditEmployee = () => {
                   onChange={handleFileChange}
                 />
               </div>
+              <button className="btn ap-btn-save w-100 btnsaveemployee mb-2" onClick={handleDelete}>Delete Employee</button>
               <button className="btn ap-btn-save w-100 btnsaveemployee" onClick={handleSave}>Save Changes</button>
             </div>
 
+            {/* Right column - Form */}
             <div className="col-md-7">
-              <form className="row g-3">
+              <form className="row g-3" onSubmit={e => e.preventDefault()}>
+                <div className="col-6">
+                  <label className="form-label ap-label">ID (MongoDB)</label>
+                  <input
+                    type="text"
+                    className="form-control ap-input idinput"
+                    name="_id"
+                    value={form._id}
+                    disabled
+                  />
+                </div>
                 <div className="col-6">
                   <label className="form-label ap-label">Name</label>
                   <input
@@ -123,11 +194,12 @@ const EditEmployee = () => {
                 <div className="col-6">
                   <label className="form-label ap-label">Age</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control ap-input"
                     name="age"
                     value={form.age}
                     onChange={handleChange}
+                    min={0}
                   />
                 </div>
                 <div className="col-6">
@@ -140,12 +212,13 @@ const EditEmployee = () => {
                   >
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 <div className="col-6">
                   <label className="form-label ap-label">Phone</label>
                   <input
-                    type="text"
+                    type="tel"
                     className="form-control ap-input"
                     name="phone"
                     value={form.phone}
@@ -166,8 +239,8 @@ const EditEmployee = () => {
                   <label className="form-label ap-label">Role</label>
                   <select
                     className="form-select ap-input"
-                    name="rol"
-                    value={form.rol}
+                    name="role"
+                    value={form.role}
                     onChange={handleChange}
                   >
                     <option value="Admin">Admin</option>
@@ -185,3 +258,4 @@ const EditEmployee = () => {
 };
 
 export default EditEmployee;
+

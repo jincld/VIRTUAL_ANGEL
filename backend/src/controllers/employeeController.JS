@@ -53,11 +53,16 @@ employeeController.createEmployee = async (req, res) => {
 
 // DELETE
 employeeController.deleteEmployee = async (req, res) => {
-  const deletedEmployee = await EmployeeModel.findByIdAndDelete(req.params.id);
-  if (!deletedEmployee) {
-    return res.status(404).json({ message: "Employee not found" });
+  try {
+    const deletedEmployee = await employeeModel.findByIdAndDelete(req.params.id);
+    if (!deletedEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    res.json({ message: "Employee deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    res.status(500).json({ message: "Error deleting employee" });
   }
-  res.json({ message: "Employee Customers" });
 };
 
 //OBTENER POR ID
