@@ -55,13 +55,6 @@ return (
         <p className="infoprofilead">
           {showPassword ? adminInfo.password : "••••••••••••••"}
         </p>
-                  <button
-            className="btn btn-showing"
-            onClick={() => setShowPassword((prev) => !prev)}
-            style={{ marginLeft: '10px' }}
-          >
-            {showPassword ? "HIDE" : "SHOW"}
-          </button>
       </div>
       <button className="btn btn-logout" onClick={handleLogout}>LOGOUT</button>
     </div>
