@@ -25,24 +25,35 @@ const Employees = () => {
   useEffect(() => {
     if (location.state?.shouldRefetch) {
       fetchEmployees();
-      // Limpiar el estado para que no vuelva a recargar al navegar
+      // Clear state to avoid re-fetching on navigation
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
 
   const fetchEmployees = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/employee');
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      const data = await res.json();
+      const res = await fetch('http://localhost:3001/api/employee', {
+        credentials: 'include',
+      });
 
-      const empleados = Array.isArray(data)
+      console.log('Raw response:', res);
+
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+
+      const data = await res.json();
+      console.log('Data received from server:', data);
+
+      const employeeList = Array.isArray(data)
         ? data
         : Array.isArray(data.employees)
         ? data.employees
+        : Array.isArray(data.data)
+        ? data.data
         : [];
 
-      setEmployees(empleados);
+      console.log('Processed employees:', employeeList);
+
+      setEmployees(employeeList);
       setLoading(false);
     } catch (err) {
       console.error('Error fetching employees:', err);
@@ -59,14 +70,19 @@ const Employees = () => {
   };
 
   const filteredEmployees = employees.filter((employee) => {
+    const name = employee.name || '';
+    const email = employee.email || '';
+    const rol = employee.rol || '';
+    const gender = employee.gender || '';
+
     const matchSearch =
-      employee.name.toLowerCase().includes(query.toLowerCase()) ||
-      employee.email.toLowerCase().includes(query.toLowerCase()) ||
-      employee.rol.toLowerCase().includes(query.toLowerCase());
+      name.toLowerCase().includes(query.toLowerCase()) ||
+      email.toLowerCase().includes(query.toLowerCase()) ||
+      rol.toLowerCase().includes(query.toLowerCase());
 
     const matchFilters =
-      (genderFilter ? employee.gender.toLowerCase() === genderFilter.toLowerCase() : true) &&
-      (roleFilter ? employee.rol.toLowerCase() === roleFilter.toLowerCase() : true);
+      (genderFilter ? gender.toLowerCase() === genderFilter.toLowerCase() : true) &&
+      (roleFilter ? rol.toLowerCase() === roleFilter.toLowerCase() : true);
 
     return matchSearch && matchFilters;
   });
@@ -140,7 +156,7 @@ const Employees = () => {
         ) : (
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
             {filteredEmployees.map((employee) => {
-              console.log(employee); // Útil para depurar si imagen u otros campos están vacíos
+              console.log(employee); // Useful for debugging if image or other fields are empty
               return (
                 <div
                   className="col d-flex justify-content-center"
@@ -168,3 +184,4 @@ const Employees = () => {
 };
 
 export default Employees;
+
