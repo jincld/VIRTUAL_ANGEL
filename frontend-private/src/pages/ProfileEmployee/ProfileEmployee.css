@@ -1,0 +1,189 @@
+/* Fondo que cubre el 100% de la pantalla y centra el contenido */
+.ap-wrapper {
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    flex-direction: column; /* Esto asegura que el título esté arriba */
+    align-items: center;     /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 2;
+    min-height: 100vh;
+  }
+  
+  
+  .backaddemployee {
+    background-image: url('addproduct-bg.png');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position:absolute; /* <- Cambiado a fixed */
+    top: 120px;
+    left: 0;
+    z-index: 0; /* Asegura que quede detrás */
+  }
+
+  /* Estilo de la tarjeta */
+  .ap-card {
+    background-color: #000;
+    width: 80%;               /* El formulario ocupará el 80% del ancho de la pantalla */
+    max-width: 800px;         /* Reducción en el ancho máximo */
+    min-height: 400px;        /* Establecer un valor mínimo de altura */
+    height: auto;             /* La altura de la tarjeta se ajusta al contenido */
+    padding: 1rem;
+    border-radius: 10px;
+    overflow: hidden;         /* Evitar cualquier desbordamiento */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 2;
+  }
+  
+  /* Etiquetas de los inputs */
+  .ap-label {
+    color: #ddd;
+    font-size: 0.9rem;   /* Reducir el tamaño de las etiquetas */
+  }
+  
+  /* Estilo de los inputs */
+  .ap-input {
+    background-color: #1e1e1e !important;
+    color: #fff;
+    border: 1px solid #444;
+    font-size: 0.9rem;     /* Reducir el tamaño de la fuente de los inputs */
+    padding: 0.5rem;       /* Reducir el padding de los inputs */
+  }
+  
+  /* Placeholder de los inputs */
+  .ap-input::placeholder {
+    color: #aaa;
+  }
+  
+  /* Estilo de los botones */
+  .ap-btn-upload {
+    background-color: #444;
+    color: #fff;
+    padding: 0.5rem;
+    font-size: 0.9rem;  /* Reducir tamaño de fuente en los botones */
+  }
+  
+  .ap-btn-clear {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 0.5rem;
+    font-size: 0.9rem;  /* Reducir tamaño de fuente en los botones */
+    border-radius: 0%;
+  }
+  
+  .ap-btn-clear:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .ap-btn-save {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.5rem;
+    font-size: 0.9rem;  /* Reducir tamaño de fuente en los botones */
+  }
+  
+  .ap-img-preview {
+    max-height: 200px;
+    object-fit: cover;
+    border: 1px solid #333;
+  }
+  
+  /* Flex para los inputs del formulario */
+  form .col-6 {
+    flex: 0 0 50%; /* Campos lado a lado */
+    padding: 0.5rem;
+  }
+  
+  form .col-12 {
+    flex: 0 0 100%; /* Campos que ocupan todo el espacio */
+  }
+
+  .btnsaveemployee{
+    background-color: #ff0000;
+    border-radius: 0%;
+  }
+
+  .btnsaveemployee:hover{
+    background-color: #000000;
+    color: #ff0000;
+    border-color: #ff0000;
+  }
+
+  .btnupload-image{
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 0%;
+  }
+
+  .btnupload-image:hover{
+    background-color: #000000;
+    color: #ff0000;
+    border-color: #ff0000;
+  }
+
+  .addemployee-title{
+    z-index: 2;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000 !important;
+  }
+
+  @media (max-width: 1025px) {
+    .backaddemployee{
+        background-image: url('addproduct-bg-2.png');
+    }
+  }
+  
+  /* Media query para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .ap-card {
+      width: 90%; /* El formulario ocupará casi todo el ancho en pantallas pequeñas */
+      max-height: none; /* El máximo de altura no se aplica */
+      margin: 0;         /* Eliminar el margen superior que lo desplazaba hacia abajo */
+    }
+
+    .addemployee-title{
+        margin-top: 40px;
+      }
+
+    .ap-wrapper {
+        background-color: #ffffff;
+    }
+
+    .backaddemployee{
+        background-image: url('addproduct-bg-3.png');
+        background-repeat: repeat-y;
+    }
+  
+    .ap-img-preview {
+      max-height: 150px; /* Reducir el tamaño de la imagen */
+    }
+  
+    .ap-btn-upload,
+    .ap-btn-clear,
+    .ap-btn-save {
+      width: 100%; /* Los botones se hacen más anchos en pantallas pequeñas */
+      padding: 0.5rem;  /* Reducir padding en los botones */
+    }
+  
+    form .col-6 {
+      flex: 0 0 100%; /* En pantallas pequeñas, los campos se apilan */
+    }
+  
+    /* Hacer que el contenedor no se sobrepase en pantallas pequeñas */
+    .ap-wrapper {
+      padding: 10px;     /* Reducir padding alrededor para evitar el desbordamiento */
+      height: auto;      /* Ajustar el tamaño del contenedor según el contenido */
+    }
+  }

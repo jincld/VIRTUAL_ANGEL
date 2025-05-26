@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useAuth, AuthProvider } from '../../frontend-public/AuthToken.jsx';
+import { useAuth, AuthProvider } from '../AuthToken.jsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ClientNav from '../../frontend-public/src/components/Nav/nav.jsx';
@@ -13,21 +13,23 @@ import Login from './pages/Login/Login.jsx';
 import ForgotPass from '../../frontend-public/src/pages/ForgotPassword/Forgotpassword.jsx';
 import VerifyCode from '../../frontend-public/src/pages/VerifyCode/VerifyCode.jsx';
 import NewPassword from '../../frontend-public/src/pages/NewPassword/NewPassword.jsx';
-import Home from './pages/home.jsx';
+
 import Contact from './pages/contact/Contact.jsx';
-import FirstUse from './pages/FirstUse/FirstUse.jsx';
+
 
 // Rutas protegidas
+import Home from './pages/home.jsx';
+import FirstUse from './pages/FirstUse/FirstUse.jsx';
 import Inicio from './pages/inicio/inicio.jsx';
 import Products from './pages/Products/Products.jsx';
 import Shirts from '../../frontend-public/src/pages/shirts/Shirts.jsx';
 import Pants from '../../frontend-public/src/pages/pants/Pants.jsx';
 import Jacket from '../../frontend-public/src/pages/jackets/Jackets.jsx';
 import Sweaters from '../../frontend-public/src/pages/sweaters/Sweaters.jsx';
-import PantsDetail from '../../frontend-public/src/pages/pants/PantsDetailAdmin.jsx';
-import ShirtsDetail from '../../frontend-public/src/pages/shirts/ShirtsDetailAdmin.jsx';
-import JacketsDetail from '../../frontend-public/src/pages/jackets/JacketsDetailAdmin.jsx';
-import SweatersDetail from '../../frontend-public/src/pages/sweaters/SweatersDetailAdmin.jsx';
+import PantsDetail from './pages/ProductsView/PantsView/PantsDetailAdmin.jsx';
+import ShirtsDetail from './pages/ProductsView/ShirtsView/ShirtsDetailAdmin.jsx';
+import JacketsDetail from './pages/ProductsView/JacketsView/JacketsDetailAdmin.jsx';
+import SweatersDetail from './pages/ProductsView/SweatersView/SweatersDetailAdmin.jsx';
 import AddProduct from './pages/AddProduct/AddProduct.jsx';
 import EditProduct from './pages/EditProduct/EditProduct.jsx';
 import Employees from './pages/Employee/Employee.jsx';
@@ -38,6 +40,8 @@ import Sales from './pages/sales/Sales.jsx';
 import SaleDetail from './pages/sales/SaleDetail.jsx';
 import OrderDetail from './pages/orders/OrderDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ProfileAdmin from './pages/ProfileAdmin/ProfileAdmin.jsx';
+import ProfileEmployee from './pages/ProfileEmployee/ProfileEmployee.jsx';
 
 // 🔐 Protege rutas temporales como recuperación de contraseña
 const PasswordProtectedRoute = ({ element, storageKey }) => {
@@ -103,11 +107,13 @@ function App() {
             <Route path="forgotpassword" element={<ForgotPass />} />
             <Route path="verifycode" element={<PasswordProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />} />
             <Route path="newpassword" element={<PasswordProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />} />
-            <Route path="startpage" element={<Home />} />
+
             <Route path="contact" element={<Contact />} />
-            <Route path="firstuse" element={<FirstUse />} />
+
 
             {/* Rutas protegidas */}
+            <Route path="startpage" element={<ProtectedRoute element={<Home />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="firstuse" element={<ProtectedRoute element={<FirstUse />} allowedRoles={['admin', 'employee']} />} />
             <Route path="inicio" element={<ProtectedRoute element={<Inicio />} allowedRoles={['admin', 'employee']} />} />
             <Route path="products" element={<ProtectedRoute element={<Products />} allowedRoles={['admin', 'employee']} />} />
             <Route path="employee" element={<ProtectedRoute element={<Employees />} allowedRoles={['admin']} />} />
@@ -124,9 +130,11 @@ function App() {
             <Route path="jackets/:id" element={<ProtectedRoute element={<JacketsDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="sweaters/:id" element={<ProtectedRoute element={<SweatersDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="/addproduct" element={<ProtectedRoute element={<AddProduct />} allowedRoles={['admin', 'employee']} />} />
-            <Route path="editproduct" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="editproduct/:id" element={<ProtectedRoute element={<EditProduct />} allowedRoles={['admin', 'employee']} />} />
             <Route path="sales/:id" element={<ProtectedRoute element={<SaleDetail />} allowedRoles={['admin', 'employee']} />} />
             <Route path="orders/:id" element={<ProtectedRoute element={<OrderDetail />} allowedRoles={['admin', 'employee']} />} />
+            <Route path="profileadmin" element={<ProtectedRoute element={<ProfileAdmin />} allowedRoles={['admin']} />} />
+            <Route path="profileemployee" element={<ProtectedRoute element={<ProfileEmployee />} allowedRoles={['employee']} />} />
           </Routes>
         </LayoutWrapper>
       </Router>

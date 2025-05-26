@@ -4,14 +4,18 @@ import productsController from "../controllers/productsController.js";
 
 const router = express.Router();
 
-// Multer para almacenar en memoria temporal (buffer o path)
-const storage = multer.memoryStorage(); // o usa diskStorage si Cloudinary necesita path
-const upload = multer({ storage }); // ✅ AHORA ESTÁ DEFINIDO
+//configurar una carpeta local que guarde las imagenes
+const upload = multer({dest: "public/"})
 
-// Rutas
-router.get("/product", productsController.getProduct);
-router.post("/product", upload.single("image"), productsController.insertProduct);
-router.put("/product/:id", upload.single("image"), productsController.updateProduct);
-router.delete("/product/:id", productsController.deleteProduct);
+router
+  .route("/")
+  .get(productsController.getProduct)
+  .post(upload.single("imagen"), productsController.insertProduct);
+
+router
+  .route("/:id")
+  .get(productsController.getProductById) 
+  .put(upload.single("imagen"), productsController.updateProduct)
+  .delete(productsController.deleteProduct);
 
 export default router;

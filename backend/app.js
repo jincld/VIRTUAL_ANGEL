@@ -20,8 +20,12 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json());
+
 app.use(cookieParser());
+
+
+app.use(express.json({ limit: '40mb' })); // Aumentar el límite según sea necesario
+app.use(express.urlencoded({ limit: '40mb', extended: true })); // Para formularios con archivos
 
 // importar rutas
 import categoryRoutes from "./src/routes/category.js";
@@ -38,17 +42,19 @@ import logoutRoute from "./src/routes/logout.js";
 import passwordRecoveryRoutes from "./src/routes/passwordRecovery.js";
 import validateAuthToken from "./src/middlewares/validateAuthToken.js"
 import meRoute from './src/routes/me.js';
+import adminRoutes from "./src/routes/adminRoutes.js";
 
 // rutas
 app.use("/api/category", validateAuthToken(["admin"]), categoryRoutes);
 app.use("/api/contact", validateAuthToken(["employee", "admin", "client"]), contactRoutes);
 app.use("/api/clients", validateAuthToken(["employee", "admin"]), clientRoutes);
-app.use("/api/employee", validateAuthToken(["admin"]), employeeRoutes);
-app.use("/api/product", productsRoutes);
+app.use("/api/employee", validateAuthToken(["employee", "admin"]), employeeRoutes);
+app.use("/api/product", validateAuthToken(["employee", "admin"]), productsRoutes);
 app.use("/api/order", validateAuthToken(["employee", "admin"]), orderRoutes);
-app.use("/api/assessment", validateAuthToken(["employee", "admin"]), assessmentRoutes);
+app.use("/api/assessment", validateAuthToken(["employee", "admin", "client"]), assessmentRoutes);
 app.use("/api/registerEmployees", validateAuthToken(["admin"]), registerEmployeesRoutes);
-app.use("/api/registerClients", validateAuthToken(["employee", "admin"]), registerClientsRoutes);
+app.use("/api/registerClients", registerClientsRoutes);
+app.use("/api/admin", validateAuthToken(["admin"]), adminRoutes);
 app.use("/api/login", loginRoute);
 app.use("/api/logout", logoutRoute);
 app.use("/api/passwordRecovery", passwordRecoveryRoutes);

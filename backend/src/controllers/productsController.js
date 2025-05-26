@@ -1,9 +1,8 @@
-
 import productsModel from "../models/products.js";
 import { v2 as cloudinary } from "cloudinary";
 import { config } from "../config.js";
 
-// Configurar Cloudinary
+// Configuración de Cloudinary
 cloudinary.config({
   cloud_name: config.cloudinary.cloudinary_name,
   api_key: config.cloudinary.cloudinary_api_key,
@@ -12,126 +11,124 @@ cloudinary.config({
 
 const productsController = {};
 
-// GET
+// Obtener productos (GET)
 productsController.getProduct = async (req, res) => {
-  try {
-    const products = await productsModel.find().populate("idCategory");
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener productos", error });
-  }
+  const products = await productsModel.find();
+  res.json(products);
 };
 
-// POST
+// Insertar producto (POST)
 productsController.insertProduct = async (req, res) => {
+  const { titulo, coleccion, categoria, precio, stock, color, colorcode } = req.body;
+  let imageUrl = "";
+
   try {
-    const { name, description, idCategory, sizes, prices, stock, color } = req.body;
-
-    // Validar campos requeridos
-    if (!name || !description || !idCategory || !sizes || !prices || !stock || !color) {
-      return res.status(400).json({ message: "Faltan campos requeridos" });
-    }
-
-    let imageUrl = "";
-
-    // Verificar si se recibió imagen
     if (req.file) {
-      try {
-        const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: "public",
-          allowed_formats: ["jpg", "png", "jpeg"],
-        });
-        imageUrl = result.secure_url;
-      } catch (uploadError) {
-        return res.status(500).json({ message: "Error al subir imagen a Cloudinary", error: uploadError.message });
-      }
-    } else {
-      return res.status(400).json({ message: "Imagen no proporcionada" });
-    }
-
-    const newProduct = new productsModel({
-      name,
-      description,
-      idCategory,
-      sizes,
-      prices,
-      stock,
-      image: imageUrl,
-      color,
-    });
-
-    await newProduct.save();
-    res.status(201).json({ message: "Producto guardado exitosamente", product: newProduct });
-  } catch (error) {
-    console.error("Error al guardar el producto:", error);
-    res.status(500).json({
-      message: "Error interno al guardar el producto",
-      error: error.message,
-      stack: error.stack,
-    });
-  }
-};
-
-
-// PUT
-productsController.updateProduct = async (req, res) => {
-  try {
-    const { name, description, idCategory, sizes, prices, stock, color } = req.body;
-    let imageUrl = req.body.image;
-
-    // Verificar si se sube una nueva imagen
-    if (req.file) {
+      console.log("Imagen detectada para subir:", req.file.path); // Verificar si la imagen está presente
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "products",
-        allowed_formats: ["jpg", "png", "jpeg"],
+        allowed_formats: ["jpg", "jpeg", "png"],
       });
       imageUrl = result.secure_url;
     }
 
-    // Validar precios y stock
-    const pricesNum = parseFloat(prices);
-    const stockNum = parseInt(stock);
+    const newProduct = new productsModel({
+      name: titulo,
+      category: categoria,
+      price: precio,
+      stock,
+      image: imageUrl,
+      color,
+      colorcode,
+      coleccion,
+    });
 
-    if (isNaN(pricesNum) || isNaN(stockNum)) {
-      return res.status(400).json({ message: "Precio o stock inválido" });
+    const savedProduct = await newProduct.save();
+    console.log("🟢 Producto guardado: ID", savedProduct._id);
+    res.json({ message: "Product saved", id: savedProduct._id });
+  } catch (error) {
+    console.error("🔴 Error al guardar el producto:", error.message);
+    res.status(500).json({ message: "Error al guardar el producto", error: error.message });
+  }
+};
+
+// Eliminar producto (DELETE)
+productsController.deleteProduct = async (req, res) => {
+  try {
+    console.log("ID a eliminar:", req.params.id); // Verificar el ID que se recibe
+
+    const deletedProduct = await productsModel.findByIdAndDelete(req.params.id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" }); // Manejo si el producto no existe
     }
 
-    const updated = await productsModel.findByIdAndUpdate(
-      req.params.id,
-      {
-        name,
-        description,
-        idCategory,
-        sizes,
-        prices: pricesNum,
-        stock: stockNum,
-        image: imageUrl,
-        color,
-      },
-      { new: true }
-    );
-
-    if (!updated) return res.status(404).json({ message: "Producto no encontrado" });
-
-    res.json({ message: "Producto actualizado correctamente", product: updated });
+    console.log("🟢 Producto eliminado:", req.params.id);
+    res.json({ message: "Product deleted" });
   } catch (error) {
-    console.error("Error al actualizar producto:", error);
-    res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
+    console.error("🔴 Error al eliminar el producto:", error.message);
+    res.status(500).json({ message: "Error deleting product", error: error.message });
+  }
+};
+
+// Obtener producto por ID (GET)
+productsController.getProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await productsModel.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error("🔴 Error al obtener producto por ID:", error.message);
+    res.status(500).json({ message: "Error fetching product", error: error.message });
   }
 };
 
 
-// DELETE
-productsController.deleteProduct = async (req, res) => {
-  try {
-    const deleted = await productsModel.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: "Producto no encontrado" });
+// Actualizar producto (PUT)
+productsController.updateProduct = async (req, res) => {
+  const { titulo, coleccion, categoria, precio, stock, color, colorcode } = req.body;
+  const { id } = req.params;
+  
+  console.log("ID a actualizar:", id); // Verificar el ID
+  console.log("Datos recibidos en update:", req.body); // Verificar los datos enviados
 
-    res.json({ message: "Product deleted" });
+  let updatedData = {
+    name: titulo,
+    coleccion,
+    category: categoria,
+    price: precio,
+    stock,
+    color,
+    colorcode
+  };
+
+  try {
+    if (req.file) {
+      console.log("Imagen detectada para subir:", req.file.path); // Confirmar si hay imagen
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "products",
+        allowed_formats: ["jpg", "jpeg", "png"],
+      });
+      updatedData.image = result.secure_url;
+    }
+
+    const updatedProduct = await productsModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" }); // Manejo si el producto no existe
+    }
+
+    console.log("🟢 Producto actualizado:", updatedProduct);
+    res.json({ message: "Product updated successfully", updatedProduct });
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar el producto", error });
+    console.error("🔴 Error al actualizar producto:", error.message);
+    res.status(500).json({ message: "Failed to update product", error: error.message });
   }
 };
 
 export default productsController;
-

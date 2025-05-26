@@ -1,17 +1,21 @@
 import express from "express";
+import multer from "multer";
 import employeeController from "../controllers/employeeController.js";
-// Router() nos ayuda a colocar los metodos
-// que tendra mi ruta
+
 const router = express.Router();
+
+const upload = multer({dest: "public/"})
 
 router
   .route("/")
   .get(employeeController.getemployee)
-  .post(employeeController.createEmployee);
+  .post(upload.single("imagen"), employeeController.createEmployee);
 
 router
   .route("/:id")
-  .put(employeeController.updateEmployee)
+  .get(employeeController.getEmployeeById)   // <--- agregar esta línea
+  .put(upload.single("imagen"), employeeController.updateEmployee)
   .delete(employeeController.deleteEmployee);
+
 
 export default router;

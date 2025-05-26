@@ -1,31 +1,29 @@
 import jsonwebtoken from 'jsonwebtoken';
 import {config} from "../config.js";
 
-export const validateAuthToken = (allowedUserTypes = [])=>{
-    return (req, res, next)=>{
-        try {
-            //1 extraer el token de la cookie
-            const {authToken} = req.cookies;
+export const validateAuthToken = (allowedUserTypes = []) => {
+  return (req, res, next) => {
+    try {
+      const { authToken } = req.cookies;
 
-            //2 validar existebcia de cookies
+      if (!authToken) {
+        return res.status(401).json({ message: "Cookies not found, please login first" });
+      }
 
-            if(!authToken){
-                return res.json({message: "Cookies not found, please login first"})
-            }
+      const decoded = jsonwebtoken.verify(authToken, config.JWT.secret);
+      req.user = decoded; // <-- añade esto para que el controller sepa quién eres
 
-            //3 extraer información del token
-            const decoded = jsonwebtoken.verify(authToken, config.JWT.secret)
+      if (!allowedUserTypes.includes(decoded.userType)) {
+        return res.status(403).json({ message: "Access denied" });
+      }
 
-            //verificar si el tipo de usuario puede ingresar o no
-            if(!allowedUserTypes.includes(decoded.userType)){
-                return res.json({message: "Access denied"})
-            }
-
-            next();
-        } catch (error) {
-            console.log("error" + error)
-        }
-    };
+      next();
+    } catch (error) {
+      console.log("Token validation error:", error);
+      return res.status(401).json({ message: "Invalid token" });
+    }
+  };
 };
+
 
 export default validateAuthToken;

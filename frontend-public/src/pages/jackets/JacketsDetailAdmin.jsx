@@ -1,55 +1,53 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom"; // Importamos useNavigate
-import Reviews from "../../components/Reviews/ReviewsAdmin"; // Asegúrate de tener este componente
-
-import JacketsData from "./JacketsData"; // Asegúrate de tener este archivo
-import './JacketsDetail.css'; // El archivo de estilos correspondiente
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Reviews from "../../components/Reviews/ReviewsAdmin";
+import './JacketsDetail.css';
 
 function JacketsDetail() {
-  const { id } = useParams(); // Obtenemos el id de la URL
-  const jacket = JacketsData.find(jacket => jacket.id === id); // Encontramos la chaqueta con el id correspondiente
-  const navigate = useNavigate(); // Usamos el hook useNavigate
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [jacket, setJacket] = useState(null);
 
-  if (!jacket) {
-    return <h2>Jacket not found</h2>; // Si no se encuentra la chaqueta, mostramos un mensaje
-  }
+  useEffect(() => {
+    const fetchJacket = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3001/api/product/${id}`, {
+          withCredentials: true
+        });
+        setJacket(res.data);
+      } catch (error) {
+        console.error("Error fetching jacket:", error);
+      }
+    };
 
-  const handleBackClick = () => {
-    navigate(-1); // Esto te lleva a la última página visitada
-  };
+    fetchJacket();
+  }, [id]);
+
+  if (!jacket) return <h2>Loading jacket...</h2>;
+
+  const handleBackClick = () => navigate(-1);
 
   return (
     <div className="container-fluid margin-top-global">
       <div className="jackets-card">
         <div className="jackets-card__content">
-          {/* Botón que redirige a la última página visitada */}
-          <button onClick={handleBackClick} className="btn btn-back">
-            ← BACK
-          </button>
-
-          {/* Imagen de la chaqueta */}
+          <button onClick={handleBackClick} className="btn btn-back">← BACK</button>
           <div className="jackets-card__image-wrapper">
-            <img className="img-item" src={jacket.imagen} alt={jacket.titulo} />
+            <img className="img-item" src={jacket.image} alt={jacket.name} />
           </div>
-
-          {/* Título de la chaqueta */}
-          <h2 className="jacket-title">{jacket.titulo}</h2>
-
-          {/* Información de la chaqueta (color, colección, precio) */}
+          <h2 className="jacket-title">{jacket.name}</h2>
           <div className="jacket-info-row">
             <div className="left-meta">
               <div className="color-box" style={{ backgroundColor: jacket.colorcode }}></div>
               <p className="jacket-collection">Collection: {jacket.coleccion}</p>
             </div>
-            <p className="jacket-price">${jacket.precio}</p>
+            <p className="jacket-price">${jacket.price}</p>
           </div>
-
         </div>
-
-        {/* Sección de reseñas */}
         <div className="jackets-card__image">
           <h2 className="review-title">REVIEWS</h2>
-          <Reviews id={jacket.id} /> {/* Pasa el id para que Reviews pueda obtener las reseñas correspondientes */}
+          <Reviews id={jacket._id} />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import './AddProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -10,48 +11,20 @@ const AddProduct = () => {
   }, []);
 
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [colorcode, setColorcode] = useState('#000000');
 
-  const [form, setForm] = useState({
-    id: '',
-    imagen: '',
-    titulo: '',
-    precio: '',
-    coleccion: '',
-    color: '',
-    colorcode: '#000000',
-    stock: '',
-    categoria: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm();
 
-  // Aquí deberías traer las categorías reales con sus ids si tienes API para eso.
-  // Por ahora pongo un arreglo estático con ids ficticios:
-  const categories = [
-    { _id: '644e3e2f1234567890abcdef', name: 'Shirts' },
-    { _id: '644e3e2f1234567890abcdea', name: 'Pants' },
-    { _id: '644e3e2f1234567890abcdeb', name: 'Jackets' },
-    { _id: '644e3e2f1234567890abcdec', name: 'Sweaters' },
-  ];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleClear = () => {
-    setForm({
-      id: '',
-      imagen: '',
-      titulo: '',
-      precio: '',
-      coleccion: '',
-      color: '',
-      colorcode: '#000000',
-      stock: '',
-      categoria: '',
-    });
-    if (fileInputRef.current) fileInputRef.current.value = null; // limpiar input file
-  };
-
+  // Manejar cambios en imagen
   const handleUpload = () => {
     fileInputRef.current.click();
   };
@@ -59,52 +32,45 @@ const AddProduct = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm(prev => ({ ...prev, imagen: reader.result }));
-      };
-      reader.readAsDataURL(file);
+      setImageFile(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
-  const handleSave = async () => {
+  // Submit del formulario
+  const onSubmit = async (data) => {
+    if (!imageFile) {
+      alert("Please upload an image.");
+      return;
+    }
+
+    const payload = new FormData();
+    payload.append('titulo', data.titulo);
+    payload.append('coleccion', data.coleccion);
+    payload.append('categoria', data.categoria);
+    payload.append('precio', parseFloat(data.precio));
+    payload.append('stock', parseInt(data.stock));
+    payload.append('color', data.color);
+    payload.append('colorcode', colorcode);
+    payload.append('imagen', imageFile);
+
     try {
-      // Validar campos básicos
-      if (!form.titulo || !form.coleccion || !form.categoria || !form.precio || !form.stock || !form.color) {
-        alert("Por favor completa todos los campos requeridos.");
-        return;
-      }
-      if (!fileInputRef.current.files[0]) {
-        alert("Por favor sube una imagen.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("name", form.titulo);
-      formData.append("description", form.coleccion);
-      formData.append("idCategory", form.categoria); // debe ser el ID
-      formData.append("prices", form.precio);
-      formData.append("stock", form.stock);
-      formData.append("color", form.color);
-      formData.append("image", fileInputRef.current.files[0]);
-
-      const res = await fetch("http://localhost:3001/api/products", {
-        method: "POST",
-        body: formData,
+      const response = await fetch('http://localhost:3001/api/product', {
+        method: 'POST',
+        credentials: 'include',
+        body: payload,
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        alert(`Error saving product: ${errorData.message}`);
-        return;
+      if (response.ok) {
+        alert('Product saved successfully');
+        navigate('/products');
+      } else {
+        const errorData = await response.json();
+        alert('Failed to save product: ' + (errorData.message || 'Unknown error'));
       }
-
-      const data = await res.json();
-      alert("Product saved successfully!");
-      handleClear();
     } catch (error) {
-      console.error("Error saving product:", error);
-      alert("Error saving product");
+      console.error('Error:', error);
+      alert('There was an error saving the product.');
     }
   };
 
@@ -116,20 +82,25 @@ const AddProduct = () => {
       </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addproduct-title">ADD NEW PRODUCT</h2>
-        <div className="ap-card  rounded p-4 shadow">
+        <div className="ap-card rounded p-4 shadow">
           <div className="row g-4">
-            {/* Columna 1 */}
+            {/* Imagen */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
                 <img
-                  src={form.imagen || '/holder-newitem.png'}
+                  src={previewImage || '/holder-newitem.png'}
                   alt="Preview"
                   className="img-fluid ap-img-preview"
                 />
               </div>
               <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
                 <button className="btn ap-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>
-                <button className="btn ap-btn-clear w-50" onClick={handleClear}>Clear Form</button>
+                <button className="btn ap-btn-clear w-50" onClick={() => {
+                  reset();
+                  setPreviewImage(null);
+                  setImageFile(null);
+                  setColorcode('#000000');
+                }}>Clear Form</button>
                 <input
                   type="file"
                   accept="image/*"
@@ -138,122 +109,76 @@ const AddProduct = () => {
                   onChange={handleFileChange}
                 />
               </div>
-              <button className="btn ap-btn-save w-100 btnsaveitem" onClick={handleSave}>Save Item</button>
             </div>
 
-            {/* Columna 2 - Formulario */}
+            {/* Formulario */}
             <div className="col-md-7">
-              <form className="row g-3" onSubmit={e => e.preventDefault()}>
-                {/* Primera fila de campos */}
-                <div className="col-6">
-                  <label className="form-label ap-label">ID</label>
-                  <input
-                    type="text"
-                    className="form-control ap-input"
-                    name="id"
-                    value={form.id}
-                    onChange={handleChange}
-                    placeholder="Start ID with SH, P, J or SW"
-                    disabled
-                  />
-                </div>
+              <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
+
                 <div className="col-6">
                   <label className="form-label ap-label">Price</label>
-                  <input
-                    type="number"
-                    className="form-control ap-input"
-                    name="precio"
-                    value={form.precio}
-                    onChange={handleChange}
-                    min="0"
-                    step="0.01"
-                  />
+                  <input type="number" className="form-control ap-input" {...register('precio', { required: 'Price is required' })} />
+                  {errors.precio && <span>{errors.precio.message}</span>}
                 </div>
 
-                {/* Segunda fila de campos */}
                 <div className="col-6">
                   <label className="form-label ap-label">Item Name</label>
-                  <input
-                    type="text"
-                    className="form-control ap-input"
-                    name="titulo"
-                    value={form.titulo}
-                    onChange={handleChange}
-                  />
+                  <input type="text" className="form-control ap-input" {...register('titulo', { required: 'Title is required' })} />
+                  {errors.titulo && <span>{errors.titulo.message}</span>}
                 </div>
+
                 <div className="col-6">
                   <label className="form-label ap-label">Collection</label>
-                  <input
-                    type="text"
-                    className="form-control ap-input"
-                    name="coleccion"
-                    value={form.coleccion}
-                    onChange={handleChange}
-                  />
+                  <input type="text" className="form-control ap-input" {...register('coleccion', { required: 'Collection is required' })} />
+                  {errors.coleccion && <span>{errors.coleccion.message}</span>}
                 </div>
 
-                {/* Tercera fila de campos */}
                 <div className="col-6">
                   <label className="form-label ap-label">Color Name</label>
-                  <input
-                    type="text"
-                    className="form-control ap-input"
-                    name="color"
-                    value={form.color}
-                    onChange={handleChange}
-                    placeholder="Name in lowercase"
-                  />
+                  <input type="text" className="form-control ap-input" {...register('color', { required: 'Color is required' })} />
+                  {errors.color && <span>{errors.color.message}</span>}
                 </div>
 
-                {/* Color Picker con cuadro de color */}
                 <div className="col-6 d-flex align-items-center">
                   <label className="form-label ap-label me-2">Color Code</label>
                   <input
                     type="color"
                     className="form-control ap-input me-2"
-                    name="colorcode"
-                    value={form.colorcode}
-                    onChange={handleChange}
+                    value={colorcode}
+                    onChange={(e) => setColorcode(e.target.value)}
                     style={{ width: '40px', height: '40px', border: 'none' }}
                   />
                   <input
                     type="text"
                     className="form-control ap-input"
-                    name="colorcode"
-                    value={form.colorcode}
-                    onChange={handleChange}
+                    value={colorcode}
+                    onChange={(e) => setColorcode(e.target.value)}
                     placeholder="#000000"
                     style={{ width: '100px' }}
                   />
                 </div>
 
-                {/* Última fila de campos */}
                 <div className="col-6">
                   <label className="form-label ap-label">Stock</label>
-                  <input
-                    type="number"
-                    className="form-control ap-input"
-                    name="stock"
-                    value={form.stock}
-                    onChange={handleChange}
-                    min="0"
-                    step="1"
-                  />
+                  <input type="number" className="form-control ap-input" {...register('stock', { required: 'Stock is required' })} />
+                  {errors.stock && <span>{errors.stock.message}</span>}
                 </div>
+
                 <div className="col-6">
                   <label className="form-label ap-label">Category</label>
-                  <select
-                    className="form-select ap-input"
-                    name="categoria"
-                    value={form.categoria}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select category</option>
-                    {categories.map(cat => (
-                      <option key={cat._id} value={cat._id}>{cat.name}</option>
-                    ))}
+                  <select className="form-select ap-input" {...register('categoria', { required: 'Category is required' })}>
+                    <option value="Shirts">Shirts</option>
+                    <option value="Pants">Pants</option>
+                    <option value="Jackets">Jackets</option>
+                    <option value="Sweaters">Sweaters</option>
                   </select>
+                  {errors.categoria && <span>{errors.categoria.message}</span>}
                 </div>
+
+                <div className="col-12">
+                  <button type="submit" className="btn ap-btn-save w-100 btnsaveitem">Save Item</button>
+                </div>
+
               </form>
             </div>
           </div>
@@ -264,4 +189,3 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
-
