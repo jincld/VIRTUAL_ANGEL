@@ -115,10 +115,10 @@ employeeController.updateEmployee = async (req, res) => {
       { new: true }
     );
 
-    res.json({ message: "Empleado actualizado correctamente" });
+    res.json({ message: "Employee updated" });
   } catch (error) {
-    console.error("Error al actualizar empleado:", error);
-    res.status(500).json({ message: "Error al actualizar empleado" });
+    console.error("Error updating employee:", error);
+    res.status(500).json({ message: "Error updating employee" });
   }
 };
 

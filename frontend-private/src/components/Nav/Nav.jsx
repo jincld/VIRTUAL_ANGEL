@@ -36,13 +36,13 @@ function Nav() {
 
             {userType === 'admin' && (
               <li className="nav-item">
-                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileadmin">PROFILE ADMIN</NavLink>
+                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileadmin">PROFILE</NavLink>
               </li>
             )}
 
             {userType === 'employee' && (
               <li className="nav-item">
-                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileemployee">PROFILE EMPLOYEE</NavLink>
+                <NavLink className={({ isActive }) => `nav-link itemnav ${isActive ? 'active' : ''}`} to="/profileemployee">PROFILE</NavLink>
               </li>
             )}
           </ul>

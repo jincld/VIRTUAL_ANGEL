@@ -55,8 +55,18 @@ const OrdersTable = () => {
   return (
     <>
       <div className="backorders"></div>
+      
       <div className="orders-container">
+<div className="orders-header">
+  <h2>ORDERS</h2>
+  <div className="orders-buttons">
+    <button className="icon-button" onClick={() => window.print()}>🖨️</button>
+    <button className="icon-button">⬇️</button>
+  </div>
+</div>
+
         <div className="orders-table-wrapper">
+          
           <table className="orders-table">
             <thead>
               <tr>
@@ -93,14 +103,7 @@ const OrdersTable = () => {
           </table>
         </div>
 
-        <h2>ORDERS</h2>
 
-        <div className="orders-buttons">
-          <button className="icon-button" onClick={() => window.print()}>
-            🖨️
-          </button>
-          <button className="icon-button">⬇️</button>
-        </div>
 
         <div className="orders-pagination">
           <button onClick={handlePrevPage} disabled={currentPage === 1}>

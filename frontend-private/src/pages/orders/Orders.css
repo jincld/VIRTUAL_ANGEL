@@ -37,6 +37,16 @@
   flex-direction: column;
 }
 
+.orders-header{
+    display: flex;
+  justify-content: space-between; /* Título a la izquierda y botones a la derecha */
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 0 10px;
+}
+
 .orders-header {
   display: flex;
   justify-content: space-between;
