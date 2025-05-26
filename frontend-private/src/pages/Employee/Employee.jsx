@@ -154,29 +154,39 @@ const Employees = () => {
             <h5>No employees found with the selected filters or search.</h5>
           </div>
         ) : (
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-            {filteredEmployees.map((employee) => {
-              console.log(employee); // Useful for debugging if image or other fields are empty
-              return (
-                <div
-                  className="col d-flex justify-content-center"
-                  data-aos="fade-up"
-                  key={employee._id}
-                >
-                  <CardEmployee
-                    id={employee._id}
-                    imagen={employee.imagen || 'https://via.placeholder.com/150'}
-                    name={employee.name}
-                    age={employee.age}
-                    gender={employee.gender}
-                    phone={employee.phone}
-                    email={employee.email}
-                    rol={employee.rol}
-                  />
-                </div>
-              );
-            })}
-          </div>
+<div
+  style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '1.5rem',
+  }}
+>
+  {filteredEmployees.map((employee) => (
+    <div
+      key={employee._id}
+      data-aos="fade-up"
+      style={{
+        flex: '1 1 280px',
+        maxWidth: '300px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <CardEmployee
+        id={employee._id}
+        imagen={employee.imagen || 'https://via.placeholder.com/150'}
+        name={employee.name}
+        age={employee.age}
+        gender={employee.gender}
+        phone={employee.phone}
+        email={employee.email}
+        rol={employee.rol}
+      />
+    </div>
+  ))}
+</div>
+
         )}
       </div>
     </>
