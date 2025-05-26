@@ -99,7 +99,7 @@ const EditEmployee = () => {
       if (!response.ok) throw new Error('Error deleting employee');
 
       alert('Employee deleted successfully');
-      navigate('/employees');
+      navigate('/employee');
     } catch (error) {
       alert('Error deleting employee');
     }
@@ -138,7 +138,7 @@ const EditEmployee = () => {
     <>
       <div className="backaddemployee"></div>
       <div className="btn-marginpd margin-top-global">
-        <Link to="/employees" className="ap-btn-back">← BACK</Link>
+        <Link to="/employee" className="ap-btn-back">← BACK</Link>
       </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addemployee-title">EDIT EMPLOYEE</h2>
