@@ -32,7 +32,13 @@ const OrderDetail = () => {
       const updatedOrder = { ...order, status };
       await axios.put(`http://localhost:3001/api/order/${id}`, updatedOrder);
       alert("Order status updated successfully.");
-      navigate('/orders');
+      
+      // Redirige a /sales si el estado es "Finished", si no a /orders
+      if (status === "Finished") {
+        navigate('/sales');
+      } else {
+        navigate('/orders');
+      }
     } catch (error) {
       console.error("Error updating order:", error);
       alert("Failed to update order.");
@@ -64,7 +70,7 @@ const OrderDetail = () => {
                 <option>Delivered</option>
                 <option>Shipped</option>
                 <option>Canceled</option>
-                <option>Finished</option>  {/* <-- Nueva opción agregada */}
+                <option>Finished</option>
               </select>
             </label>
             <label>
@@ -95,3 +101,4 @@ const OrderDetail = () => {
 };
 
 export default OrderDetail;
+
