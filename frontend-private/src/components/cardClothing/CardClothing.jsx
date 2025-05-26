@@ -17,7 +17,7 @@ const handleEdit = () => {
   };
 
   return (
-    <div className="card" style={{ width: '18rem', padding: '1.5rem' }}>
+    <div className="card">
       <img src={imagen} className="card-img-top" alt={titulo} />
       <div className="card-body">
         <h5 className="card-title">{titulo}</h5>

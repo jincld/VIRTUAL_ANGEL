@@ -289,3 +289,4 @@ const res = await fetch(`http://localhost:3001/api/product/${id}`, {
 };
 
 export default EditProduct;
+

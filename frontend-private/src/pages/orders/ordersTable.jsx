@@ -1,6 +1,8 @@
+// OrdersTable.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+
 import './Orders.css';
 
 const OrdersTable = () => {
@@ -11,17 +13,29 @@ const OrdersTable = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/order');
-      console.log("API Response:", response.data);
-      // Asegúrate de que response.data sea un array, si no lo es, ajusta el acceso
-      setOrders(Array.isArray(response.data) ? response.data : response.data.orders || []);
+      console.log('Orders API response:', response.data);
+
+      if (Array.isArray(response.data)) {
+        setOrders(response.data);
+      } else if (Array.isArray(response.data.orders)) {
+        setOrders(response.data.orders);
+      } else {
+        console.error("La respuesta no contiene un array de órdenes.");
+        setOrders([]);
+      }
     } catch (error) {
       console.error("Error fetching orders:", error);
+      setOrders([]);
     }
   };
 
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  useEffect(() => {
+    console.log('Orders state:', orders);
+  }, [orders]);
 
   const totalPages = Math.ceil(orders.length / itemsPerPage);
 
@@ -33,25 +47,15 @@ const OrdersTable = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const currentData = Array.isArray(orders)
-    ? orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-    : [];
+  const currentData = orders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <>
-    <div className="backorders"></div>
+      <div className="backorders"></div>
       <div className="orders-container">
-        <h2>ORDERS</h2>
-
-        <div className="orders-buttons">
-          <button className="icon-button" onClick={() => window.print()}>
-            🖨️
-          </button>
-          <button className="icon-button">
-            ⬇️ {/* Puedes conectar este botón a una función para descargar CSV si lo deseas */}
-          </button>
-        </div>
-
         <div className="orders-table-wrapper">
           <table className="orders-table">
             <thead>
@@ -65,22 +69,37 @@ const OrdersTable = () => {
               </tr>
             </thead>
             <tbody>
-              {currentData.map((order) => (
-                <tr key={order._id || order.id}>
-                  <td data-label="ORDER">#{order._id || order.id}</td>
-                  <td data-label="DATE">{order.date || order.fecha}</td>
-                  <td data-label="STATUS">{order.status || order.estado}</td>
-                  <td data-label="TOTAL">${order.total}</td>
-                  <td data-label="ITEMS">{order.items}</td>
-                  <td data-label="">
-                    <Link to={`/orders/${order._id || order.id}`} className="view-button">
-                      VIEW DETAILS →
-                    </Link>
-                  </td>
+              {currentData.length === 0 ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center' }}>No orders found.</td>
                 </tr>
-              ))}
+              ) : (
+                currentData.map((order) => (
+                  <tr key={order._id || order.id}>
+                    <td data-label="ORDER">#{order._id || order.id}</td>
+                    <td data-label="DATE">{order.fecha || order.date || '—'}</td>
+                    <td data-label="STATUS">{order.estado || order.status || '—'}</td>
+                    <td data-label="TOTAL">${order.total ?? 0}</td>
+                    <td data-label="ITEMS">{order.items ?? 0}</td>
+                    <td data-label="">
+                      <Link to={`/orders/${order._id || order.id}`} className="view-button">
+                        VIEW DETAILS →
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
+        </div>
+
+        <h2>ORDERS</h2>
+
+        <div className="orders-buttons">
+          <button className="icon-button" onClick={() => window.print()}>
+            🖨️
+          </button>
+          <button className="icon-button">⬇️</button>
         </div>
 
         <div className="orders-pagination">
@@ -98,6 +117,9 @@ const OrdersTable = () => {
 };
 
 export default OrdersTable;
+
+
+
 
 
 
