@@ -1,22 +1,14 @@
-/*
-fields:
-idCustomer
-idProducts
-comment
-assessment
-*/
-
 import { Schema, model } from "mongoose";
 
 const assessmentSchema = new Schema({
     idCustomer: {
         type: Schema.Types.ObjectId,
-        ref: "customers",
+        ref: "clients",
         require: true
     },
     idProducts: {
         type: Schema.Types.ObjectId,
-        ref: "Products",
+        ref: "products",
         require: true
     },
     comment: {
@@ -34,4 +26,4 @@ const assessmentSchema = new Schema({
     strict: false
 })
 
-export default model ("Assessment", assessmentSchema); 
+export default model ("assesstments", assessmentSchema); 

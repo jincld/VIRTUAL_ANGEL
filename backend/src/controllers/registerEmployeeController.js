@@ -1,48 +1,51 @@
+// controllers/registerEmployeesController.js
 import EmployeeModel from "../models/employee.js";
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
-import {config} from "../config.js";
+import { config } from "../config.js";
+import { v2 as cloudinary } from "cloudinary";
+
 
 const registerEmployeesController = {};
 
-registerEmployeesController.register = async (req, res) =>{
-    const{name, password, age, gender, phone, email, rol} = req.body;
+registerEmployeesController.register = async (req, res) => {
+  const { name, password, age, gender, phone, email, rol } = req.body;
 
-    try{
-        //verificar si el empleado ya existe
-        const existEmployee = await EmployeeModel.findOne({email})
-        if(existEmployee) {
-            return res.json({message: "El empleado ya existe"})
-        }
+  try {
+    const existEmployee = await EmployeeModel.findOne({ email });
+    if (existEmployee) return res.status(400).json({ message: "El empleado ya existe" });
 
-        //Encriptar contraseña
-        const passwordHash = await bcryptjs.hash(password, 10)
+    const passwordHash = await bcryptjs.hash(password, 10);
 
-        //Guardar el nuevo empleado
-        const newEmployee = new EmployeeModel ({name, password: passwordHash, age, gender, phone, email, rol})
-
-        await newEmployee.save();
-
-        //TOKEN!!!!!!!!!
-
-        jsonwebtoken.sign(
-            //Qué voy a guardar
-            {id: newEmployee._id},
-            //Cuál es el secreto
-            config.JWT.secret,
-            //Cuándo expira
-            {expiresIn: config.JWT.expiresIn},
-            //Función flecha
-            (error, token) => {
-                if(error) console.log(error)
-                    res.cookie("authToken", token)
-                res.json({message: "Empleado registrado"})
-            }
-        )
-    
-    } catch (error) {
-        console.log(error)
+    let imageUrl = "";
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "employees",
+        allowed_formats: ["jpg", "png", "jpeg"],
+      });
+      imageUrl = result.secure_url;
     }
+
+    const newEmployee = new EmployeeModel({
+      name,
+      password: passwordHash,
+      age,
+      gender,
+      phone,
+      email,
+      rol,
+      imagen: imageUrl,
+    });
+
+    await newEmployee.save();
+
+    // No tocar la cookie authToken ni generar token acá
+    res.status(201).json({ message: "Empleado guardado correctamente" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error en el registro" });
+  }
 };
+
 
 export default registerEmployeesController;

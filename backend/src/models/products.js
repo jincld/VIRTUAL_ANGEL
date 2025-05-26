@@ -1,53 +1,33 @@
-/*
-fields:
-name
-description
-idCategory
-sizes
-prices
-stock
-image
-color
-*/
-
 import { Schema, model } from "mongoose";
 
 const productsSchema = new Schema({
     name:{
-        type: String,
-        require: true
+        type: String
     },
-    description:{
-        type: String,
-        require: true,
+    category: {
+        type: String
     },
-    idCategory: {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-        require: true
-    },
-    sizes: {
-        type: String,
-        require: true
-    },
-    prices: {
-        type: Number,
-        require: true
+    price: {
+        type: Number
     },
     stock: {
-        type: Number,
-        require: true
+        type: Number
     },
     image: {
         type: String
     },
     color: {
-        type: String,
-        require: true
+        type: String
+    },
+    colorcode: {
+        type: String
+    },
+    coleccion: {
+        type: String
     }
 }, {
     timestamps: true,
     strict: false
 })
 
-export default model ("Products", productsSchema);
+export default model ("products", productsSchema);

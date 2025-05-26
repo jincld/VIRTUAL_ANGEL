@@ -1,31 +1,63 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import './EditProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const EditProduct = () => {
+  const { id } = useParams(); // obtener id desde la url
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const { id, imagen, titulo, precio, coleccion, color, colorcode, stock, categoria } = state;
-
-  useEffect(() => {
-    AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
-  }, []);
-
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
-    id,
-    imagen,
-    titulo,
-    precio,
-    coleccion,
-    color,
-    colorcode,
-    stock,
-    categoria,
+    _id: '',
+    imagen: '',
+    titulo: '',
+    precio: '',
+    coleccion: '',
+    color: '',
+    colorcode: '#000000',
+    stock: '',
+    categoria: '',
   });
+
+useEffect(() => {
+  AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
+  
+  console.log('Fetching product with id:', id);
+  
+  async function fetchProduct() {
+    try {
+const res = await fetch(`http://localhost:3001/api/product/${id}`, {
+  credentials: 'include'
+});
+
+      console.log('Fetch response status:', res.status);
+      if (!res.ok) throw new Error('Producto no encontrado');
+      const data = await res.json();
+      console.log('Fetched product data:', data);
+
+      setForm({
+        _id: data._id,
+        imagen: data.image,
+        titulo: data.name,
+        precio: data.price,
+        coleccion: data.coleccion,
+        color: data.color,
+        colorcode: data.colorcode || '#000000',
+        stock: data.stock,
+        categoria: data.category,
+      });
+    } catch (error) {
+      console.error(error);
+      alert('Error al cargar el producto');
+      navigate('/products');
+    }
+  }
+
+  fetchProduct();
+}, [id, navigate]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +66,7 @@ const EditProduct = () => {
 
   const handleClear = () => {
     setForm({
+      _id: '',
       imagen: '',
       titulo: '',
       precio: '',
@@ -60,38 +93,53 @@ const EditProduct = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/product/${form._id}`, {
+        method: 'DELETE',
+        credentials: 'include', // para que envíe cookies junto con la petición
+      });
+
+      if (!response.ok) throw new Error('Error deleting product');
+
+      alert('Producto eliminado correctamente');
+      navigate('/products');
+    } catch (error) {
+      console.error('Error eliminando producto:', error);
+      alert('Error al eliminar producto');
+    }
+  };
+
   const handleSave = async () => {
     try {
       const formData = new FormData();
-      formData.append("name", form.titulo);
-      formData.append("description", form.coleccion);
-      formData.append("idCategory", form.categoria);
-      formData.append("sizes", "default"); // Ajustá si tenés múltiples tallas
-      formData.append("prices", parseFloat(form.precio));
-      formData.append("stock", parseInt(form.stock));
-      formData.append("color", form.color);
+      formData.append('titulo', form.titulo);
+      formData.append('coleccion', form.coleccion);
+      formData.append('categoria', form.categoria);
+      formData.append('precio', form.precio);
+      formData.append('stock', form.stock);
+      formData.append('color', form.color);
+      formData.append('colorcode', form.colorcode);
 
-      if (fileInputRef.current && fileInputRef.current.files[0]) {
-        formData.append("image", fileInputRef.current.files[0]);
+      if (fileInputRef.current.files[0]) {
+        formData.append('imagen', fileInputRef.current.files[0]);
       }
 
-    const response = await fetch(`http://localhost:3001/api/product/${form.id}`, {
-      method: "PUT",
-      body: formData,
-});
+      const response = await fetch(`http://localhost:3001/api/product/${form._id}`, {
+        method: 'PUT',
+        credentials: 'include', // para que envíe cookies junto con la petición
+        body: formData,
+      });
 
+      if (!response.ok) throw new Error('Error al actualizar producto');
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Error al actualizar el producto");
-      }
-
-      alert("Producto actualizado exitosamente");
-      navigate("/products");
-    } catch (err) {
-      console.error("Error actualizando producto:", err);
-      alert("Ocurrió un error al actualizar el producto.");
+      alert('Producto actualizado correctamente');
+      navigate('/products');
+    } catch (error) {
+      console.error('Error actualizando producto:', error);
+      alert('Error al actualizar producto');
     }
   };
 
@@ -99,12 +147,13 @@ const EditProduct = () => {
     <>
       <div className="backeditproduct"></div>
       <div className="btn-marginpd margin-top-global">
-        <Link to={"/products"} className="ap-btn-back">← BACK</Link>
+        <Link to="/products" className="ap-btn-back">← BACK</Link>
       </div>
       <div className="ap-wrapper">
         <h2 className="text-center text-black mb-4 addproduct-title">EDIT PRODUCT</h2>
         <div className="ap-card rounded p-4 shadow">
           <div className="row g-4">
+            {/* Columna 1 */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
                 <img
@@ -124,19 +173,21 @@ const EditProduct = () => {
                   onChange={handleFileChange}
                 />
               </div>
+              <button className="btn ap-btn-save w-100 btnsaveitem" onClick={handleDelete}>Delete item</button>
               <button className="btn ap-btn-save w-100 btnsaveitem" onClick={handleSave}>Save Changes</button>
             </div>
 
+            {/* Columna 2 - Formulario */}
             <div className="col-md-7">
               <form className="row g-3">
                 <div className="col-6">
-                  <label className="form-label ap-label">ID</label>
+                  <label className="form-label ap-label">ID (MongoDB)</label>
                   <input
                     type="text"
-                    className="form-control ap-input"
-                    name="id"
-                    value={form.id}
-                    readOnly
+                    className="form-control ap-input idinput"
+                    name="_id"
+                    value={form._id}
+                    disabled
                   />
                 </div>
                 <div className="col-6">
@@ -238,3 +289,4 @@ const EditProduct = () => {
 };
 
 export default EditProduct;
+

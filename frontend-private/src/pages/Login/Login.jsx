@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../../../frontend-public/AuthToken';
+import { useAuth } from '../../../AuthToken.jsx';
 
 const Login = () => {
   const navigate = useNavigate();

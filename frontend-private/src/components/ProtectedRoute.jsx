@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../../frontend-public/AuthToken';
+import { useAuth } from '../../AuthToken.jsx';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 
