@@ -29,10 +29,18 @@ const AddEmployee = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+      if (!validTypes.includes(file.type)) {
+        alert('Invalid image format. Only JPG, JPEG, and PNG format are allowed.');
+        fileInputRef.current.value = ""; // Limpia el input
+        return;
+      }
+  
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
   };
+  
 
   const onSubmit = async (data) => {
     if (!imageFile) {

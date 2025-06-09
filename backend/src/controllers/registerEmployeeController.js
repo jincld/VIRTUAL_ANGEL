@@ -1,10 +1,7 @@
-// controllers/registerEmployeesController.js
 import EmployeeModel from "../models/employee.js";
+import ClientModel from "../models/clients.js"; 
 import bcryptjs from "bcryptjs";
-import jsonwebtoken from "jsonwebtoken";
-import { config } from "../config.js";
 import { v2 as cloudinary } from "cloudinary";
-
 
 const registerEmployeesController = {};
 
@@ -12,8 +9,14 @@ registerEmployeesController.register = async (req, res) => {
   const { name, password, age, gender, phone, email, rol } = req.body;
 
   try {
+    // Verificar si ya existe un empleado con ese email
     const existEmployee = await EmployeeModel.findOne({ email });
-    if (existEmployee) return res.status(400).json({ message: "El empleado ya existe" });
+    // Verificar si ya existe un cliente con ese email
+    const existClient = await ClientModel.findOne({ email });
+
+    if (existEmployee || existClient) {
+      return res.status(400).json({ message: "Este correo ya está registrado" });
+    }
 
     const passwordHash = await bcryptjs.hash(password, 10);
 
@@ -39,13 +42,11 @@ registerEmployeesController.register = async (req, res) => {
 
     await newEmployee.save();
 
-    // No tocar la cookie authToken ni generar token acá
     res.status(201).json({ message: "Empleado guardado correctamente" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error en el registro" });
   }
 };
-
 
 export default registerEmployeesController;
