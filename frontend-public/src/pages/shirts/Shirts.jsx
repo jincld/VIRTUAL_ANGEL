@@ -3,26 +3,39 @@ import './Shirts.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import CardClothing from '../../components/cardClothing/CardClothing.jsx';
-import shirtsData from './ShirtsData.jsx';
 
 const Shirts = () => {
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,  // Duración de la animación
-      easing: 'ease-in-out',  // Efecto de aceleración
-      once: true,  // Ejecutar la animación solo una vez
-      offset: 200,  // Desplazamiento desde el top para que inicie la animación
-    });
-  }, []);
-
-  // Estado para manejar la búsqueda
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [collectionFilter, setCollectionFilter] = useState('');
   const [colorFilter, setColorFilter] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
+  const [collections, setCollections] = useState([]);
+  const [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
+
+    fetch('http://localhost:3001/api/product', {
+      credentials: 'include',
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch products');
+        return res.json();
+      })
+      .then(data => {
+        // Solo productos con categoría "shirts"
+        const shirts = data.filter(product => product.category?.toLowerCase() === 'shirts');
+        setProducts(shirts);
+
+        // Filtros únicos
+        setCollections([...new Set(shirts.map(p => p.coleccion).filter(Boolean))]);
+        setColors([...new Set(shirts.map(p => p.color).filter(Boolean))]);
+      })
+      .catch(err => console.error('Error fetching shirts:', err));
+  }, []);
 
   const toggleFilters = () => setShowFilters(!showFilters);
 
@@ -34,24 +47,23 @@ const Shirts = () => {
     setMaxPrice(200);
   };
 
-  // Filtrar las camisetas según los filtros de búsqueda y otros filtros
-  const filteredShirts = shirtsData
+  const filteredShirts = products
     .filter(shirt => {
-      const matchSearch = 
-        shirt.titulo.toLowerCase().includes(query.toLowerCase()) ||
-        shirt.coleccion?.toLowerCase().includes(query.toLowerCase()) ||
-        shirt.color?.toLowerCase().includes(query.toLowerCase());
+      const matchSearch =
+        (shirt.name?.toLowerCase().includes(query.toLowerCase()) || '') ||
+        (shirt.coleccion?.toLowerCase().includes(query.toLowerCase()) || '') ||
+        (shirt.color?.toLowerCase().includes(query.toLowerCase()) || '');
 
       const matchFilters =
         (collectionFilter ? shirt.coleccion === collectionFilter : true) &&
         (colorFilter ? shirt.color === colorFilter : true) &&
-        shirt.precio <= maxPrice;
+        shirt.price <= maxPrice;
 
       return matchSearch && matchFilters;
     })
     .sort((a, b) => {
-      if (sortOrder === 'asc') return a.precio - b.precio;
-      if (sortOrder === 'desc') return b.precio - a.precio;
+      if (sortOrder === 'asc') return a.price - b.price;
+      if (sortOrder === 'desc') return b.price - a.price;
       return 0;
     });
 
@@ -59,12 +71,10 @@ const Shirts = () => {
     <>
       <div className="backshirts"></div>
       <div className="container content-zone py-5">
-
         <div className="title-wrapper">
           <h1 className="shirtstitle margin-top-global">SHIRTS</h1>
         </div>
 
-        {/* Barra de búsqueda */}
         <div className="d-flex justify-content-center align-items-center mb-4 gap-3">
           <input
             type="text"
@@ -86,9 +96,9 @@ const Shirts = () => {
                 <label className="form-label">Collection:</label>
                 <select className="form-select" value={collectionFilter} onChange={(e) => setCollectionFilter(e.target.value)}>
                   <option value="">All</option>
-                  <option value="ANGEL OR CRAZY">ANGEL OR CRAZY</option>
-                  <option value="This Is Eclipse">This Is Eclipse</option>
-                  <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
+                  {collections.map((col) => (
+                    <option key={col} value={col}>{col}</option>
+                  ))}
                 </select>
               </div>
 
@@ -96,12 +106,9 @@ const Shirts = () => {
                 <label className="form-label">Color:</label>
                 <select className="form-select" value={colorFilter} onChange={(e) => setColorFilter(e.target.value)}>
                   <option value="">All</option>
-                  <option value="black">Black</option>
-                  <option value="white">White</option>
-                  <option value="gray">Gray</option>
-                  <option value="red">Red</option>
-                  <option value="blue">Blue</option>
-                  <option value="brown">Brown</option>
+                  {colors.map((color) => (
+                    <option key={color} value={color}>{color}</option>
+                  ))}
                 </select>
               </div>
 
@@ -141,13 +148,39 @@ const Shirts = () => {
           </div>
         )}
 
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-          {filteredShirts.map((shirt) => (
-            <div className="col d-flex justify-content-center" data-aos="fade-up" key={shirt.id}>
-              <CardClothing key={shirt.id} {...shirt} />
-            </div>
-          ))}
-        </div>
+<div
+  style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '1.5rem',
+  }}
+>
+  {filteredShirts.map((shirt) => (
+    <div
+      key={shirt._id}
+      data-aos="fade-up"
+      style={{
+        flex: '1 1 280px',  // flexible para crecer y encoger, ancho base 280px
+        maxWidth: '300px',  // máximo ancho para cada card
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <CardClothing
+        id={shirt._id}
+        imagen={shirt.image}
+        titulo={shirt.name}
+        precio={shirt.price}
+        categoria={shirt.category}
+        stock={shirt.stock}
+        coleccion={shirt.coleccion}
+        color={shirt.color}
+        colorcode={shirt.colorcode}
+      />
+    </div>
+  ))}
+</div>
 
       </div>
     </>
