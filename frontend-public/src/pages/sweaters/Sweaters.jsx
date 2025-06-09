@@ -3,26 +3,42 @@ import './Sweaters.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import CardClothing from '../../components/cardClothing/CardClothing.jsx';
-import sweatersData from './SweatersData.jsx';
 
 const Sweaters = () => {
-  
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,  // Duración de la animación
-      easing: 'ease-in-out',  // Efecto de aceleración
-      once: true,  // Ejecutar la animación solo una vez
-      offset: 200,  // Desplazamiento desde el top para que inicie la animación
-    });
-  }, []);
-
-  // Estado para manejar la búsqueda
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [collectionFilter, setCollectionFilter] = useState('');
   const [colorFilter, setColorFilter] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
+  const [collections, setCollections] = useState([]);
+  const [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 200,
+    });
+
+    fetch('http://localhost:3001/api/product', { credentials: 'include' })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch products');
+        return res.json();
+      })
+      .then(data => {
+        // Filtrar solo sweaters
+        const sweaters = data.filter(item => item.category?.toLowerCase() === 'sweaters');
+        setProducts(sweaters);
+
+        // Obtener colecciones y colores únicos para filtros
+        setCollections([...new Set(sweaters.map(s => s.coleccion).filter(Boolean))]);
+        setColors([...new Set(sweaters.map(s => s.color).filter(Boolean))]);
+      })
+      .catch(err => console.error('Error fetching sweaters:', err));
+  }, []);
 
   const toggleFilters = () => setShowFilters(!showFilters);
 
@@ -34,40 +50,37 @@ const Sweaters = () => {
     setMaxPrice(200);
   };
 
-  // Filtrar los sweaters considerando la búsqueda
-  const filteredSweaters = sweatersData
+  const filteredSweaters = products
     .filter(sweater => {
-      const matchSearch = 
-        sweater.titulo.toLowerCase().includes(query.toLowerCase()) ||
-        sweater.coleccion?.toLowerCase().includes(query.toLowerCase()) ||
-        sweater.color?.toLowerCase().includes(query.toLowerCase()) ||
-        (!isNaN(query) && Math.abs(sweater.precio - parseFloat(query)) < 5);
+      const q = query.toLowerCase();
+      const matchSearch =
+        (sweater.name?.toLowerCase().includes(q) || '') ||
+        (sweater.coleccion?.toLowerCase().includes(q) || '') ||
+        (sweater.color?.toLowerCase().includes(q) || '') ||
+        (!isNaN(query) && Math.abs(sweater.price - parseFloat(query)) < 5);
 
       const matchFilters =
         (collectionFilter ? sweater.coleccion === collectionFilter : true) &&
         (colorFilter ? sweater.color === colorFilter : true) &&
-        sweater.precio <= maxPrice;
+        sweater.price <= maxPrice;
 
       return matchSearch && matchFilters;
     })
     .sort((a, b) => {
-      if (sortOrder === 'asc') return a.precio - b.precio;
-      if (sortOrder === 'desc') return b.precio - a.precio;
+      if (sortOrder === 'asc') return a.price - b.price;
+      if (sortOrder === 'desc') return b.price - a.price;
       return 0;
     });
 
   return (
     <>
-      {/* Fondo fijo detrás del contenido */}
       <div className="backsweaters"></div>
 
-      {/* Contenedor del contenido encima del fondo */}
       <div className="container content-zone py-5">
         <div className="title-wrapper">
           <h1 className="sweaterstitle margin-top-global">SWEATERS</h1>
         </div>
 
-        {/* Barra de búsqueda */}
         <div className="d-flex justify-content-center align-items-center mb-4 gap-3">
           <input
             type="text"
@@ -82,36 +95,48 @@ const Sweaters = () => {
           </button>
         </div>
 
-        {/* Filtros */}
         {showFilters && (
           <div className="filter-menu p-4 mt-3 rounded shadow-sm">
             <div className="row">
               <div className="col-md-4 mb-3">
                 <label className="form-label">Collection:</label>
-                <select className="form-select" value={collectionFilter} onChange={(e) => setCollectionFilter(e.target.value)}>
+                <select
+                  className="form-select"
+                  value={collectionFilter}
+                  onChange={(e) => setCollectionFilter(e.target.value)}
+                >
                   <option value="">All</option>
-                  <option value="ANGEL OR CRAZY">ANGEL OR CRAZY</option>
-                  <option value="This Is Eclipse">This Is Eclipse</option>
-                  <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
+                  {collections.map(col => (
+                    <option key={col} value={col}>
+                      {col}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div className="col-md-4 mb-3">
                 <label className="form-label">Color:</label>
-                <select className="form-select" value={colorFilter} onChange={(e) => setColorFilter(e.target.value)}>
+                <select
+                  className="form-select"
+                  value={colorFilter}
+                  onChange={(e) => setColorFilter(e.target.value)}
+                >
                   <option value="">All</option>
-                  <option value="black">Black</option>
-                  <option value="white">White</option>
-                  <option value="gray">Gray</option>
-                  <option value="red">Red</option>
-                  <option value="blue">Blue</option>
-                  <option value="brown">Brown</option>
+                  {colors.map(color => (
+                    <option key={color} value={color}>
+                      {color}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div className="col-md-4 mb-3">
                 <label className="form-label">Sort by price:</label>
-                <select className="form-select" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                <select
+                  className="form-select"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                >
                   <option value="">No order</option>
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
@@ -133,7 +158,9 @@ const Sweaters = () => {
                 />
               </div>
               <div className="col-md-3 text-end">
-                <button className="btn btn-limpiar" onClick={clearFilters}>Clear filters</button>
+                <button className="btn btn-limpiar" onClick={clearFilters}>
+                  Clear filters
+                </button>
               </div>
             </div>
           </div>
@@ -145,10 +172,36 @@ const Sweaters = () => {
           </div>
         )}
 
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '1.5rem',
+          }}
+        >
           {filteredSweaters.map((sweater) => (
-            <div className="col d-flex justify-content-center" data-aos="fade-up" key={sweater.id}>
-              <CardClothing key={sweater.id} {...sweater} />
+            <div
+              key={sweater._id}
+              data-aos="fade-up"
+              style={{
+                flex: '1 1 280px',  // flexible para crecer y encoger, ancho base 280px
+                maxWidth: '300px',  // máximo ancho para cada card
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <CardClothing
+                id={sweater._id}
+                imagen={sweater.image}
+                titulo={sweater.name}
+                precio={sweater.price}
+                categoria={sweater.category}
+                stock={sweater.stock}
+                coleccion={sweater.coleccion}
+                color={sweater.color}
+                colorcode={sweater.colorcode}
+              />
             </div>
           ))}
         </div>
