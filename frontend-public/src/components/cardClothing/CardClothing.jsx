@@ -9,7 +9,7 @@ function CardClothing({ id, imagen, titulo, precio, categoria }) {
       <div className="card-body">
         <h5 className="card-title">{titulo}</h5>
         <p className="card-text">${precio}</p>
-        <Link to={`/${categoria}/${id}`} className="btn btn-dark">Purchase</Link>
+        <Link to={`/${categoria.toLowerCase()}/${id}`} className="btn btn-dark">Purchase</Link>
       </div>
     </div>
   );
