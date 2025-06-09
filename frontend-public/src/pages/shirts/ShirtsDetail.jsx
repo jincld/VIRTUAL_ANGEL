@@ -98,19 +98,39 @@ function ShirtsDetail() {
                 onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
               />
               <div className="popup-buttons">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    console.log({
-                      productId: shirt._id,
-                      ...reviewForm
-                    });
-                    alert("REVIEW SAVED");
-                    setShowPopup(false);
-                  }}
-                >
-                  SEND REVIEW
-                </button>
+              <button
+  className="btn"
+  onClick={async () => {
+    try {
+      const res = await fetch('http://localhost:3001/api/assessment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idCustomer: reviewForm.user,  // Aquí deberías usar el ID real del usuario si tienes autenticación
+          idProducts: shirt._id,
+          comment: reviewForm.comment,
+          assessment: reviewForm.rating,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to save review');
+
+      alert('Review saved successfully');
+      setShowPopup(false);
+      setReviewForm({ user: '', rating: 5, comment: '' });
+
+      // Opcional: recargar las reseñas (ver punto 3)
+      // Puedes crear una función para recargar las reseñas y llamarla aquí
+
+    } catch (error) {
+      console.error(error);
+      alert('Failed to save review');
+    }
+  }}
+>
+  SEND REVIEW
+</button>
+
                 <button className="btn" onClick={handleClosePopup}>CANCEL</button>
               </div>
             </div>
