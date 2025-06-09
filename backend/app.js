@@ -50,7 +50,7 @@ app.use("/api/category", validateAuthToken(["admin"]), categoryRoutes);
 app.use("/api/contact", validateAuthToken(["employee", "admin", "client"]), contactRoutes);
 app.use("/api/clients", validateAuthToken(["employee", "admin"]), clientRoutes);
 app.use("/api/employee", validateAuthToken(["employee", "admin"]), employeeRoutes);
-app.use("/api/product", validateAuthToken(["employee", "admin"]), productsRoutes);
+app.use("/api/product", productsRoutes);
 app.use("/api/order", validateAuthToken(["employee", "admin"]), orderRoutes);
 app.use("/api/assessment", validateAuthToken(["employee", "admin", "client"]), assessmentRoutes);
 app.use("/api/registerEmployees", validateAuthToken(["admin"]), registerEmployeesRoutes);
