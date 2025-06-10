@@ -52,7 +52,7 @@ app.use("/api/clients", validateAuthToken(["employee", "admin"]), clientRoutes);
 app.use("/api/employee", validateAuthToken(["employee", "admin"]), employeeRoutes);
 app.use("/api/product", productsRoutes);
 app.use("/api/order", validateAuthToken(["employee", "admin"]), orderRoutes);
-app.use("/api/assessment", validateAuthToken(["employee", "admin", "client"]), assessmentRoutes);
+app.use("/api/assessment", assessmentRoutes);
 app.use("/api/registerEmployees", validateAuthToken(["admin"]), registerEmployeesRoutes);
 app.use("/api/registerClients", registerClientsRoutes);
 app.use("/api/admin", validateAuthToken(["admin"]), adminRoutes);
