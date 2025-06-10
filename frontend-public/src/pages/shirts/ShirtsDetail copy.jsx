@@ -1,15 +1,13 @@
-// ShirtsDetail.js
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Reviews from "../../components/Reviews/Reviews";
-import { useCart } from "../../context/CartContext";  // Accede al contexto de carrito
+import { useCart } from "../../context/CartContext"; // Ruta correcta
 import './ShirtsDetail.css';
 
 function ShirtsDetail() {
   const { id } = useParams(); // Obtiene el ID de la URL
   const navigate = useNavigate();
-  const { addToCart } = useCart();  // Accede a la función addToCart
+  const { addToCart } = useCart(); // Accede a la función addToCart desde el contexto
 
   const [shirt, setShirt] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -22,7 +20,9 @@ function ShirtsDetail() {
 
   // Cargar datos desde el backend
   useEffect(() => {
-    fetch(`http://localhost:3001/api/product/${id}`, { credentials: 'include' })
+    fetch(`http://localhost:3001/api/product/${id}`, {
+      credentials: 'include',
+    })
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch shirt data');
         return res.json();
@@ -37,18 +37,7 @@ function ShirtsDetail() {
 
   const handleAddToCart = () => {
     if (shirt) {
-      // Asegúrate de que el producto tenga las propiedades necesarias
-      const productToAdd = {
-        id: shirt._id, // ID único de la camisa
-        title: shirt.name, // Nombre de la camisa
-        price: shirt.price, // Precio de la camisa
-        image: shirt.image, // Imagen de la camisa
-        size: shirt.size, // Talla de la camisa
-        color: shirt.color, // Color de la camisa
-        collection: shirt.coleccion, // Colección de la camisa
-      };
-
-      addToCart(productToAdd);  // Añadir al carrito usando la función del contexto
+      addToCart(shirt); // Añadir al carrito usando la función del contexto
       alert("Product added to cart!");
     }
   };
@@ -124,7 +113,10 @@ function ShirtsDetail() {
                 <button
                   className="btn"
                   onClick={() => {
-                    console.log({ productId: shirt._id, ...reviewForm });
+                    console.log({
+                      productId: shirt._id,
+                      ...reviewForm
+                    });
                     alert("REVIEW SAVED");
                     setShowPopup(false);
                   }}
@@ -142,4 +134,3 @@ function ShirtsDetail() {
 }
 
 export default ShirtsDetail;
-
