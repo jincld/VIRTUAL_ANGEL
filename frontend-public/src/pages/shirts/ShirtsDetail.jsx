@@ -14,10 +14,12 @@ function ShirtsDetail() {
   const [shirt, setShirt] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const [reviewForm, setReviewForm] = useState({
     rating: 5,
     comment: ''
   });
+  
 
   // Cargar datos del producto
   useEffect(() => {
@@ -34,23 +36,33 @@ function ShirtsDetail() {
     navigate(-1); // Volver atrás
   };
 
+  const handleIncrement = () => {
+    if (quantity < 10) setQuantity(prev => prev + 1);
+  };
+  
+  const handleDecrement = () => {
+    if (quantity > 1) setQuantity(prev => prev - 1);
+  };
+  
+
   const handleAddToCart = () => {
     if (shirt) {
-      // Asegúrate de que el producto tenga las propiedades necesarias
       const productToAdd = {
-        id: shirt._id, // ID único de la camisa
-        title: shirt.name, // Nombre de la camisa
-        price: shirt.price, // Precio de la camisa
-        image: shirt.image, // Imagen de la camisa
-        size: shirt.size, // Talla de la camisa
-        color: shirt.color, // Color de la camisa
-        collection: shirt.coleccion, // Colección de la camisa
+        id: shirt._id,
+        title: shirt.name,
+        price: shirt.price,
+        image: shirt.image,
+        size: shirt.size,
+        color: shirt.color,
+        collection: shirt.coleccion,
+        quantity: quantity,  // 👈 añadimos la cantidad
       };
-
-      addToCart(productToAdd);  // Añadir al carrito usando la función del contexto
-      alert("Product added to cart!");
+  
+      addToCart(productToAdd);
+      alert(`${quantity} piece(s) added to cart!`);
     }
   };
+  
 
   const handleClosePopup = () => {
     setIsClosing(true);
@@ -120,6 +132,13 @@ function ShirtsDetail() {
           <button onClick={handleAddToCart} className="btn btn-back">
             ADD TO CART
           </button>
+
+          <div className="quantity-selector">
+  <button className="btn" onClick={handleDecrement}>-</button>
+  <span className="quantity-display">{quantity}</span>
+  <button className="btn" onClick={handleIncrement}>+</button>
+</div>
+
         </div>
 
         <div className="shirts-card__image">
