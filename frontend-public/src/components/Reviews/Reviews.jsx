@@ -37,7 +37,7 @@ const fetchReviews = async () => {
     <div className="reviews-container">
       {reviews.map((review, index) => (
         <div key={index} className="review-box">
-          <p className="user-name">{review.user_name}</p>
+          <p className="user-name">{review.idCustomer?.name || "Unknown user"}</p>
           <p className="stars">{"★".repeat(review.assessment)}{"☆".repeat(5 - review.rating)}</p>
           <p className="comment">{review.comment}</p>
         </div>

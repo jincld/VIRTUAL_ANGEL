@@ -15,7 +15,6 @@ function ShirtsDetail() {
   const [isClosing, setIsClosing] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [reviewForm, setReviewForm] = useState({
-    user: '',
     rating: 5,
     comment: ''
   });
@@ -63,11 +62,11 @@ function ShirtsDetail() {
 
   // Función que maneja el envío de la reseña
   const handleSendReview = () => {
-    // Validar que el nombre, comentario y rating no estén vacíos
-    if (!reviewForm.user || !reviewForm.comment) {
-      alert("Please complete all fields");
+    if (!reviewForm.comment || reviewForm.comment.trim() === "") {
+      alert("Please complete the comment field");
       return;
     }
+    
 
     fetch("http://localhost:3001/api/assessment", {
       method: "POST",
@@ -79,7 +78,6 @@ function ShirtsDetail() {
         idProducts: shirt._id,
         comment: reviewForm.comment,
         assessment: reviewForm.rating,
-        user_name: reviewForm.user  // Enviar el nombre del usuario
       }),
     })
       .then((response) => response.json())
@@ -137,12 +135,7 @@ function ShirtsDetail() {
           <div className={`review-popup ${isClosing ? 'fade-out-c' : 'fade-in-c'}`}>
             <div className="review-popup-content">
               <h3>MAKE YOUR REVIEW</h3>
-              <input
-                type="text"
-                placeholder="YOUR NAME"
-                value={reviewForm.user}
-                onChange={(e) => setReviewForm({ ...reviewForm, user: e.target.value })}
-              />
+
 
               <select
                 value={reviewForm.rating}
@@ -153,6 +146,13 @@ function ShirtsDetail() {
                 ))}
               </select>
               <textarea
+                style={{
+                  width: '100%',
+                  maxWidth: '400px',
+                  height: '100px',
+                  maxHeight: '150px',
+                  minHeight: '40px'
+                }}
                 placeholder="COMMENTS"
                 value={reviewForm.comment}
                 onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
