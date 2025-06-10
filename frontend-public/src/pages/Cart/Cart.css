@@ -1,10 +1,9 @@
-/* src/pages/Cart/Cart.css */
-
+/* Fondo del carrito */
 .backcarts {
   background-image: url('/shirtsback.png');
-  background-size: cover; 
+  background-size: cover;
   background-position: center;
-  background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
+  background-repeat: repeat-y;
   width: 100vw;
   min-height: 100vh;
   background-color: #000000;
@@ -14,29 +13,63 @@
   z-index: 0;
 }
 
-.total-text {
-  background-color: rgba(255, 255, 255, 0.7); /* blanco semitransparente */
-  padding: 5px;
-  color: rgb(56, 46, 46); /* cambia el texto a negro para que contraste */
-  font-weight: bold;
-}
-/* Contenedor con scroll solo para los items del carrito */
-.cart-items-container {
-  max-height: 500px;  /* Puedes ajustar esto dependiendo de tu diseño */
-  overflow-y: scroll;   /* Habilita el scroll solo en esta sección */
-  padding-right: 10px; /* Para evitar que el scroll se superponga a los items */
+.shop-t {
+  margin-top: 120px;
 }
 
-/* Estilo para ocultar el scrollbar */
+/* Estilos para el total */
+.total-text {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px;
+  color: rgb(56, 46, 46);
+  font-weight: bold;
+}
+
+/* Contenedor con scroll solo para los items del carrito */
+.cart-items-container {
+  max-height: 500px;
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+
+/* Ocultar scrollbar */
 .cart-items-container::-webkit-scrollbar {
-  width: 0px;  /* Oculta el scrollbar */
-  background: transparent; /* Asegura que no haya fondo visible */
+  width: 0px;
+  background: transparent;
 }
 
 .cart-items-container::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Oculta el "thumb" o la parte que se mueve */
+  background-color: transparent;
 }
 
 .cart-items-container::-webkit-scrollbar-track {
-  background: transparent; /* Asegura que no haya track visible */
+  background: transparent;
+}
+
+/* Estilos para el botón de checkout */
+.checkout-btn {
+  background-color: #e60000; /* Naranja vibrante */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Efecto hover */
+.checkout-btn:hover {
+  background-color: #000000; /* Un tono más oscuro de naranja */
+  transform: scale(1.05);
+}
+
+/* Estado deshabilitado */
+.checkout-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
 }

@@ -1,9 +1,12 @@
 import React from "react";
+import { useCart } from "../../context/CartContext"; // Importar el contexto
 
- function CartItem({ product }) {
+function CartItem({ product }) {
+  const { removeFromCart } = useCart(); // Obtener la función para eliminar productos
+
   return (
     <div
-      className="card mb-4"
+      className= "mb-4"
       style={{
         border: "1px solid #e0e0e0",
         borderRadius: "8px",
@@ -19,8 +22,8 @@ import React from "react";
             alt={product.title}
             className="img-fluid rounded"
             style={{
-              width: "180px",   /* AUMENTAMOS tamaño */
-              height: "180px",  /* AUMENTAMOS tamaño */
+              width: "180px",
+              height: "180px",
               objectFit: "cover",
               padding: "10px",
             }}
@@ -28,31 +31,34 @@ import React from "react";
         </div>
 
         {/* Info del producto */}
-        <div className="col-md-7">
+        <div className="col-md-6">
           <div className="card-body">
             <h5 className="card-title fw-bold">{product.title}</h5>
             <p className="card-text mb-1">
-              COLLECTION: <span className="fw-semibold">{product.collection}</span>
+              COLLECTION: <span className="fw-semibold">{product.collection || "N/A"}</span>
             </p>
             <p className="card-text mb-1">
-              SIZE: <span className="fw-semibold">{product.size}</span>
-            </p>
-            <p className="card-text mb-1">
-              COLOR: <span className="fw-semibold">{product.color}</span>
+              COLOR: <span className="fw-semibold">{product.color || "N/A"}</span>
             </p>
             <p className="card-text">
-              QUANTITY: <span className="fw-semibold">{product.quantity}</span>
+              QUANTITY: <span className="fw-semibold">{Number(product.quantity) || 1}</span>
             </p>
           </div>
         </div>
 
-        {/* Precio del producto */}
-        <div className="col-md-3 text-end pe-4">
-          <h4 className="text-danger fw-bold">${product.price.toFixed(2)}</h4>
+        {/* Precio y botón de eliminación */}
+        <div className="col-md-4 text-end pe-4">
+          <h4 className="text-danger fw-bold">${(Number(product.price) || 0).toFixed(2)}</h4>
+          <button 
+            className="btn btn-danger mt-2"
+            onClick={() => removeFromCart(product.id)}
+          >
+            Remove
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-export default CartItem
+export default CartItem;

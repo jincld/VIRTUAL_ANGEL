@@ -1,6 +1,4 @@
-// CartContext.js
-
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Contexto de carrito
 const CartContext = createContext();
@@ -12,29 +10,38 @@ export function useCart() {
 
 // Proveedor del carrito
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  // Estado del carrito con recuperación desde localStorage
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  // Guardar el carrito en localStorage cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   // Función para agregar productos al carrito
   const addToCart = (product) => {
     setCart((prevCart) => {
-      // Crear una clave única para el producto
-      const uniqueProductKey = `${product.id}-${product.size}-${product.color}`;
+      const uniqueProductKey = `${product.id}-${product.size || "default"}-${product.color || "default"}`;
 
-      // Verificamos si el producto con la combinación de ID, tamaño y color ya está en el carrito
       const existingProduct = prevCart.find(
-        (item) => `${item.id}-${item.size}-${item.color}` === uniqueProductKey
+        (item) => `${item.id}-${item.size || "default"}-${item.color || "default"}` === uniqueProductKey
       );
 
       if (existingProduct) {
-        // Si el producto ya existe, actualizamos la cantidad
         return prevCart.map((item) =>
-          `${item.id}-${item.size}-${item.color}` === uniqueProductKey
-            ? { ...item, quantity: item.quantity + 1 }  // Aumenta la cantidad
+          `${item.id}-${item.size || "default"}-${item.color || "default"}` === uniqueProductKey
+            ? { ...item, quantity: (Number(item.quantity) || 0) + 1 }
             : item
         );
       } else {
-        // Si no existe, agregamos el producto con cantidad 1
-        return [...prevCart, { ...product, quantity: 1 }];
+        return [...prevCart, { 
+          ...product, 
+          quantity: Number(product.quantity) > 0 ? Number(product.quantity) : 1, 
+          price: Number(product.price) > 0 ? Number(product.price) : 0 
+        }];
       }
     });
   };
@@ -44,14 +51,10 @@ export function CartProvider({ children }) {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // Función para vaciar el carrito
-  const clearCart = () => {
-    setCart([]);
-  };
-
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
 }
+

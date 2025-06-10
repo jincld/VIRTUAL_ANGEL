@@ -1,7 +1,7 @@
 import React from "react";
 import { useCart } from "../../context/CartContext"; // Obtener el hook de carrito
 import CartItem from "../../components/CartItems/CartItem";
-import '../Cart/Cart.css';
+import "../Cart/Cart.css";
 import { useNavigate } from "react-router-dom";
 
 // Componente para mostrar el total
@@ -22,20 +22,19 @@ function CartPage() {
     navigate("/checkout");
   };
 
-  // Cálculo del total y cantidad
-  const totalPrice = cart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
-  const totalQuantity = cart.reduce(
-    (sum, product) => sum + product.quantity,
-    0
-  );
+  // Asegurar que `cart` tenga valores antes de calcular el total
+  const totalPrice = cart.length > 0 
+    ? cart.reduce((total, product) => total + (Number(product.price) || 0) * (Number(product.quantity) || 0), 0)
+    : 0;
+
+  const totalQuantity = cart.length > 0 
+    ? cart.reduce((sum, product) => sum + (Number(product.quantity) || 0), 0)
+    : 0;
 
   return (
     <div className="position-relative min-vh-100 bg-white backcarts">
       <div className="container py-5 content-zone">
-        <h1 className="text-start mb-4">Your Shopping Cart</h1>
+        <h1 className="text-start mb-4 shop-t">YOUR SHOPPING CART</h1>
 
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
@@ -52,9 +51,9 @@ function CartPage() {
               <Total totalPrice={totalPrice} totalQuantity={totalQuantity} />
             </div>
             {/* Botón para proceder al checkout */}
-            <div className="col-12 mt-3">
+            <div className="col-12 mt-3 text-center">
               <button
-                className="btn btn-primary"
+                className="checkout-btn"
                 onClick={handleCheckout}
                 disabled={cart.length === 0}
               >
@@ -69,4 +68,5 @@ function CartPage() {
 }
 
 export default CartPage;
+
 
