@@ -4,12 +4,8 @@ import 'aos/dist/aos.css';
 import './Search.css';
 import CardClothing from '../../components/cardClothing/CardClothing.jsx';
 
-import shirtsData from '../../pages/shirts/ShirtsData';
-import PantsData from '../../pages/pants/PantsData';
-import JacketsData from '../../pages/jackets/JacketsData';
-import SweatersData from '../../pages/sweaters/SweatersData';
-
 const SearchPage = () => {
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [collectionFilter, setCollectionFilter] = useState('');
@@ -17,211 +13,256 @@ const SearchPage = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [maxPrice, setMaxPrice] = useState(200);
   const [sortOrder, setSortOrder] = useState('');
-  const [results, setResults] = useState([]);
   const [recommended, setRecommended] = useState([]);
 
-  const allProducts = [
-    ...shirtsData.map(item => ({ ...item, category: 'shirts' })),
-    ...PantsData.map(item => ({ ...item, category: 'pants' })),
-    ...JacketsData.map(item => ({ ...item, category: 'jackets' })),
-    ...SweatersData.map(item => ({ ...item, category: 'sweaters' }))
-  ];
+  // Estados para opciones de filtros dinámicos
+  const [collections, setCollections] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
-    const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
-    setRecommended(shuffled.slice(0, 8));
+
+    // Fetch de productos desde el backend
+    fetch('http://localhost:3001/api/product', { credentials: 'include' })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch products');
+        return res.json();
+      })
+      .then(data => {
+        setProducts(data);
+
+        // Extraer opciones únicas para filtros
+        setCollections([...new Set(data.map(p => p.coleccion).filter(Boolean))]);
+        setColors([...new Set(data.map(p => p.color).filter(Boolean))]);
+        setCategories([...new Set(data.map(p => p.category).filter(Boolean))]);
+
+        // Recomendados: mezcla aleatoria y corta lista
+        const shuffled = [...data].sort(() => 0.5 - Math.random());
+        setRecommended(shuffled.slice(0, 8));
+      })
+      .catch(err => console.error('Error fetching products:', err));
   }, []);
 
-  const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setQuery(value);
-    filterAndSetResults(value);
-  };
+  // Función para filtrar productos según búsqueda y filtros
+  const filteredProducts = products
+    .filter(item => {
+      const lowerQuery = query.toLowerCase();
 
-  const filterAndSetResults = (searchTerm) => {
-    const filtered = allProducts.filter((item) => {
-      const matchTitle = item.titulo.toLowerCase().includes(searchTerm);
-      const matchColor = item.color?.toLowerCase().includes(searchTerm);
-      const matchCollection = item.coleccion?.toLowerCase().includes(searchTerm);
-      const matchCategory = item.category?.toLowerCase().includes(searchTerm);
-      const matchPrice = !isNaN(searchTerm) && Math.abs(item.precio - parseFloat(searchTerm)) < 5;
-      
-      const matchesSearch = matchTitle || matchColor || matchCollection || matchCategory || matchPrice;      
-      const matchesFilters =
+      // Búsqueda en varios campos
+      const matchSearch =
+        item.name?.toLowerCase().includes(lowerQuery) ||
+        item.coleccion?.toLowerCase().includes(lowerQuery) ||
+        item.color?.toLowerCase().includes(lowerQuery) ||
+        item.category?.toLowerCase().includes(lowerQuery);
+
+      // Aplicar filtros
+      const matchFilters =
         (collectionFilter ? item.coleccion === collectionFilter : true) &&
         (colorFilter ? item.color === colorFilter : true) &&
         (categoryFilter ? item.category === categoryFilter : true) &&
-        item.precio <= maxPrice;
+        item.price <= maxPrice;
 
-      return matchesSearch && matchesFilters;
-    });
-
-    const sorted = filtered.sort((a, b) => {
-      if (sortOrder === 'asc') return a.precio - b.precio;
-      if (sortOrder === 'desc') return b.precio - a.precio;
+      return matchSearch && matchFilters;
+    })
+    .sort((a, b) => {
+      if (sortOrder === 'asc') return a.price - b.price;
+      if (sortOrder === 'desc') return b.price - a.price;
       return 0;
     });
 
-    setResults(sorted);
-  };
-
   const clearFilters = () => {
+    setQuery('');
     setCollectionFilter('');
     setColorFilter('');
     setCategoryFilter('');
     setSortOrder('');
     setMaxPrice(200);
-    filterAndSetResults(query);
   };
 
-  useEffect(() => {
-    filterAndSetResults(query);
-  }, [query, collectionFilter, colorFilter, categoryFilter, maxPrice, sortOrder]);
+  // Contenedor estilo flexbox para cards, usado tanto para recomendados como filtrados
+  const cardsContainerStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '1.5rem',
+  };
+
+  const cardWrapperStyle = {
+    flex: '1 1 280px',
+    maxWidth: '300px',
+    display: 'flex',
+    justifyContent: 'center',
+  };
+
+  // Nuevo: definimos si hay algún filtro activo o búsqueda
+  const hasFilter =
+    query.trim() !== '' ||
+    collectionFilter !== '' ||
+    colorFilter !== '' ||
+    categoryFilter !== '' ||
+    maxPrice !== 200 ||
+    sortOrder !== '';
 
   return (
     <>
       <div className="backsearch"></div>
       <div className="container content-zone py-5 margin-top-global">
-      <div className="search-container">
-        <h1 className="search-title">SEARCH PRODUCTS</h1>
+        <div className="search-container">
+          <h1 className="search-title">SEARCH PRODUCTS</h1>
 
-        <div className="d-flex justify-content-center align-items-center mb-4 gap-3">
-          <input
-            type="text"
-            placeholder="Look for your perfect item..."
-            value={query}
-            onChange={handleSearch}
-            className="search-input form-control input-style"
-            style={{ maxWidth: '400px' }}
-          />
-          <button className="btnfilters btnsearchfilters" onClick={() => setShowFilters(!showFilters)}>
-            {showFilters ? 'Hide filters' : 'Show filters'}
-          </button>
-        </div>
-
-        {showFilters && (
-          <div className="filter-menu p-4 mt-3 rounded shadow-sm">
-            <div className="row">
-              <div className="col-md-3 mb-3">
-                <label className="form-label">Collection:</label>
-                <select className="form-select" value={collectionFilter} onChange={(e) => {
-                  setCollectionFilter(e.target.value);
-                  filterAndSetResults(query);
-                }}>
-                  <option value="">All</option>
-                  <option value="ANGEL OR CRAZY">ANGEL OR CRAZY</option>
-                  <option value="This Is Eclipse">This Is Eclipse</option>
-                  <option value="GOOD BOY GONE BAD">GOOD BOY GONE BAD</option>
-                </select>
-              </div>
-
-              <div className="col-md-3 mb-3">
-                <label className="form-label">Color:</label>
-                <select className="form-select" value={colorFilter} onChange={(e) => {
-                  setColorFilter(e.target.value);
-                  filterAndSetResults(query);
-                }}>
-                  <option value="">All</option>
-                  <option value="black">Black</option>
-                  <option value="white">White</option>
-                  <option value="gray">Gray</option>
-                  <option value="red">Red</option>
-                  <option value="blue">Blue</option>
-                  <option value="brown">Brown</option>
-                </select>
-              </div>
-
-              <div className="col-md-3 mb-3">
-                <label className="form-label">Category:</label>
-                <select className="form-select" value={categoryFilter} onChange={(e) => {
-                  setCategoryFilter(e.target.value);
-                  filterAndSetResults(query);
-                }}>
-                  <option value="">All</option>
-                  <option value="shirts">Shirts</option>
-                  <option value="pants">Pants</option>
-                  <option value="jackets">Jackets</option>
-                  <option value="sweaters">Sweaters</option>
-                </select>
-              </div>
-
-              <div className="col-md-3 mb-3">
-                <label className="form-label">Sort by price:</label>
-                <select className="form-select" value={sortOrder} onChange={(e) => {
-                  setSortOrder(e.target.value);
-                  filterAndSetResults(query);
-                }}>
-                  <option value="">No order</option>
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="row mt-3 align-items-center">
-              <div className="col-md-9">
-                <label className="form-label">Max price: ${maxPrice}</label>
-                <input
-                  type="range"
-                  className="form-range"
-                  min="0"
-                  max="200"
-                  value={maxPrice}
-                  onChange={(e) => {
-                    setMaxPrice(parseFloat(e.target.value));
-                    filterAndSetResults(query);
-                  }}
-                />
-              </div>
-              <div className="col-md-3 text-end">
-                <button className="btn btn-limpiar" onClick={clearFilters}>Clear filters</button>
-              </div>
-            </div>
+          <div className="d-flex justify-content-center align-items-center mb-4 gap-3">
+            <input
+              type="text"
+              placeholder="Look for your perfect item..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="search-input form-control input-style"
+              style={{ maxWidth: '400px' }}
+            />
+            <button className="btnfilters btnsearchfilters" onClick={() => setShowFilters(!showFilters)}>
+              {showFilters ? 'Hide filters' : 'Show filters'}
+            </button>
           </div>
-        )}
 
-        {query === '' && recommended.length > 0 && (
-          <>
-            <h2 className="recommend-title">Recommended for you</h2>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-              {recommended.map((item) => (
-                <div className="col d-flex justify-content-center" data-aos="fade-up" key={item.id}>
-                  <CardClothing
-                    id={item.id}
-                    imagen={item.imagen}
-                    titulo={item.titulo}
-                    precio={item.precio}
-                    categoria={item.categoria}
+          {showFilters && (
+            <div className="filter-menu p-4 mt-3 rounded shadow-sm">
+              <div className="row">
+                <div className="col-md-3 mb-3">
+                  <label className="form-label">Collection:</label>
+                  <select
+                    className="form-select"
+                    value={collectionFilter}
+                    onChange={(e) => setCollectionFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {collections.map((col) => (
+                      <option key={col} value={col}>
+                        {col}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3 mb-3">
+                  <label className="form-label">Color:</label>
+                  <select
+                    className="form-select"
+                    value={colorFilter}
+                    onChange={(e) => setColorFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {colors.map((color) => (
+                      <option key={color} value={color}>
+                        {color}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3 mb-3">
+                  <label className="form-label">Category:</label>
+                  <select
+                    className="form-select"
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3 mb-3">
+                  <label className="form-label">Sort by price:</label>
+                  <select
+                    className="form-select"
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                  >
+                    <option value="">No order</option>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="row mt-3 align-items-center">
+                <div className="col-md-9">
+                  <label className="form-label">Max price: ${maxPrice}</label>
+                  <input
+                    type="range"
+                    className="form-range"
+                    min="0"
+                    max="200"
+                    step="1"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(parseFloat(e.target.value))}
                   />
                 </div>
-              ))}
+                <div className="col-md-3 text-end">
+                  <button className="btn btn-limpiar" onClick={clearFilters}>
+                    Clear filters
+                  </button>
+                </div>
+              </div>
             </div>
-          </>
-        )}
+          )}
 
-        {query !== '' && (
-          <>
-            {results.length === 0 ? (
-              <p className="no-results">No products found.</p>
-            ) : (
-              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
-                {results.map((item) => (
-                  <div className="col d-flex justify-content-center" data-aos="fade-up" key={item.id}>
+          {/* Mostrar recomendados solo si NO hay filtros ni búsqueda */}
+          {!hasFilter && recommended.length > 0 && (
+            <>
+              <h2 className="recommend-title">Recommended for you</h2>
+              <div style={cardsContainerStyle}>
+                {recommended.map((item) => (
+                  <div key={item._id} data-aos="fade-up" style={cardWrapperStyle}>
                     <CardClothing
-                      id={item.id}
-                      imagen={item.imagen}
-                      titulo={item.titulo}
-                      precio={item.precio}
-                      category={item.category}
+                      id={item._id}
+                      imagen={item.image}
+                      titulo={item.name}
+                      precio={item.price}
+                      categoria={item.category}
+                      stock={item.stock}
+                      coleccion={item.coleccion}
+                      color={item.color}
+                      colorcode={item.colorcode}
                     />
                   </div>
                 ))}
               </div>
-            )}
-          </>
-        )}
-      </div>
+            </>
+          )}
+
+          {/* Mostrar productos filtrados solo si hay algún filtro o búsqueda */}
+          {hasFilter && (
+            <>
+              {filteredProducts.length === 0 ? (
+                <p className="no-results">No products found.</p>
+              ) : (
+                <div style={cardsContainerStyle}>
+                  {filteredProducts.map((item) => (
+                    <div key={item._id} data-aos="fade-up" style={cardWrapperStyle}>
+                      <CardClothing
+                        id={item._id}
+                        imagen={item.image}
+                        titulo={item.name}
+                        precio={item.price}
+                        categoria={item.category}
+                        stock={item.stock}
+                        coleccion={item.coleccion}
+                        color={item.color}
+                        colorcode={item.colorcode}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );
