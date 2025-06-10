@@ -1,19 +1,42 @@
+/* src/pages/Cart/Cart.css */
+
 .backcarts {
-    background-image: url('/shirtsback.png');
-    background-size: cover; 
-    background-position: center;
-    background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
-    width: 100vw;
-    min-height: 100vh;
-    background-color: #000000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-  .total-text {
-    background-color: rgba(255, 255, 255, 0.7); /* blanco semitransparente */
-    padding: 5px;
-    color: rgb(56, 46, 46); /* cambia el texto a negro para que contraste */
-    font-weight: bold;
- }
+  background-image: url('/shirtsback.png');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: repeat-y; /* Ya no se repite, se adapta al tamaño */
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.total-text {
+  background-color: rgba(255, 255, 255, 0.7); /* blanco semitransparente */
+  padding: 5px;
+  color: rgb(56, 46, 46); /* cambia el texto a negro para que contraste */
+  font-weight: bold;
+}
+/* Contenedor con scroll solo para los items del carrito */
+.cart-items-container {
+  max-height: 500px;  /* Puedes ajustar esto dependiendo de tu diseño */
+  overflow-y: scroll;   /* Habilita el scroll solo en esta sección */
+  padding-right: 10px; /* Para evitar que el scroll se superponga a los items */
+}
+
+/* Estilo para ocultar el scrollbar */
+.cart-items-container::-webkit-scrollbar {
+  width: 0px;  /* Oculta el scrollbar */
+  background: transparent; /* Asegura que no haya fondo visible */
+}
+
+.cart-items-container::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Oculta el "thumb" o la parte que se mueve */
+}
+
+.cart-items-container::-webkit-scrollbar-track {
+  background: transparent; /* Asegura que no haya track visible */
+}

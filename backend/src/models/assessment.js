@@ -20,10 +20,10 @@ const assessmentSchema = new Schema({
         require: true,
         min: 1,
         max: 5
-    }
+    },
 }, {
     timestamps: true,
     strict: false
-})
+});
 
-export default model ("assesstments", assessmentSchema); 
+export default model("assessments", assessmentSchema);
