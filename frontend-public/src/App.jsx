@@ -5,6 +5,9 @@ import Footer from './components/Footer/Footer.jsx';
 import ClientNav from './components/Nav/nav.jsx';
 import { AuthProvider, useAuth } from '../../frontend-public/AuthToken.jsx';
 
+// Importamos el CartProvider desde el nuevo archivo creado
+import { CartProvider } from './context/CartContext'; // Importa correctamente CartContext
+
 // Pages
 import Home from './pages/home.jsx';
 import About from './pages/about/About.jsx';
@@ -15,8 +18,8 @@ import Shirts from './pages/shirts/Shirts.jsx';
 import Pants from './pages/pants/Pants.jsx';
 import Jacket from './pages/jackets/Jackets.jsx';
 import Sweaters from './pages/sweaters/Sweaters.jsx';
-import PantsDetail from './pages/pants/PantsDetail.jsx';
 import ShirtsDetail from './pages/shirts/ShirtsDetail.jsx';
+import PantsDetail from './pages/pants/PantsDetail.jsx';
 import JacketsDetail from './pages/jackets/JacketsDetail.jsx';
 import SweatersDetail from './pages/sweaters/SweatersDetail.jsx';
 import News from './pages/news/New.jsx';
@@ -63,42 +66,44 @@ const ProtectedRoute = ({ element, storageKey, redirectTo = "/" }) => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <LayoutWrapper>
-          <Routes>
-            {/* Auth Pages */}
-            <Route path="/" element={<Login />} />
-            <Route path="forgotpassword" element={<ForgotPass />} />
-            <Route path="verifycode" element={
-              <ProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />
-            } />
-            <Route path="newpassword" element={
-              <ProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />
-            } />
-            <Route path="createaccount" element={<CreateAccount />} />
+      <CartProvider> {/* Asegúrate de envolver toda la aplicación con el CartProvider */}
+        <Router>
+          <LayoutWrapper>
+            <Routes>
+              {/* Auth Pages */}
+              <Route path="/" element={<Login />} />
+              <Route path="forgotpassword" element={<ForgotPass />} />
+              <Route path="verifycode" element={
+                <ProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />
+              } />
+              <Route path="newpassword" element={
+                <ProtectedRoute element={<NewPassword />} storageKey="canAccessNewPassword" />
+              } />
+              <Route path="createaccount" element={<CreateAccount />} />
 
-            {/* Cliente Pages */}
-            <Route path="home" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="terms" element={<Terms />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="clothing" element={<Clothing />} />
-            <Route path="shirts" element={<Shirts />} />
-            <Route path="pants" element={<Pants />} />
-            <Route path="jackets" element={<Jacket />} />
-            <Route path="sweaters" element={<Sweaters />} />
-            <Route path="shirts/:id" element={<ShirtsDetail />} />
-            <Route path="pants/:id" element={<PantsDetail />} />
-            <Route path="jackets/:id" element={<JacketsDetail />} />
-            <Route path="sweaters/:id" element={<SweatersDetail />} />
-            <Route path="news" element={<News />} />
-            <Route path="searchpage" element={<SearchPage />} />
-            <Route path="lookbook" element={<Lookbook />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="checkout" element={<CheckoutForm />} />
-          </Routes>
-        </LayoutWrapper>
-      </Router>
+              {/* Cliente Pages */}
+              <Route path="home" element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="clothing" element={<Clothing />} />
+              <Route path="shirts" element={<Shirts />} />
+              <Route path="pants" element={<Pants />} />
+              <Route path="jackets" element={<Jacket />} />
+              <Route path="sweaters" element={<Sweaters />} />
+              <Route path="shirts/:id" element={<ShirtsDetail />} />
+              <Route path="pants/:id" element={<PantsDetail />} />
+              <Route path="jackets/:id" element={<JacketsDetail />} />
+              <Route path="sweaters/:id" element={<SweatersDetail />} />
+              <Route path="news" element={<News />} />
+              <Route path="searchpage" element={<SearchPage />} />
+              <Route path="lookbook" element={<Lookbook />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="checkout" element={<CheckoutForm />} />
+            </Routes>
+          </LayoutWrapper>
+        </Router>
+      </CartProvider> 
     </AuthProvider>
   );
 }
