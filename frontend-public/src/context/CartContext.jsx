@@ -25,15 +25,18 @@ export function CartProvider({ children }) {
   const addToCart = (product) => {
     setCart((prevCart) => {
       const uniqueProductKey = `${product.id}-${product.size || "default"}-${product.color || "default"}`;
-
+  
       const existingProduct = prevCart.find(
         (item) => `${item.id}-${item.size || "default"}-${item.color || "default"}` === uniqueProductKey
       );
-
+  
       if (existingProduct) {
         return prevCart.map((item) =>
           `${item.id}-${item.size || "default"}-${item.color || "default"}` === uniqueProductKey
-            ? { ...item, quantity: (Number(item.quantity) || 0) + 1 }
+            ? { 
+                ...item, 
+                quantity: (Number(item.quantity) || 0) + (Number(product.quantity) || 1) 
+              }
             : item
         );
       } else {
@@ -45,6 +48,7 @@ export function CartProvider({ children }) {
       }
     });
   };
+  
 
   // Función para eliminar un producto del carrito
   const removeFromCart = (id) => {
