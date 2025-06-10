@@ -158,10 +158,10 @@ function ShirtsDetail() {
                 onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
               />
               <div className="popup-buttons">
-                <button className="btn" onClick={handleSendReview}>
+              <button className="btn" onClick={handleSendReview}>
                   SEND REVIEW
                 </button>
-
+                
                 <button className="btn" onClick={handleClosePopup}>CANCEL</button>
               </div>
             </div>
