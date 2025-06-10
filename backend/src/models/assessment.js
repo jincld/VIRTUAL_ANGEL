@@ -21,10 +21,6 @@ const assessmentSchema = new Schema({
         min: 1,
         max: 5
     },
-    user_name: { // Nuevo campo para el nombre del usuario
-        type: String,
-        required: true
-    }
 }, {
     timestamps: true,
     strict: false

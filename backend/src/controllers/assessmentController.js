@@ -7,11 +7,14 @@ assessmentController.getAssessment = async (req, res) => {
     res.json(assessments)
 }
 
-//getbyid
+// getbyid
 assessmentController.getAssessmentByProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const assessments = await assessmentModel.find({ idProducts: id });
+    const assessments = await assessmentModel
+      .find({ idProducts: id })
+      .populate("idCustomer", "name"); // <-- Esto es lo que faltaba
+
     res.json(assessments);
   } catch (error) {
     res.status(500).json({ message: "Error fetching reviews", error });
@@ -19,17 +22,17 @@ assessmentController.getAssessmentByProduct = async (req, res) => {
 };
 
 
+
 //insert
 assessmentController.insertAssessment = async (req, res) => {
-    const { idProducts, comment, assessment, user_name } = req.body; // Ahora también recibimos user_name
+    const { idProducts, comment, assessment } = req.body; 
     const idCustomer = req.user.idCustomer;  // Accedemos al id del cliente desde el middleware
   
     const newAssessment = new assessmentModel({
       idCustomer,
       idProducts,
       comment,
-      assessment,
-      user_name  // Guardamos el nombre del usuario
+      assessment
     });
   
     await newAssessment.save();
