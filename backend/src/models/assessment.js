@@ -20,10 +20,14 @@ const assessmentSchema = new Schema({
         require: true,
         min: 1,
         max: 5
+    },
+    user_name: { // Nuevo campo para el nombre del usuario
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,
     strict: false
-})
+});
 
-export default model ("assesstments", assessmentSchema); 
+export default model("assessments", assessmentSchema);

@@ -20,7 +20,7 @@ function ShirtsDetail() {
     comment: ''
   });
 
-  // Cargar datos desde el backend
+  // Cargar datos del producto
   useEffect(() => {
     fetch(`http://localhost:3001/api/product/${id}`, { credentials: 'include' })
       .then(res => {
@@ -59,6 +59,42 @@ function ShirtsDetail() {
       setShowPopup(false);
       setIsClosing(false);
     }, 300);
+  };
+
+  // Función que maneja el envío de la reseña
+  const handleSendReview = () => {
+    // Validar que el nombre, comentario y rating no estén vacíos
+    if (!reviewForm.user || !reviewForm.comment) {
+      alert("Please complete all fields");
+      return;
+    }
+
+    fetch("http://localhost:3001/api/assessment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",  // Esto enviará automáticamente el authToken en la cookie
+      body: JSON.stringify({
+        idProducts: shirt._id,
+        comment: reviewForm.comment,
+        assessment: reviewForm.rating,
+        user_name: reviewForm.user  // Enviar el nombre del usuario
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Review saved:", data);
+        alert("Review saved!");
+        setShowPopup(false);  // Cierra el popup después de enviar
+
+        // Recargar la página para mostrar las reseñas actualizadas
+        window.location.reload();  // Recarga la página
+      })
+      .catch((error) => {
+        console.error("Error saving review:", error);
+        alert("There was an error saving your review.");
+      });
   };
 
   if (!shirt) return <h2>Loading shirt...</h2>;
@@ -105,8 +141,9 @@ function ShirtsDetail() {
                 type="text"
                 placeholder="YOUR NAME"
                 value={reviewForm.user}
-                onChange={e => setReviewForm({ ...reviewForm, user: e.target.value })}
+                onChange={(e) => setReviewForm({ ...reviewForm, user: e.target.value })}
               />
+
               <select
                 value={reviewForm.rating}
                 onChange={e => setReviewForm({ ...reviewForm, rating: Number(e.target.value) })}
@@ -121,16 +158,10 @@ function ShirtsDetail() {
                 onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
               />
               <div className="popup-buttons">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    console.log({ productId: shirt._id, ...reviewForm });
-                    alert("REVIEW SAVED");
-                    setShowPopup(false);
-                  }}
-                >
+                <button className="btn" onClick={handleSendReview}>
                   SEND REVIEW
                 </button>
+
                 <button className="btn" onClick={handleClosePopup}>CANCEL</button>
               </div>
             </div>
