@@ -1,5 +1,6 @@
 const customersController = {};
 import clientsModel from "../models/clients.js";
+import bcrypt from 'bcryptjs';
 
 // Obtener un cliente por su ID
 customersController.getCustomerID = async (req, res) => {
@@ -45,25 +46,36 @@ customersController.deleteCustomers = async (req, res) => {
 
 // UPDATE
 customersController.updateCustomers = async (req, res) => {
-  // Solicito todos los valores
-  const { name, password, age, gender, cardNumber, address, phone, email } = req.body;
-  // Actualizo
-  await clientsModel.findByIdAndUpdate(
-    req.params.id,
-    {
-      name,
-      password,
-      age,
-      gender,
-      cardNumber,
-      address,
-      phone,
-      email
-    },
-    { new: true }
-  );
-  // muestro un mensaje que todo se actualizo
-  res.json({ message: "Customers updated" });
+  try {
+    const { name, password, age, gender, cardNumber, address, phone, email } = req.body;
+
+    // Si la contraseña ha cambiado, ciframos la nueva contraseña
+    let hashedPassword = password;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);  // Se cifra la contraseña con 10 rondas
+    }
+
+    // Actualizamos el cliente en la base de datos
+    await clientsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        password: hashedPassword,  // Guardamos la contraseña cifrada
+        age,
+        gender,
+        cardNumber,
+        address,
+        phone,
+        email
+      },
+      { new: true }
+    );
+
+    res.json({ message: "Customer updated successfully" });
+  } catch (error) {
+    console.error("Error updating customer:", error);
+    res.status(500).json({ message: "Error updating customer" });
+  }
 };
 
 export default customersController;

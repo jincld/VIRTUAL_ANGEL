@@ -78,12 +78,18 @@ const ProfileClient = () => {
       data.phone === originalData.phone &&
       String(data.age) === String(originalData.age) &&
       data.gender === originalData.gender &&
-      !data.password;
-
+      !data.password;  // Aquí comprobamos si la contraseña está vacía
+  
+    // Si no hay cambios, no enviamos nada
     if (noChanges) {
       return;
     }
-
+  
+    // Si la contraseña está vacía, la eliminamos de los datos a enviar
+    if (!data.password) {
+      delete data.password;
+    }
+  
     try {
       const response = await fetch(`http://localhost:3001/api/clients/${userId}`, {
         method: 'PUT',
@@ -93,9 +99,9 @@ const ProfileClient = () => {
         },
         body: JSON.stringify(data),
       });
-
+  
       const resData = await response.json();
-
+  
       if (response.ok) {
         alert(resData.message || 'Profile updated successfully');
         fetchUserData();
@@ -108,6 +114,7 @@ const ProfileClient = () => {
       alert('Error updating profile');
     }
   };
+  
 
   const handleLogout = async () => {
     try {
@@ -139,37 +146,12 @@ const ProfileClient = () => {
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
               <div className="mb-3 w-100">
                 <img
-                  src="/static-image.png" // Imagen estática
+                  src="/profileclient-ad.png" // Imagen estática
                   alt="Profile"
                   className="img-fluid profile-img-preview"
                 />
               </div>
-              <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
-                {!isEditing ? (
-                  <>
-                    <button
-                      type="button"
-                      className="btn profile-btn-save w-100 profile-btn-edit"
-                      onClick={() => setIsEditing(true)}
-                    >
-                      EDIT PROFILE
-                    </button>
 
-                    <button type="button" className="btn profile-btn-logout w-100 mt-2" onClick={handleLogout}>
-                      LOGOUT
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button type="submit" className="btn profile-btn-save w-100">
-                      SAVE CHANGES
-                    </button>
-                    <button type="button" className="btn profile-btn-save w-100 mt-2" onClick={handleCancelEdit}>
-                      CANCEL EDIT
-                    </button>
-                  </>
-                )}
-              </div>
             </div>
 
             {/* Formulario */}
@@ -245,6 +227,33 @@ const ProfileClient = () => {
                   />
                   {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
                 </div>
+
+                <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
+                {!isEditing ? (
+                  <>
+                    <button
+                      type="button"
+                      className="btn profile-btn-save w-100 profile-btn-edit"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      EDIT PROFILE
+                    </button>
+
+                    <button type="button" className="btn profile-btn-logout w-100" onClick={handleLogout}>
+                      LOGOUT
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button type="submit" className="btn profile-btn-save w-100">
+                      SAVE CHANGES
+                    </button>
+                    <button type="button" className="btn profile-btn-save w-100" onClick={handleCancelEdit}>
+                      CANCEL EDIT
+                    </button>
+                  </>
+                )}
+              </div>
               </div>
             </div>
           </form>
