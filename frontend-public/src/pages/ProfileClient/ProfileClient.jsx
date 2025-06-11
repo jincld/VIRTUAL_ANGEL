@@ -127,13 +127,13 @@ const ProfileClient = () => {
 
   return (
     <>
-      <div className="backaddclient"></div>
-      <div className="btn-marginpd margin-top-global"></div>
-      <div className="ap-wrapper">
-        <h2 className="text-center text-black mb-4 addclient-title">
+      <div className="profile-client-background"></div>
+      <div className="btn-margin-top"></div>
+      <div className="profile-wrapper">
+        <h2 className="text-center text-white mb-4 profile-title">
           {isEditing ? 'EDIT PROFILE' : 'PROFILE'}
         </h2>
-        <div className="ap-card rounded p-4 shadow">
+        <div className="profile-card rounded p-4 shadow">
           <form className="row g-4" onSubmit={handleSubmit(onSubmit)}>
             {/* Imagen Estática */}
             <div className="col-md-5 text-center d-flex flex-column align-items-center justify-content-start">
@@ -141,7 +141,7 @@ const ProfileClient = () => {
                 <img
                   src="/static-image.png" // Imagen estática
                   alt="Profile"
-                  className="img-fluid ap-img-preview"
+                  className="img-fluid profile-img-preview"
                 />
               </div>
               <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
@@ -149,22 +149,22 @@ const ProfileClient = () => {
                   <>
                     <button
                       type="button"
-                      className="btn ap-btn-save w-100 btnsaveclient"
+                      className="btn profile-btn-save w-100 profile-btn-edit"
                       onClick={() => setIsEditing(true)}
                     >
                       EDIT PROFILE
                     </button>
 
-                    <button type="button" className="btn ap-btn-save btn-logout w-100 mt-2" onClick={handleLogout}>
+                    <button type="button" className="btn profile-btn-logout w-100 mt-2" onClick={handleLogout}>
                       LOGOUT
                     </button>
                   </>
                 ) : (
                   <>
-                    <button type="submit" className="btn ap-btn-save w-100 btnsaveclient">
+                    <button type="submit" className="btn profile-btn-save w-100">
                       SAVE CHANGES
                     </button>
-                    <button type="button" className="btn ap-btn-save w-100 btnsaveclient mt-2" onClick={handleCancelEdit}>
+                    <button type="button" className="btn profile-btn-save w-100 mt-2" onClick={handleCancelEdit}>
                       CANCEL EDIT
                     </button>
                   </>
@@ -176,10 +176,10 @@ const ProfileClient = () => {
             <div className="col-md-7">
               <div className="row g-3">
                 <div className="col-6">
-                  <label className="form-label ap-label">Name</label>
+                  <label className="form-label profile-label">Name</label>
                   <input
                     type="text"
-                    className={`form-control ap-input ${errors.name ? 'is-invalid' : ''}`}
+                    className={`form-control profile-input ${errors.name ? 'is-invalid' : ''}`}
                     {...register('name', { required: 'Name is required' })}
                     disabled={!isEditing}
                   />
@@ -187,10 +187,10 @@ const ProfileClient = () => {
                 </div>
 
                 <div className="col-6">
-                  <label className="form-label ap-label">Email</label>
+                  <label className="form-label profile-label">Email</label>
                   <input
                     type="email"
-                    className={`form-control ap-input ${errors.email ? 'is-invalid' : ''}`}
+                    className={`form-control profile-input ${errors.email ? 'is-invalid' : ''}`}
                     {...register('email', {
                       required: 'Email is required',
                       pattern: {
@@ -204,10 +204,10 @@ const ProfileClient = () => {
                 </div>
 
                 <div className="col-6">
-                  <label className="form-label ap-label">Phone</label>
+                  <label className="form-label profile-label">Phone</label>
                   <input
                     type="text"
-                    className={`form-control ap-input ${errors.phone ? 'is-invalid' : ''}`}
+                    className={`form-control profile-input ${errors.phone ? 'is-invalid' : ''}`}
                     {...register('phone', { required: 'Phone is required' })}
                     disabled={!isEditing}
                   />
@@ -215,9 +215,9 @@ const ProfileClient = () => {
                 </div>
 
                 <div className="col-6">
-                  <label className="form-label ap-label">Gender</label>
+                  <label className="form-label profile-label">Gender</label>
                   <select
-                    className={`form-select ap-input ${errors.gender ? 'is-invalid' : ''}`}
+                    className={`form-select profile-input ${errors.gender ? 'is-invalid' : ''}`}
                     {...register('gender', { required: 'Gender is required' })}
                     disabled={!isEditing}
                   >
@@ -230,10 +230,10 @@ const ProfileClient = () => {
                 </div>
 
                 <div className="col-12">
-                  <label className="form-label ap-label">Password</label>
+                  <label className="form-label profile-label">Password</label>
                   <input
                     type="password"
-                    className={`form-control ap-input ${errors.password ? 'is-invalid' : ''}`}
+                    className={`form-control profile-input ${errors.password ? 'is-invalid' : ''}`}
                     {...register('password', {
                       minLength: {
                         value: 6,
