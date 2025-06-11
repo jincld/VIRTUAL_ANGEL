@@ -27,6 +27,7 @@ import SearchPage from './pages/Search/Search.jsx';
 import Lookbook from './pages/Lookbook/Lookbook.jsx';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
+import ProfileClient from './pages/ProfileClient/ProfileClient.jsx';
 
 // Auth Pages
 import Login from './pages/Login/Login.jsx';
@@ -100,6 +101,7 @@ function App() {
               <Route path="lookbook" element={<Lookbook />} />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutForm />} />
+              <Route path="profileclient" element={<ProfileClient />} />
             </Routes>
           </LayoutWrapper>
         </Router>

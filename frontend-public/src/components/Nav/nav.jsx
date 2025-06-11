@@ -32,7 +32,7 @@ function Nav() {
                   <NavLink className="nav-link itemnav" to="/searchpage" activeclassname="active">SEARCH</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link itemnav" to="/" activeclassname="active">LOGIN</NavLink>
+                  <NavLink className="nav-link itemnav" to="/profileclient" activeclassname="active">PROFILE</NavLink>
                 </li>
               </ul>
             </div>

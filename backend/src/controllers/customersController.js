@@ -1,6 +1,25 @@
 const customersController = {};
 import clientsModel from "../models/clients.js";
 
+// Obtener un cliente por su ID
+customersController.getCustomerID = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtiene el ID de los parámetros de la URL
+
+    const customer = await clientsModel.findById(id); // Busca el cliente por su ID
+
+    if (!customer) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+
+    // Si el cliente es encontrado, devuelve los datos
+    return res.status(200).json(customer);
+  } catch (error) {
+    console.error("Error al obtener el cliente:", error);
+    return res.status(500).json({ message: "Error al obtener el cliente" });
+  }
+};
+
 // SELECT
 customersController.getCustomers = async (req, res) => {
   const Customers = await clientsModel.find();
