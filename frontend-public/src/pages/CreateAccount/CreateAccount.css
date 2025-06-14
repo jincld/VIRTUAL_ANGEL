@@ -123,10 +123,11 @@
   }
 
   .title-createaccount{
-    margin-top: 100px;
+    margin-top: 90px;
     font-size: 60px;
     font-weight: bold;
     text-align: center;
+    color: #000000;
   }
 
   .createaccount-label{
@@ -147,7 +148,28 @@
 
   .div-create-to-login{
     padding-top: 7px;
+    padding-bottom: 20px;
   }
+
+  .input-group-createaccount select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #E3E3E3;
+  background-color: #E3E3E3;
+  color: #000000;
+  border-radius: 2px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.input-group-createaccount select:focus {
+  outline: none;
+  border: 1px solid #ff0000;
+  background-color: #E3E3E3;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.452);
+}
+
 
   .show-newpassword-create {
     background-color: #ff0000; /* Fondo rojo */

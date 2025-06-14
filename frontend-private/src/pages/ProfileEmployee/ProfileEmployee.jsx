@@ -81,13 +81,24 @@ const ProfileEmployee = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    // Validar tipo MIME del archivo (jpg, jpeg, png)
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      alert('Only JPG, JPEG, and PNG files are allowed.');
+      // Limpiar input file y no guardar archivo inválido
+      e.target.value = null;
+      setImageFile(null);
+      setImagePreview(originalData?.imagen || '/holder-newemployee.png');
+      return;
     }
-  };
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+};
+
 
   const handleCancelEdit = () => {
     if (originalData) {
@@ -188,36 +199,38 @@ const noChanges =
                   className="img-fluid ap-img-preview"
                 />
               </div>
-              <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
-                <button
-                  type="button"
-                  className="btn ap-btn-upload w-50 btnupload-image"
-                  onClick={handleUpload}
-                  disabled={!isEditing}
-                >
-                  Upload Image
-                </button>
-                {isEditing && (
-                  <button
-                    type="button"
-                    className="btn ap-btn-clear w-50"
-                    onClick={() => {
-                      reset(originalData);
-                      setImageFile(null);
-                      setImagePreview(originalData.imagen || '/holder-newemployee.png');
-                    }}
-                  >
-                    Clear Form
-                  </button>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                />
-              </div>
+<div className="d-flex gap-2 mb-3 w-100 justify-content-center">
+  {isEditing && (
+    <button
+      type="button"
+      className="btn ap-btn-upload w-50 btnupload-image"
+      onClick={handleUpload}
+    >
+      Upload Image
+    </button>
+  )}
+  {isEditing && (
+    <button
+      type="button"
+      className="btn ap-btn-clear w-50"
+      onClick={() => {
+        reset(originalData);
+        setImageFile(null);
+        setImagePreview(originalData.imagen || '/holder-newemployee.png');
+      }}
+    >
+      Clear Form
+    </button>
+  )}
+  <input
+    type="file"
+    accept="image/*"
+    style={{ display: 'none' }}
+    ref={fileInputRef}
+    onChange={handleFileChange}
+  />
+</div>
+
 
               {!isEditing ? (
                 <>

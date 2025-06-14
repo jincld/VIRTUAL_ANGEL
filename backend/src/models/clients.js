@@ -25,7 +25,7 @@ const clientsSchema = new Schema(
       type: String,
     },
     phone: {
-      type: Number,
+      type: String,
       min: 8,
     },
     email: {

@@ -29,13 +29,25 @@ const AddProduct = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setPreviewImage(URL.createObjectURL(file));
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    // Validar tipo de imagen permitido
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      alert('Please upload an image with jpg, jpeg or png format.');
+      // Limpiar input y estado de imagen
+      e.target.value = null;
+      setImageFile(null);
+      setPreviewImage(null);
+      return;
     }
-  };
+
+    setImageFile(file);
+    setPreviewImage(URL.createObjectURL(file));
+  }
+};
+
 
   // Submit del formulario
   const onSubmit = async (data) => {

@@ -82,16 +82,24 @@ const res = await fetch(`http://localhost:3001/api/product/${id}`, {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm((prev) => ({ ...prev, imagen: reader.result }));
-      };
-      reader.readAsDataURL(file);
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!validTypes.includes(file.type)) {
+      alert('Please upload an image with jpg, jpeg or png format.');
+      e.target.value = null;  // limpiar input
+      return;
     }
-  };
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm((prev) => ({ ...prev, imagen: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;

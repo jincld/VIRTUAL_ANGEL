@@ -124,6 +124,14 @@ form .col-12 {
   flex: 0 0 100%; /* Campos que ocupan todo el espacio */
 }
 
+  .profile-title {
+    margin-top: 100px;
+    color: #000000 !important;
+    z-index: 20;
+    font-size: 45px;
+    font-weight: bold;
+  }
+
 /* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
   .profile-card {
@@ -133,7 +141,10 @@ form .col-12 {
   }
 
   .profile-title {
-    margin-top: 40px;
+    margin-top: 190px;
+    color: #000000 !important;
+    z-index: 20;
+    background-color: #ffffff;
   }
 
   .profile-wrapper {
