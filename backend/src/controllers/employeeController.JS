@@ -32,9 +32,12 @@ employeeController.createEmployee = async (req, res) => {
       imageUrl = result.secure_url;
     }
 
+    // Hashear la contraseña aquí antes de crear
+    const passwordHash = await bcryptjs.hash(password, 10);
+
     const newEmployee = new employeeModel({
       name,
-      password,
+      password: passwordHash,  // guardar hash, no texto plano
       age,
       gender,
       phone,

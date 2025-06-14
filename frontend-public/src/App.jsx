@@ -64,6 +64,18 @@ const ProtectedRoute = ({ element, storageKey, redirectTo = "/" }) => {
   return hasAccess ? element : <Navigate to="/forgotpassword" replace />;
 };
 
+const ProtectedClientRoute = ({ element }) => {
+  const { userType } = useAuth();
+
+  if (userType === 'client') {
+    return element;
+  }
+
+  // Redirigir al login si no es cliente
+  return <Navigate to="/" replace />;
+};
+
+
 function App() {
   return (
     <AuthProvider>
@@ -83,25 +95,26 @@ function App() {
               <Route path="createaccount" element={<CreateAccount />} />
 
               {/* Cliente Pages */}
-              <Route path="home" element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="terms" element={<Terms />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="clothing" element={<Clothing />} />
-              <Route path="shirts" element={<Shirts />} />
-              <Route path="pants" element={<Pants />} />
-              <Route path="jackets" element={<Jacket />} />
-              <Route path="sweaters" element={<Sweaters />} />
-              <Route path="shirts/:id" element={<ShirtsDetail />} />
-              <Route path="pants/:id" element={<PantsDetail />} />
-              <Route path="jackets/:id" element={<JacketsDetail />} />
-              <Route path="sweaters/:id" element={<SweatersDetail />} />
-              <Route path="news" element={<News />} />
-              <Route path="searchpage" element={<SearchPage />} />
-              <Route path="lookbook" element={<Lookbook />} />
-              <Route path="cart" element={<CartPage />} />
-              <Route path="checkout" element={<CheckoutForm />} />
-              <Route path="profileclient" element={<ProfileClient />} />
+<Route path="home" element={<ProtectedClientRoute element={<Home />} />} />
+<Route path="about" element={<ProtectedClientRoute element={<About />} />} />
+<Route path="terms" element={<ProtectedClientRoute element={<Terms />} />} />
+<Route path="contact" element={<ProtectedClientRoute element={<Contact />} />} />
+<Route path="clothing" element={<ProtectedClientRoute element={<Clothing />} />} />
+<Route path="shirts" element={<ProtectedClientRoute element={<Shirts />} />} />
+<Route path="pants" element={<ProtectedClientRoute element={<Pants />} />} />
+<Route path="jackets" element={<ProtectedClientRoute element={<Jacket />} />} />
+<Route path="sweaters" element={<ProtectedClientRoute element={<Sweaters />} />} />
+<Route path="shirts/:id" element={<ProtectedClientRoute element={<ShirtsDetail />} />} />
+<Route path="pants/:id" element={<ProtectedClientRoute element={<PantsDetail />} />} />
+<Route path="jackets/:id" element={<ProtectedClientRoute element={<JacketsDetail />} />} />
+<Route path="sweaters/:id" element={<ProtectedClientRoute element={<SweatersDetail />} />} />
+<Route path="news" element={<ProtectedClientRoute element={<News />} />} />
+<Route path="searchpage" element={<ProtectedClientRoute element={<SearchPage />} />} />
+<Route path="lookbook" element={<ProtectedClientRoute element={<Lookbook />} />} />
+<Route path="cart" element={<ProtectedClientRoute element={<CartPage />} />} />
+<Route path="checkout" element={<ProtectedClientRoute element={<CheckoutForm />} />} />
+<Route path="profileclient" element={<ProtectedClientRoute element={<ProfileClient />} />} />
+
             </Routes>
           </LayoutWrapper>
         </Router>

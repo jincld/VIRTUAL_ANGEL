@@ -22,7 +22,7 @@ const employeeSchema = new Schema(
         type: String,
       },
       phone: {
-        type: Number,
+        type: String,
         require: true,
         min: 8,
       },

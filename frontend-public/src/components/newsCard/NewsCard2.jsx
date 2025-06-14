@@ -9,7 +9,7 @@ function NewsCard2({ title, description, link, image }) {
         <h2 className="header2">NEW IN</h2>
         <h3>{title}</h3>
         <p>{description}</p>
-        <Link to={`/newcollection/${link}`} className="btn btn-dark btnnews">
+        <Link to={`/clothing`} className="btn btn-dark btnnews">
           EXPLORE &rarr;
         </Link>
       </div>

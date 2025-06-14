@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './addEmployee.css'; // We use the same CSS you have
 import AOS from 'aos';
@@ -9,16 +10,18 @@ const EditEmployee = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const [form, setForm] = useState({
-    _id: '',
-    image: '',
-    name: '',
-    age: '',
-    gender: '',
-    phone: '',
-    email: '',
-    role: '',
-  });
+const [form, setForm] = useState({
+  _id: '',
+  image: '',
+  name: '',
+  age: '',
+  gender: '',
+  phone: '',
+  email: '',
+  role: '',
+  password: '', 
+});
+
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
@@ -31,16 +34,18 @@ const EditEmployee = () => {
         if (!res.ok) throw new Error('Employee not found');
         const data = await res.json();
 
-        setForm({
-          _id: data._id,
-          image: data.imagen || '',
-          name: data.name || '',
-          age: data.age || '',
-          gender: data.gender || 'Female',
-          phone: data.phone || '',
-          email: data.email || '',
-          role: data.rol || 'Employee',
-        });
+setForm({
+  _id: data._id,
+  image: data.imagen || '',
+  name: data.name || '',
+  age: data.age || '',
+  gender: data.gender || 'Female',
+  phone: data.phone || '',
+  email: data.email || '',
+  role: data.rol || 'Employee',
+  password: '', // Nunca mostrar la contraseña actual
+});
+
       } catch (error) {
         alert('Error loading employee');
         navigate('/employees');
@@ -76,16 +81,25 @@ const EditEmployee = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm(prev => ({ ...prev, image: reader.result }));
-      };
-      reader.readAsDataURL(file);
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    // Validar tipo MIME: solo imágenes PNG, JPEG, JPG, GIF
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please upload a valid image (PNG, JPEG or JPG)');
+      e.target.value = ''; // Limpiar input
+      return;
     }
-  };
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm(prev => ({ ...prev, image: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this employee?')) return;
@@ -105,34 +119,41 @@ const EditEmployee = () => {
     }
   };
 
-  const handleSave = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('age', form.age);
-      formData.append('gender', form.gender);
-      formData.append('phone', form.phone);
-      formData.append('email', form.email);
-      formData.append('rol', form.role);
+const handleSave = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('name', form.name);
+    formData.append('age', form.age);
+    formData.append('gender', form.gender);
+    formData.append('phone', form.phone);
+    formData.append('email', form.email);
+    formData.append('rol', form.role);
 
-      if (fileInputRef.current.files[0]) {
-        formData.append('imagen', fileInputRef.current.files[0]);
-      }
-
-      const response = await fetch(`http://localhost:3001/api/employee/${form._id}`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error('Error updating employee');
-
-      alert('Employee updated successfully');
-      navigate('/employee');
-    } catch (error) {
-      alert('Error updating employee');
+    // Solo enviar imagen si hay archivo nuevo
+    if (fileInputRef.current.files[0]) {
+      formData.append('imagen', fileInputRef.current.files[0]);
     }
-  };
+
+    // Enviar contraseña solo si no está vacía
+    if (form.password && form.password.trim() !== '') {
+      formData.append('password', form.password.trim());
+    }
+
+    const response = await fetch(`http://localhost:3001/api/employee/${form._id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error('Error updating employee');
+
+    alert('Employee updated successfully');
+    navigate('/employee');
+  } catch (error) {
+    alert('Error updating employee');
+  }
+};
+
 
   return (
     <>
@@ -235,6 +256,19 @@ const EditEmployee = () => {
                     onChange={handleChange}
                   />
                 </div>
+
+                <div className="col-6">
+  <label className="form-label ap-label">Password</label>
+  <input
+    type="password"
+    className="form-control ap-input"
+    name="password"
+    value={form.password}
+    onChange={handleChange}
+    placeholder="Leave blank to keep current"
+  />
+</div>
+
                 <div className="col-6">
                   <label className="form-label ap-label">Role</label>
                   <select

@@ -16,6 +16,7 @@ const ProfileClient = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
   const [originalData, setOriginalData] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -137,8 +138,8 @@ const ProfileClient = () => {
       <div className="profile-client-background"></div>
       <div className="btn-margin-top"></div>
       <div className="profile-wrapper">
-        <h2 className="text-center text-white mb-4 profile-title">
-          {isEditing ? 'EDIT PROFILE' : 'PROFILE'}
+        <h2 className="text-center text-white profile-title">
+          PROFILE
         </h2>
         <div className="profile-card rounded p-4 shadow">
           <form className="row g-4" onSubmit={handleSubmit(onSubmit)}>
@@ -185,7 +186,22 @@ const ProfileClient = () => {
                   {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
                 </div>
 
-                <div className="col-6">
+<div className="col-6">
+  <label className="form-label profile-label">Age</label>
+  <input
+    type="number"
+    className={`form-control profile-input ${errors.age ? 'is-invalid' : ''}`}
+    {...register('age', {
+      required: 'Age is required',
+      min: { value: 18, message: 'You must be at least 18 years old' },
+    })}
+    disabled={!isEditing}
+  />
+  {errors.age && <div className="invalid-feedback">{errors.age.message}</div>}
+</div>
+
+
+                                <div className="col-6">
                   <label className="form-label profile-label">Phone</label>
                   <input
                     type="text"
@@ -211,22 +227,33 @@ const ProfileClient = () => {
                   {errors.gender && <div className="invalid-feedback">{errors.gender.message}</div>}
                 </div>
 
-                <div className="col-12">
-                  <label className="form-label profile-label">Password</label>
-                  <input
-                    type="password"
-                    className={`form-control profile-input ${errors.password ? 'is-invalid' : ''}`}
-                    {...register('password', {
-                      minLength: {
-                        value: 6,
-                        message: 'Password must be at least 6 characters',
-                      },
-                    })}
-                    disabled={!isEditing}
-                    placeholder="Leave blank to keep current password"
-                  />
-                  {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
-                </div>
+<div className="col-6">
+  <label className="form-label profile-label">Password</label>
+  <div className="input-group">
+    <input
+      type={showPassword ? 'text' : 'password'}
+      className={`form-control profile-input ${errors.password ? 'is-invalid' : ''}`}
+      {...register('password', {
+        minLength: {
+          value: 6,
+          message: 'Password must be at least 6 characters',
+        },
+      })}
+      disabled={!isEditing}
+      placeholder="Leave blank to keep current"
+    />
+    <button
+      type="button"
+      className="btn btn-outline-secondary"
+      onClick={() => setShowPassword(!showPassword)}
+      tabIndex={-1}
+      disabled={!isEditing} // opcional: deshabilitar botón si no está editando
+    >
+      {showPassword ? 'Hide' : 'Show'}
+    </button>
+  </div>
+  {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+</div>
 
                 <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
                 {!isEditing ? (
