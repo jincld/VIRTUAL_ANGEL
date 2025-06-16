@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import './AddProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import toast from 'react-hot-toast';
 
 const AddProduct = () => {
   useEffect(() => {
@@ -35,7 +36,7 @@ const handleFileChange = (e) => {
     // Validar tipo de imagen permitido
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!validTypes.includes(file.type)) {
-      alert('Please upload an image with jpg, jpeg or png format.');
+      toast.error("Please upload an image with jpg, jpeg or png format");
       // Limpiar input y estado de imagen
       e.target.value = null;
       setImageFile(null);
@@ -52,7 +53,7 @@ const handleFileChange = (e) => {
   // Submit del formulario
   const onSubmit = async (data) => {
     if (!imageFile) {
-      alert("Please upload an image.");
+      toast.error("Please upload an image");
       return;
     }
 
@@ -74,15 +75,15 @@ const handleFileChange = (e) => {
       });
 
       if (response.ok) {
-        alert('Product saved successfully');
+        toast.success("Product saved successfully");
         navigate('/products');
       } else {
         const errorData = await response.json();
-        alert('Failed to save product: ' + (errorData.message || 'Unknown error'));
+        toast.error('Failed to save product: ' + (errorData.message || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('There was an error saving the product.');
+      toast.error("There was an error saving the product");
     }
   };
 
@@ -107,12 +108,19 @@ const handleFileChange = (e) => {
               </div>
               <div className="d-flex gap-2 mb-3 w-100 justify-content-center">
                 <button className="btn ap-btn-upload w-50 btnupload-image" onClick={handleUpload}>Upload Image</button>
-                <button className="btn ap-btn-clear w-50" onClick={() => {
-                  reset();
-                  setPreviewImage(null);
-                  setImageFile(null);
-                  setColorcode('#000000');
-                }}>Clear Form</button>
+                <button
+  className="btn ap-btn-clear w-50"
+  onClick={() => {
+    reset();
+    setPreviewImage(null);
+    setImageFile(null);
+    setColorcode('#000000');
+    toast.success("Form cleared");
+  }}
+>
+  Clear Form
+</button>
+
                 <input
                   type="file"
                   accept="image/*"

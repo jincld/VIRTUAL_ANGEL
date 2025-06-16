@@ -4,6 +4,8 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import ClientNav from './components/Nav/nav.jsx';
 import { AuthProvider, useAuth } from '../../frontend-public/AuthToken.jsx';
+import { Toaster } from "react-hot-toast";
+
 
 // Importamos el CartProvider desde el nuevo archivo creado
 import { CartProvider } from './context/CartContext'; // Importa correctamente CartContext
@@ -81,6 +83,22 @@ function App() {
     <AuthProvider>
       <CartProvider> {/* Asegúrate de envolver toda la aplicación con el CartProvider */}
         <Router>
+        <Toaster
+  position="top-right"
+  reverseOrder={false}
+  containerStyle={{
+    marginTop: '120px'
+  }}
+  toastOptions={{
+    style: {
+      background: '#111',
+      color: '#ff0000',
+      fontSize: '16px',
+      zIndex: 99999,
+    },
+  }}
+/>
+
           <LayoutWrapper>
             <Routes>
               {/* Auth Pages */}
@@ -115,7 +133,10 @@ function App() {
 <Route path="checkout" element={<ProtectedClientRoute element={<CheckoutForm />} />} />
 <Route path="profileclient" element={<ProtectedClientRoute element={<ProfileClient />} />} />
 
+
+
             </Routes>
+
           </LayoutWrapper>
         </Router>
       </CartProvider> 

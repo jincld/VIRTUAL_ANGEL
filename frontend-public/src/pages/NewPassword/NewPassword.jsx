@@ -5,6 +5,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const NewPassword = () => {
   const navigate = useNavigate();
@@ -45,8 +46,16 @@ const NewPassword = () => {
         { newPassword: password },
         { withCredentials: true }
       );
+      
+      toast.success("Password updated successfully");
+      
       sessionStorage.removeItem("canAccessNewPassword");
-      window.location.href = "/";
+      
+      // Esperá 2 segundos antes de redirigir
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+      
     } catch (error) {
       console.error("Error updating password", error);
       setMessage("Failed to update password. Please try again.");
