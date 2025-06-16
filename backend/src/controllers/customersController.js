@@ -71,10 +71,10 @@ customersController.updateCustomers = async (req, res) => {
       { new: true }
     );
 
-    res.json({ message: "Customer updated successfully" });
+    res.json({ message: "Profile updated successfully" });
   } catch (error) {
     console.error("Error updating customer:", error);
-    res.status(500).json({ message: "Error updating customer" });
+    res.status(500).json({ message: "Error updating profile" });
   }
 };
 

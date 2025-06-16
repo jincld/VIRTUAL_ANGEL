@@ -7,6 +7,7 @@ import AdminNav from './components/Nav/Nav.jsx';
 
 import { useEffect } from 'react';
 import axios from 'axios';
+import { Toaster } from "react-hot-toast";
 
 // Rutas públicas
 import Login from './pages/Login/Login.jsx';
@@ -100,6 +101,21 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+      <Toaster
+  position="top-right"
+  reverseOrder={false}
+  containerStyle={{
+    marginTop: '120px'
+  }}
+  toastOptions={{
+    style: {
+      background: '#111',
+      color: '#ff0000',
+      fontSize: '16px',
+      zIndex: 99999,
+    },
+  }}
+/>
         <LayoutWrapper>
           <Routes>
             {/* Rutas públicas */}

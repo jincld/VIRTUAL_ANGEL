@@ -3,6 +3,7 @@ import { useNavigate, Link, useParams } from 'react-router-dom';
 import './EditProduct.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import toast from 'react-hot-toast';
 
 const EditProduct = () => {
   const { id } = useParams(); // obtener id desde la url
@@ -50,7 +51,7 @@ const res = await fetch(`http://localhost:3001/api/product/${id}`, {
       });
     } catch (error) {
       console.error(error);
-      alert('Error al cargar el producto');
+      toast.error("Error al cargar el producto");
       navigate('/products');
     }
   }
@@ -87,7 +88,7 @@ const handleFileChange = (e) => {
   if (file) {
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!validTypes.includes(file.type)) {
-      alert('Please upload an image with jpg, jpeg or png format.');
+      toast.error("Please upload an image with jpg, jpeg or png format");
       e.target.value = null;  // limpiar input
       return;
     }
@@ -112,11 +113,11 @@ const handleFileChange = (e) => {
 
       if (!response.ok) throw new Error('Error deleting product');
 
-      alert('Producto eliminado correctamente');
+      toast.success("Product deleted successfully");
       navigate('/products');
     } catch (error) {
       console.error('Error eliminando producto:', error);
-      alert('Error al eliminar producto');
+      toast.error("Error deleting product");
     }
   };
 
@@ -130,26 +131,31 @@ const handleFileChange = (e) => {
       formData.append('stock', form.stock);
       formData.append('color', form.color);
       formData.append('colorcode', form.colorcode);
-
+  
+      // Si hay un archivo, lo agregamos a FormData
       if (fileInputRef.current.files[0]) {
         formData.append('imagen', fileInputRef.current.files[0]);
+      } else if (form.imagen) {
+        // Si no hay un nuevo archivo, se mantiene la imagen actual
+        formData.append('imagen', form.imagen);
       }
-
+  
       const response = await fetch(`http://localhost:3001/api/product/${form._id}`, {
         method: 'PUT',
         credentials: 'include', // para que envíe cookies junto con la petición
         body: formData,
       });
-
+  
       if (!response.ok) throw new Error('Error al actualizar producto');
-
-      alert('Producto actualizado correctamente');
+  
+      toast.success("Product updated successfully");
       navigate('/products');
     } catch (error) {
       console.error('Error actualizando producto:', error);
-      alert('Error al actualizar producto');
+      toast.error("There was an error updating this product");
     }
   };
+  
 
   return (
     <>
