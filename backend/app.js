@@ -1,31 +1,6 @@
-// importar librerías
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-// crear app 🔥 PRIMERO
-const app = express();
-
-// middlewares
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
-
-
-app.use(cookieParser());
-
-
-app.use(express.json({ limit: '40mb' })); // Aumentar el límite según sea necesario
-app.use(express.urlencoded({ limit: '40mb', extended: true })); // Para formularios con archivos
 
 // importar rutas
 import categoryRoutes from "./src/routes/category.js";
@@ -40,12 +15,35 @@ import registerClientsRoutes from "./src/routes/registerClients.js";
 import loginRoute from "./src/routes/login.js";
 import logoutRoute from "./src/routes/logout.js";
 import passwordRecoveryRoutes from "./src/routes/passwordRecovery.js";
-import validateAuthToken from "./src/middlewares/validateAuthToken.js"
+import validateAuthToken from "./src/middlewares/validateAuthToken.js";
 import meRoute from './src/routes/me.js';
 import adminRoutes from "./src/routes/adminRoutes.js";
 import dashboardRoutes from './src/routes/dashboardRoutes.js';
 
-// rutas
+// Importar router de pagos
+import paymentRoutes from "./src/routes/paymentRoutes.js";
+
+// crear app
+const app = express();
+
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
+app.use(cookieParser());
+app.use(express.json({ limit: '40mb' }));
+app.use(express.urlencoded({ limit: '40mb', extended: true }));
+
+// rutas con middleware
 app.use("/api/category", validateAuthToken(["admin"]), categoryRoutes);
 app.use("/api/contact", validateAuthToken(["employee", "admin", "client"]), contactRoutes);
 app.use("/api/clients", clientRoutes);
@@ -62,6 +60,7 @@ app.use("/api/passwordRecovery", passwordRecoveryRoutes);
 app.use("/api/me", meRoute);
 app.use("/api/dashboard", dashboardRoutes);
 
+// montar ruta de pagos con prefijo /api/payment
+app.use("/api/payment", paymentRoutes);
 
-// exportar la app para usarla en index.js
 export default app;
