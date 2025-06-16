@@ -120,7 +120,7 @@ const Products = () => {
         </div>
 
         {showFilters && (
-  <div className="filter-menu p-4 mt-3 rounded shadow-sm">
+  <div className="filter-menu p-4 mt-3 mb-3 rounded shadow-sm">
     {/* Filtros con Bootstrap Grid */}
     <div className="row">
       {/* Filtro: Collection */}
