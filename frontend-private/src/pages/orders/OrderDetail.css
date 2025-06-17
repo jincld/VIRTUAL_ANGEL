@@ -42,6 +42,10 @@
   z-index: 1;
 }
 
+.update-button-st{
+  background-color: #ff0000;
+}
+
 .back-orderdetail {
   background-image: url('/termsbg.png'); /* Imagen de fondo (igual que en SaleDetail) */
   background-size: cover; 

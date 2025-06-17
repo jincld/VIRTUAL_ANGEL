@@ -119,15 +119,18 @@ function PantsDetail() {
             </div>
           </div>
 
-          <button onClick={handleAddToCart} className="btn btn-back">
-            ADD TO CART
-          </button>
+<div className="cart-controls">
 
-          <div className="quantity-selector">
-            <button className="btn" onClick={handleDecrement}>-</button>
-            <span className="quantity-display">{quantity}</span>
-            <button className="btn" onClick={handleIncrement}>+</button>
-          </div>
+  <button onClick={handleAddToCart} className="btn btn-back">
+    ADD TO CART
+  </button>
+
+    <div className="quantity-selector">
+    <button className="btn" onClick={handleDecrement}>-</button>
+    <span className="quantity-display">{quantity}</span>
+    <button className="btn" onClick={handleIncrement}>+</button>
+  </div>
+</div>
         </div>
 
         <div className="pants-card__image">

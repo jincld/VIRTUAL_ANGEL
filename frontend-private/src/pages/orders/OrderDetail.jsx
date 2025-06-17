@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './OrderDetail.css';
+import toast from 'react-hot-toast';
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const OrderDetail = () => {
     try {
       const updatedOrder = { ...order, status };
       await axios.put(`http://localhost:3001/api/order/${id}`, updatedOrder);
-      alert("Order status updated successfully.");
+      toast.success("Order status updated successfully.");
       
       // Redirige a /sales si el estado es "Finished", si no a /orders
       if (status === "Finished") {
@@ -40,8 +41,8 @@ const OrderDetail = () => {
         navigate('/orders');
       }
     } catch (error) {
-      console.error("Error updating order:", error);
-      alert("Failed to update order.");
+      console.error("Error updating order status:", error);
+      toast.error("Failed to update order status");
     }
   };
 
@@ -90,7 +91,7 @@ const OrderDetail = () => {
               <textarea value={order.address} readOnly />
             </label>
 
-            <button type="button" className="update-button" onClick={handleUpdate}>
+            <button type="button" className="update-button-st" onClick={handleUpdate}>
               Update Status
             </button>
           </form>
