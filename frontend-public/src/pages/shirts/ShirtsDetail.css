@@ -19,7 +19,6 @@
   background-position: center;
   background-color: #ad6969;
   overflow-y: scroll; /* ✅ Scroll siempre visible */
-  max-height: 870px;
   padding: 20px;
   scrollbar-width: auto; /* ✅ para Firefox */
   scrollbar-color: #ffffff #ad6969; /* opcional: personaliza colores */
@@ -45,6 +44,14 @@
   min-width: 30px;
   text-align: center;
   font-weight: bold;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Para responsive */
 }
 
  

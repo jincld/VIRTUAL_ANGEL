@@ -58,7 +58,7 @@ function SweatersDetail() {
       };
 
       addToCart(productToAdd);
-      toast(`${quantity} Product(s) added to cart`);
+      toast.success(`${quantity} Product(s) added to cart`);
     }
   };
 
@@ -121,13 +121,18 @@ function SweatersDetail() {
             <p className="sweater-price">${sweater.price}</p>
           </div>
 
-          <button onClick={handleAddToCart} className="btn btn-back">ADD TO CART</button>
+<div className="cart-controls">
 
-          <div className="quantity-selector">
-            <button className="btn" onClick={handleDecrement}>-</button>
-            <span className="quantity-display">{quantity}</span>
-            <button className="btn" onClick={handleIncrement}>+</button>
-          </div>
+  <button onClick={handleAddToCart} className="btn btn-back">
+    ADD TO CART
+  </button>
+
+    <div className="quantity-selector">
+    <button className="btn" onClick={handleDecrement}>-</button>
+    <span className="quantity-display">{quantity}</span>
+    <button className="btn" onClick={handleIncrement}>+</button>
+  </div>
+</div>
         </div>
 
         <div className="sweaters-card__image">
