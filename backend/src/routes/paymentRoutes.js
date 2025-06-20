@@ -1,10 +1,11 @@
-import express from "express";
-import { getToken, realPayment3ds } from "./paymentController.js";
+// routes/paymentRoutes.js
+import { Router } from "express";
+import { getToken, testPaymentSin3DS } from "../controllers/paymentController.js";
 
-const router = express.Router();
+const router = Router();
 
-router.post("/token", getToken);
-router.post("/payment3ds", realPayment3ds);
+router.post("/get-token", getToken);
+router.post("/test-payment-sin3ds", testPaymentSin3DS);
 
 export default router;
 

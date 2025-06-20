@@ -3,87 +3,84 @@ import "../Cart/Checkout.css";
 
 function CheckoutForm() {
   const [step, setStep] = useState(1);
-  const [accessToken, setAccessToken] = useState(null);
 
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    direccion: "",
-    ciudad: "",
-    telefono: "",
+    nombreCliente: "",
+    emailCliente: "",
     monto: 0.01,
-    urlRedirect: "https://www.ricaldone.edu.sv",
-    idPais: "SV",
-    idRegion: "SV-SS",
-    codigoPostal: "1101",
-  });
-
-  const [formDataTarjeta, setFormDataTarjeta] = useState({
-    numeroTarjeta: "",
-    cvv: "",
-    mesVencimiento: "",
-    anioVencimiento: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (formData.hasOwnProperty(name)) {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    } else if (formDataTarjeta.hasOwnProperty(name)) {
-      setFormDataTarjeta((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const limpiarFormulario = () => {
+    setFormData({
+      nombreCliente: "",
+      emailCliente: "",
+      monto: 0.01,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      alert("Generando token...");
 
-      const tokenResponse = await fetch("http://localhost:3001/api/token", {
+    try {
+      alert("Generando token de acceso...");
+
+      // 1. Obtener token de backend
+      const tokenResponse = await fetch("http://localhost:3001/api/payment/get-token", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (!tokenResponse.ok) {
-        const error = await tokenResponse.text();
-        throw new Error(`Error al obtener token: ${error}`);
+        const errorText = await tokenResponse.text();
+        throw new Error(`Error al obtener token: ${errorText}`);
       }
 
-      const tokenData = await tokenResponse.json();
-      setAccessToken(tokenData.access_token);
-      alert("Token generado. Procesando pago...");
+      const { access_token } = await tokenResponse.json();
 
-      const paymentPayload = {
-        ...formData,
-        tarjetaCreditoDebido: formDataTarjeta,
+      alert("Token generado. Enviando pago...");
+
+      // 2. Armar objeto para pago (solo los datos necesarios, sin info de tarjeta)
+      const payload = {
+        monto: formData.monto,
+        emailCliente: formData.emailCliente,
+        nombreCliente: formData.nombreCliente,
+        tokenTarjeta: "null", // simulamos pago sin token de tarjeta
       };
 
-      const paymentResponse = await fetch("http://localhost:3001/api/payment3ds", {
+      // 3. Enviar pago al backend para que llame a Wompi
+      const paymentResponse = await fetch("http://localhost:3001/api/payment/test-payment-sin3ds", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: tokenData.access_token, formData: paymentPayload }),
+        body: JSON.stringify({
+          token: access_token,
+          formData: payload,
+        }),
       });
 
       if (!paymentResponse.ok) {
-        const error = await paymentResponse.text();
-        throw new Error(`Error en el pago: ${error}`);
+        const errorText = await paymentResponse.text();
+        throw new Error(`Error al procesar pago: ${errorText}`);
       }
 
-      const paymentData = await paymentResponse.json();
-      console.log("Respuesta del pago:", paymentData);
-      alert("✅ ¡Pago realizado con éxito!");
-
+      const result = await paymentResponse.json();
+      console.log("Respuesta del pago:", result);
+      alert("✅ ¡Pago simulado correctamente!");
       setStep(2);
-
+      limpiarFormulario();
     } catch (error) {
-      console.error(error);
+      console.error("Error en el proceso de pago:", error);
       alert(`❌ ${error.message}`);
     }
   };
 
   if (step === 2) {
     return (
-      <div style={{color: "white", textAlign: "center", marginTop: "100px"}}>
+      <div style={{ color: "white", textAlign: "center", marginTop: "100px" }}>
         <h2>¡Pago exitoso!</h2>
         <p>Gracias por tu compra.</p>
       </div>
@@ -93,7 +90,6 @@ function CheckoutForm() {
   return (
     <div className="position-relative min-vh-100 bg-black margin-top-global">
       <div className="backcartsCheckout"></div>
-
       <div className="container d-flex flex-column justify-content-center align-items-center py-5 content-zone">
         <div
           className="form-background p-5"
@@ -110,36 +106,43 @@ function CheckoutForm() {
           </h1>
 
           <form onSubmit={handleSubmit} className="w-100">
-            {/* Aquí tus inputs igual que ya tienes */}
-            {/* ... */}
-            {/* Ejemplo para nombre */}
             <div className="mb-4">
               <label className="form-label text-white">Nombre</label>
               <input
                 type="text"
-                name="nombre"
+                name="nombreCliente"
                 className="form-control input-custom"
-                placeholder="Juan"
                 required
                 onChange={handleChange}
+                value={formData.nombreCliente}
               />
             </div>
-            {/* Resto de campos igual */}
-            {/* Tarjeta */}
-            <h5 className="text-center mt-5 mb-4 text-danger">Información de la tarjeta</h5>
 
             <div className="mb-4">
-              <label className="form-label text-white">Número de Tarjeta</label>
+              <label className="form-label text-white">Email</label>
               <input
-                type="text"
-                name="numeroTarjeta"
+                type="email"
+                name="emailCliente"
                 className="form-control input-custom"
-                placeholder="1234 5678 9012 3456"
                 required
                 onChange={handleChange}
+                value={formData.emailCliente}
               />
             </div>
-            {/* ... resto de inputs de tarjeta igual */}
+
+            <div className="mb-4">
+              <label className="form-label text-white">Monto</label>
+              <input
+                type="number"
+                step="0.01"
+                min="0.01"
+                name="monto"
+                className="form-control input-custom"
+                required
+                onChange={handleChange}
+                value={formData.monto}
+              />
+            </div>
 
             <button
               type="submit"
