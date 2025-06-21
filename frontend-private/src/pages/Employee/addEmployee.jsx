@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const AddEmployee = () => {
   useEffect(() => {
@@ -31,7 +32,7 @@ const AddEmployee = () => {
     if (file) {
       const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
       if (!validTypes.includes(file.type)) {
-        alert('Invalid image format. Only JPG, JPEG, and PNG format are allowed.');
+        toast.error("Please upload an image with jpg, jpeg or png format");
         fileInputRef.current.value = ""; // Limpia el input
         return;
       }
@@ -44,7 +45,7 @@ const AddEmployee = () => {
 
   const onSubmit = async (data) => {
     if (!imageFile) {
-      alert("Please upload an image.");
+      toast.error("Please upload an image");
       return;
     }
 
@@ -68,16 +69,16 @@ const AddEmployee = () => {
       const resData = await response.json();
 
       if (response.ok) {
-        alert(resData.message || 'Employee registered successfully');
+        toast.success(resData.message || 'Employee registered successfully');
         reset();
         setImageFile(null);
         setImagePreview('');
       } else {
-        alert(resData.message || 'Failed to register employee');
+        toast.error(resData.message || 'Failed to register employee');
       }
     } catch (error) {
       console.error('❌ Error saving employee:', error);
-      alert('An error occurred while saving the employee');
+      toast.error("An error occurred while saving the employee");
     }
   };
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Reviews from "../../components/Reviews/Reviews";
 import { useCart } from "../../context/CartContext";  // Accede al contexto de carrito
+import toast from 'react-hot-toast';
 import './ShirtsDetail.css';
 
 function ShirtsDetail() {
@@ -55,13 +56,14 @@ function ShirtsDetail() {
         size: shirt.size,
         color: shirt.color,
         collection: shirt.coleccion,
-        quantity: quantity,  // 👈 añadimos la cantidad
+        quantity: quantity,
       };
   
       addToCart(productToAdd);
-      alert(`${quantity} piece(s) added to cart!`);
+      toast.success(`${quantity} Product(s) added to cart`);
     }
   };
+  
   
 
   const handleClosePopup = () => {
@@ -75,17 +77,16 @@ function ShirtsDetail() {
   // Función que maneja el envío de la reseña
   const handleSendReview = () => {
     if (!reviewForm.comment || reviewForm.comment.trim() === "") {
-      alert("Please complete the comment field");
+      toast.error("Please complete the comment field");
       return;
     }
-    
-
+  
     fetch("http://localhost:3001/api/assessment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",  // Esto enviará automáticamente el authToken en la cookie
+      credentials: "include",
       body: JSON.stringify({
         idProducts: shirt._id,
         comment: reviewForm.comment,
@@ -94,18 +95,21 @@ function ShirtsDetail() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Review saved:", data);
-        alert("Review saved!");
-        setShowPopup(false);  // Cierra el popup después de enviar
-
-        // Recargar la página para mostrar las reseñas actualizadas
-        window.location.reload();  // Recarga la página
+        console.log("Reseña guardada:", data);
+        toast.success("Review saved");
+        setShowPopup(false);
+        // Retrasar el reload 3 segundos (3000 ms)
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
-        console.error("Error saving review:", error);
-        alert("There was an error saving your review.");
+        console.error("Error al guardar la reseña:", error);
+        toast.error("There was an error saving your review");
       });
   };
+  
+  
 
   if (!shirt) return <h2>Loading shirt...</h2>;
 
@@ -129,15 +133,19 @@ function ShirtsDetail() {
           </div>
 
           {/* Botón para añadir al carrito */}
-          <button onClick={handleAddToCart} className="btn btn-back">
-            ADD TO CART
-          </button>
+<div className="cart-controls">
 
-          <div className="quantity-selector">
-  <button className="btn" onClick={handleDecrement}>-</button>
-  <span className="quantity-display">{quantity}</span>
-  <button className="btn" onClick={handleIncrement}>+</button>
+  <button onClick={handleAddToCart} className="btn btn-back">
+    ADD TO CART
+  </button>
+
+    <div className="quantity-selector">
+    <button className="btn" onClick={handleDecrement}>-</button>
+    <span className="quantity-display">{quantity}</span>
+    <button className="btn" onClick={handleIncrement}>+</button>
+  </div>
 </div>
+
 
         </div>
 

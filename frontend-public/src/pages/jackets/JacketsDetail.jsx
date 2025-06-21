@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Reviews from "../../components/Reviews/Reviews";
 import { useCart } from "../../context/CartContext";  // Contexto del carrito
+import toast from 'react-hot-toast';
 import './JacketsDetail.css';
 
 function JacketsDetail() {
@@ -54,7 +55,7 @@ function JacketsDetail() {
       };
 
       addToCart(productToAdd);
-      alert(`${quantity} piece(s) added to cart!`);
+      toast.success(`${quantity} Product(s) added to cart`);
     }
   };
 
@@ -68,7 +69,7 @@ function JacketsDetail() {
 
   const handleSendReview = () => {
     if (!reviewForm.comment || reviewForm.comment.trim() === "") {
-      alert("Please complete the comment field");
+      toast.error("Please complete the comment field");
       return;
     }
 
@@ -85,13 +86,13 @@ function JacketsDetail() {
       .then(res => res.json())
       .then(data => {
         console.log("Review saved:", data);
-        alert("Review saved!");
+        toast.success("Review saved");
         setShowPopup(false);
         window.location.reload(); // Refresca para mostrar nuevas reseñas
       })
       .catch(err => {
         console.error("Error saving review:", err);
-        alert("There was an error saving your review.");
+        toast.error("There was an error saving your review");
       });
   };
 
@@ -117,13 +118,18 @@ function JacketsDetail() {
             <p className="jacket-price">${jacket.price}</p>
           </div>
 
-          <button onClick={handleAddToCart} className="btn btn-back">ADD TO CART</button>
+<div className="cart-controls">
 
-          <div className="quantity-selector">
-            <button className="btn" onClick={handleDecrement}>-</button>
-            <span className="quantity-display">{quantity}</span>
-            <button className="btn" onClick={handleIncrement}>+</button>
-          </div>
+  <button onClick={handleAddToCart} className="btn btn-back">
+    ADD TO CART
+  </button>
+
+    <div className="quantity-selector">
+    <button className="btn" onClick={handleDecrement}>-</button>
+    <span className="quantity-display">{quantity}</span>
+    <button className="btn" onClick={handleIncrement}>+</button>
+  </div>
+</div>
         </div>
 
         <div className="jackets-card__image">

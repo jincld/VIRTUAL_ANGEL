@@ -3,6 +3,7 @@ import './Contact.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import emailjs from 'emailjs-com';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
   useEffect(() => {
@@ -23,37 +24,27 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     emailjs.send(
-      'service_zsdhpbp',       // Reemplaza con tu Service ID
-      'template_6sweo54',      // Reemplaza con tu Template ID
+      'service_zsdhpbp',
+      'template_6sweo54',
       {
-        from_name: form.name,      // Campo para el nombre
-        from_email: form.email,    // Campo para el email
-        message: form.message,     // Campo para el mensaje
-        // Añadir más campos si es necesario
+        from_name: form.name,
+        from_email: form.email,
+        message: form.message,
       },
-      'dst9p7AgiSa9zImQA'        // Reemplaza con tu Public Key
+      'dst9p7AgiSa9zImQA'
     )
     .then(() => {
-      setStatus('Message sent successfully!');
+      toast.success('Message sent successfully');
       setForm({ name: '', email: '', message: '' });
-
-      // Borrar el mensaje de éxito después de 3 segundos
-      setTimeout(() => {
-        setStatus('');
-      }, 3000);  // 3000 milisegundos = 3 segundos
     })
     .catch((error) => {
       console.error('Error sending message:', error);
-      setStatus('Failed to send message. Please try again.');
-
-      // Borrar el mensaje de error después de 3 segundos
-      setTimeout(() => {
-        setStatus('');
-      }, 3000);  // 3000 milisegundos = 3 segundos
+      toast.error('Failed to send message. Please try again.');
     });
   };
+  
 
   return (
     <>

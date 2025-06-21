@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const ProfileClient = () => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const ProfileClient = () => {
         credentials: 'include',
       });
       if (!resUser.ok) {
-        alert('Could not load user data');
+        toast.error("Can't load user data");
         return;
       }
       const userData = await resUser.json();
@@ -104,16 +105,17 @@ const ProfileClient = () => {
       const resData = await response.json();
   
       if (response.ok) {
-        alert(resData.message || 'Profile updated successfully');
+        toast.success(resData.message || 'Profile updated successfully');
         fetchUserData();
         setIsEditing(false);
       } else {
-        alert(resData.message || 'Error updating profile');
+        toast.error(resData.message || 'Error updating profile');
       }
+      
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Error updating profile');
-    }
+      toast.error('Error updating profile');
+    }    
   };
   
 
@@ -124,14 +126,17 @@ const ProfileClient = () => {
         credentials: 'include',
       });
       if (res.ok) {
+        toast.success('Logged out successfully');
         navigate('/');
       } else {
-        alert('Failed to logout');
+        toast.error('Failed to logout');
       }
     } catch (error) {
       console.error('Logout error:', error);
+      toast.error('Logout error');
     }
   };
+  
 
   return (
     <>

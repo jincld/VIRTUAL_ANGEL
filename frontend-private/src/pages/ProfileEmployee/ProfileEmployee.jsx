@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const ProfileEmployee = () => {
   useEffect(() => {
@@ -45,7 +46,7 @@ const ProfileEmployee = () => {
         credentials: 'include',
       });
       if (!resUser.ok) {
-        alert('Could not load user data');
+        toast.error("Can't load user data");
         return;
       }
       const userData = await resUser.json();
@@ -87,7 +88,7 @@ const handleFileChange = (e) => {
     // Validar tipo MIME del archivo (jpg, jpeg, png)
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!validTypes.includes(file.type)) {
-      alert('Only JPG, JPEG, and PNG files are allowed.');
+      toast.error("Only JPG, JPEG, and PNG files are allowed");
       // Limpiar input file y no guardar archivo inválido
       e.target.value = null;
       setImageFile(null);
@@ -110,58 +111,58 @@ const handleFileChange = (e) => {
   };
 
 const onSubmit = async (data) => {
-const noChanges =
-  data.name === originalData.name &&
-  data.email === originalData.email &&
-  data.phone === originalData.phone &&
-  String(data.age) === String(originalData.age) &&
-  data.gender === originalData.gender &&
-  !imageFile &&
-  !data.password;  // <-- si password tiene texto, enviamos el formulario
-
+  const noChanges =
+    data.name.trim() === originalData.name.trim() &&
+    data.email.trim() === originalData.email.trim() &&
+    data.phone.trim() === originalData.phone.trim() &&
+    String(data.age).trim() === String(originalData.age).trim() &&
+    data.gender === originalData.gender &&
+    !imageFile &&
+    !data.password;
 
   if (noChanges) {
-
-    return; // evitas enviar el formulario
+    toast.warn("No changes detected");
+    return;
   }
 
+  const formData = new FormData();
+  formData.append('name', data.name);
+  formData.append('email', data.email);
+  formData.append('phone', data.phone);
+  formData.append('age', data.age);
+  formData.append('gender', data.gender);
+  if (data.password) {
+    formData.append('password', data.password);
+  }
+  if (imageFile) {
+    formData.append('imagen', imageFile);
+  }
 
+  try {
+    const response = await fetch(`http://localhost:3001/api/employee/${userId}`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: formData,
+    });
 
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('phone', data.phone);
-    formData.append('age', data.age);
-    formData.append('gender', data.gender);
-    if (data.password) {
-      formData.append('password', data.password);
-    }
-    if (imageFile) {
-      formData.append('imagen', imageFile);
-    }
+    const resData = await response.json();
 
-    try {
-      const response = await fetch(`http://localhost:3001/api/employee/${userId}`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: formData,
-      });
+    if (response.ok) {
+      toast.success(resData.message || 'Profile updated successfully');
+      setIsEditing(false);
+      setImageFile(null);
 
-      const resData = await response.json();
-
-      if (response.ok) {
-        alert(resData.message || 'Profile updated successfully');
+      setTimeout(() => {
         fetchUserData();
-        setIsEditing(false);
-        setImageFile(null);
-      } else {
-        alert(resData.message || 'Error updating profile');
-      }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Error updating profile');
+      }, 300);
+    } else {
+      toast.error(resData.message || 'Error updating profile');
     }
-  };
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    toast.error('Error updating profile');
+  }
+};
 
   const handleLogout = async () => {
     try {
@@ -172,7 +173,7 @@ const noChanges =
       if (res.ok) {
         navigate('/');
       } else {
-        alert('Failed to logout');
+        toast.error('Failed to logout');
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -210,17 +211,25 @@ const noChanges =
     </button>
   )}
   {isEditing && (
-    <button
-      type="button"
-      className="btn ap-btn-clear w-50"
-      onClick={() => {
-        reset(originalData);
-        setImageFile(null);
-        setImagePreview(originalData.imagen || '/holder-newemployee.png');
-      }}
-    >
-      Clear Form
-    </button>
+<button
+  type="button"
+  className="btn ap-btn-clear w-50"
+  onClick={() => {
+    reset({
+      name: '',
+      email: '',
+      phone: '',
+      age: '',
+      gender: '',
+      password: '',
+    });
+    setImageFile(null);
+    setImagePreview('/holder-newemployee.png');
+  }}
+>
+  Clear Form
+</button>
+
   )}
   <input
     type="file"

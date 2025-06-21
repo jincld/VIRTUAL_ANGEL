@@ -115,7 +115,7 @@ const Employees = () => {
         </div>
 
         {showFilters && (
-          <div className="filter-menu p-4 mt-3 rounded shadow-sm">
+          <div className="filter-menu p-4 mt-3 mb-3 rounded shadow-sm">
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label className="form-label">Gender:</label>

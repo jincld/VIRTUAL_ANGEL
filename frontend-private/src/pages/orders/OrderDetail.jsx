@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './OrderDetail.css';
+import toast from 'react-hot-toast';
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -53,8 +54,8 @@ const OrderDetail = () => {
         navigate('/orders');
       }
     } catch (error) {
-      console.error("Error updating order:", error);
-      alert("Failed to update order.");
+      console.error("Error updating order status:", error);
+      toast.error("Failed to update order status");
     }
   };
 
@@ -127,7 +128,7 @@ const OrderDetail = () => {
               <textarea value={order.address || ''} readOnly />
             </label>
 
-            <button type="button" className="update-button" onClick={handleUpdate}>
+            <button type="button" className="update-button-st" onClick={handleUpdate}>
               Update Status
             </button>
           </form>

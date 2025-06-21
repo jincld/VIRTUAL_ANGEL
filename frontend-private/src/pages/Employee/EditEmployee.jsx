@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import './addEmployee.css'; // We use the same CSS you have
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import toast from 'react-hot-toast';
 
 const EditEmployee = () => {
   const { id } = useParams(); // Get id from URL
@@ -47,14 +48,14 @@ setForm({
 });
 
       } catch (error) {
-        alert('Error loading employee');
+        toast.error("Error loading employee");
         navigate('/employees');
       }
     }
 
     if (id) fetchEmployee();
     else {
-      alert('No employee ID provided');
+      toast.error("No employee ID provided");
       navigate('/employees');
     }
   }, [id, navigate]);
@@ -87,7 +88,7 @@ const handleFileChange = (e) => {
     // Validar tipo MIME: solo imágenes PNG, JPEG, JPG, GIF
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
     if (!allowedTypes.includes(file.type)) {
-      alert('Please upload a valid image (PNG, JPEG or JPG)');
+      toast.error("Please upload an image with jpg, jpeg or png format");
       e.target.value = ''; // Limpiar input
       return;
     }
@@ -112,10 +113,10 @@ const handleFileChange = (e) => {
 
       if (!response.ok) throw new Error('Error deleting employee');
 
-      alert('Employee deleted successfully');
+      toast.success("Employee deleted successfully"); 
       navigate('/employee');
     } catch (error) {
-      alert('Error deleting employee');
+      toast.error("Error deleting employee");
     }
   };
 
@@ -147,10 +148,10 @@ const handleSave = async () => {
 
     if (!response.ok) throw new Error('Error updating employee');
 
-    alert('Employee updated successfully');
+    toast.success("Employee updated successfully");
     navigate('/employee');
   } catch (error) {
-    alert('Error updating employee');
+    toast.error("Error updating employee");
   }
 };
 
