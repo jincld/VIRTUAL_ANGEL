@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Sales.css";
 
@@ -11,12 +10,18 @@ const SalesTable = () => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/order");
-        // Suponiendo que response.data es un array de ventas
-        // Filtra solo ventas finalizadas (por ejemplo status === 'completed')
-        const finishedSales = response.data.filter(
-          (sale) => sale.status === "Finished"
+        const response = await fetch("http://localhost:3001/api/orders");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Filtrar las ventas con estado 'Finished'
+        const finishedSales = data.filter(
+          (sale) => sale.status?.trim().toLowerCase() === "finished"
         );
+
         setSales(finishedSales);
       } catch (error) {
         console.error("Error fetching sales:", error);
@@ -82,10 +87,14 @@ const SalesTable = () => {
                 currentData.map((sale) => (
                   <tr key={sale._id || sale.id}>
                     <td data-label="SALE ID">#{sale._id || sale.id}</td>
-                    <td data-label="DATE">{sale.date || sale.fecha}</td>
-                    <td data-label="STATUS">{sale.status || sale.estado}</td>
+                    <td data-label="DATE">
+                      {sale.createdAt
+                        ? new Date(sale.createdAt).toLocaleDateString()
+                        : "—"}
+                    </td>
+                    <td data-label="STATUS">{sale.status || "—"}</td>
                     <td data-label="TOTAL">${sale.total ?? 0}</td>
-                    <td data-label="ITEMS">{sale.items ?? 0}</td>
+                    <td data-label="ITEMS">{sale.totalquantity ?? 0}</td>
                     <td data-label="">
                       <Link
                         to={`/sales/${sale._id || sale.id}`}
@@ -118,4 +127,3 @@ const SalesTable = () => {
 };
 
 export default SalesTable;
-

@@ -1,14 +1,15 @@
-//importar el archivo app.js
 import app from "./app.js";
-//importar la conexión con base de datos
+import "./database.js"; // Aquí va la conexión si tienes (puede estar vacío)
+import dotenv from "dotenv";
 
-import "./database.js";
-import {config} from "./src/config.js";
+dotenv.config();
 
-//crear función que ejecuta el servidor
+const PORT = process.env.PORT || 3001;
+
 async function main() {
-    app.listen(config.server.port);
-    console.log("Server running! :D");
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  });
 }
-//ejecutar la función
+
 main();

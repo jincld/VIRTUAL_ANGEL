@@ -1,24 +1,30 @@
-/*
-fields:
-idCustomer
-idProducts
-total
-address
-*/
-
 import { Schema, model } from "mongoose";
 
 const orderSchema = new Schema({
   idCustomer: {
     type: Schema.Types.ObjectId,
-    ref: "customers",
-    required: true, // ← corregido de "require"
-  },
-  idProducts: {
-    type: Schema.Types.ObjectId,
-    ref: "Products",
+    ref: "clients", 
     required: true,
   },
+  products: [
+    {
+      idProduct:{
+        type: Schema.Types.ObjectId,
+        ref: "products",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        min: [1, "La cantidad debe ser al menos 1"],
+        required: true,
+      },
+      subtotal: {
+        type: Number,
+        required: true,
+        min: [0, "El subTotal no puede ser negativo"],
+      },
+    },
+  ],
   total: {
     type: Number,
     required: true,
@@ -29,12 +35,16 @@ const orderSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["In progress", "Processing", "Delivered", "Shipped", "Canceled"],
-    default: "In progress",
+    enum: ["Processing", "Pending", "Paid", "Completed", "Cancelled", "Finished"], 
+    required: true,
+  },
+  totalquantity: {
+    type: Number,
+    min: 0,
+    required: true,
   },
 }, {
   timestamps: true,
 });
 
-
-export default model ("Order", orderSchema);
+export default model("Order", orderSchema);
