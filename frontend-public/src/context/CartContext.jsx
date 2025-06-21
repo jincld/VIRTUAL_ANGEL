@@ -10,18 +10,15 @@ export function useCart() {
 
 // Proveedor del carrito
 export function CartProvider({ children }) {
-  // Estado del carrito con recuperación desde localStorage
   const [cart, setCart] = useState(() => {
     const storedCart = localStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  // Guardar el carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // Función para agregar productos al carrito
   const addToCart = (product) => {
     setCart((prevCart) => {
       const uniqueProductKey = `${product.id}-${product.size || "default"}-${product.color || "default"}`;
@@ -48,17 +45,19 @@ export function CartProvider({ children }) {
       }
     });
   };
-  
 
-  // Función para eliminar un producto del carrito
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 }
-

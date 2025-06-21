@@ -49,7 +49,7 @@ app.use("/api/contact", validateAuthToken(["employee", "admin", "client"]), cont
 app.use("/api/clients", clientRoutes);
 app.use("/api/employee", validateAuthToken(["employee", "admin"]), employeeRoutes);
 app.use("/api/product", productsRoutes);
-app.use("/api/order", validateAuthToken(["employee", "admin"]), orderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/assessment", assessmentRoutes);
 app.use("/api/registerEmployees", validateAuthToken(["admin"]), registerEmployeesRoutes);
 app.use("/api/registerClients", registerClientsRoutes);

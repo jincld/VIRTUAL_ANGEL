@@ -12,7 +12,7 @@ const SaleDetail = () => {
   useEffect(() => {
     const fetchSaleDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/order/${id}`);
+        const response = await axios.get(`http://localhost:3001/api/orders/${id}`);
         setSale(response.data);
       } catch (error) {
         console.error("Error fetching sale detail:", error);
@@ -54,15 +54,15 @@ const SaleDetail = () => {
             </label>
             <label>
               Items:
-              <input type="number" value={sale.items} readOnly />
+              <input type="number" value={sale.totalquantity} readOnly />
             </label>
             <label>
               Payment Method:
-              <input type="text" value={sale.paymentMethod || ''} readOnly />
+              <input type="text" value={sale.paymentMethod || 'Card'} readOnly />
             </label>
             <label>
               User Email:
-              <input type="email" value={sale.user || ''} readOnly />
+              <input type="email" value={sale.idCustomer.email || ''} readOnly />
             </label>
             <label>
               Address:
