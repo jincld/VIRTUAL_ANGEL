@@ -29,6 +29,9 @@ function Nav() {
                   <NavLink className="nav-link itemnav" to="/lookbook" activeclassname="active">LOOKBOOK</NavLink>
                 </li>
                 <li className="nav-item">
+                  <NavLink className="nav-link itemnav" to="/purchases" activeclassname="active">PURCHASES</NavLink>
+                </li>
+                <li className="nav-item">
                   <NavLink className="nav-link itemnav" to="/searchpage" activeclassname="active">SEARCH</NavLink>
                 </li>
                 <li className="nav-item">
