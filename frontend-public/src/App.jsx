@@ -30,6 +30,7 @@ import Lookbook from './pages/Lookbook/Lookbook.jsx';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutForm from './pages/Cart/CheckoutForm';
 import ProfileClient from './pages/ProfileClient/ProfileClient.jsx';
+import Purchases from './pages/Purchases/Purchases.jsx';
 
 // Auth Pages
 import Login from './pages/Login/Login.jsx';
@@ -132,9 +133,7 @@ function App() {
 <Route path="cart" element={<ProtectedClientRoute element={<CartPage />} />} />
 <Route path="checkout" element={<ProtectedClientRoute element={<CheckoutForm />} />} />
 <Route path="profileclient" element={<ProtectedClientRoute element={<ProfileClient />} />} />
-
-
-
+<Route path="purchases" element={<ProtectedClientRoute element={<Purchases />} />} />
             </Routes>
 
           </LayoutWrapper>

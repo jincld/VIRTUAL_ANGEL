@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Cart/Checkout.css";
 import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 function CheckoutForm() {
 const { cart, clearCart } = useCart();
@@ -81,7 +82,7 @@ const { cart, clearCart } = useCart();
     e.preventDefault();
 
     try {
-      alert("Generando token de acceso...");
+      console.log("Generando token de acceso...");
 
       const tokenResponse = await fetch("http://localhost:3001/api/payment/get-token", {
         method: "POST",
@@ -94,7 +95,8 @@ const { cart, clearCart } = useCart();
       }
 
       const { access_token } = await tokenResponse.json();
-      alert("Token generado. Enviando pago...");
+      console.log("Token generado. Enviando pago...");
+      toast.success("Card approved. Placing order...");
 
       const payload = {
         monto: formData.monto,
@@ -127,7 +129,8 @@ const { cart, clearCart } = useCart();
       }
 
       const result = await paymentResponse.json();
-      alert("✅ ¡Pago simulado correctamente!");
+      console.log("✅ ¡Pago simulado correctamente!");
+      toast.success("Order placed successfully");
 
       const orderData = {
         idCustomer: formData.emailCliente,
@@ -163,14 +166,16 @@ const { cart, clearCart } = useCart();
       }
 
       await orderResponse.json();
-      alert("Orden creada con éxito.");
+      console.log("Orden creada con éxito.");
+      toast.success("Order placed successfully");
       clearCart();
       limpiarFormulario();
       setStep(2);
       navigate("/cart");
     } catch (error) {
       console.error("Error en el proceso de pago y orden:", error);
-      alert(`❌ ${error.message}`);
+      console.log(`❌ ${error.message}`);
+      toast.error("Error placing order");
     }
   };
 
