@@ -154,39 +154,38 @@ const Employees = () => {
             <h5>No employees found with the selected filters or search.</h5>
           </div>
         ) : (
-<div
-  style={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '1.5rem',
-  }}
->
-  {filteredEmployees.map((employee) => (
-    <div
-      key={employee._id}
-      data-aos="fade-up"
-      style={{
-        flex: '1 1 280px',
-        maxWidth: '300px',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <CardEmployee
-        id={employee._id}
-        imagen={employee.imagen || 'https://via.placeholder.com/150'}
-        name={employee.name}
-        age={employee.age}
-        gender={employee.gender}
-        phone={employee.phone}
-        email={employee.email}
-        rol={employee.rol}
-      />
-    </div>
-  ))}
-</div>
-
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '1.5rem',
+            }}
+          >
+            {filteredEmployees.map((employee) => (
+              <div
+                key={employee._id}
+                data-aos="fade-up"
+                style={{
+                  flex: '1 1 calc(20% - 1.5rem)', // 5 cards per row (20% width per card)
+                  maxWidth: 'calc(20% - 1.5rem)', // Ensures no card exceeds 20% width
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <CardEmployee
+                  id={employee._id}
+                  imagen={employee.imagen || 'https://via.placeholder.com/150'}
+                  name={employee.name}
+                  age={employee.age}
+                  gender={employee.gender}
+                  phone={employee.phone}
+                  email={employee.email}
+                  rol={employee.rol}
+                />
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </>
@@ -194,4 +193,3 @@ const Employees = () => {
 };
 
 export default Employees;
-

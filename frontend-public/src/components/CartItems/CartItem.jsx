@@ -4,9 +4,14 @@ import { useCart } from "../../context/CartContext"; // Importar el contexto
 function CartItem({ product }) {
   const { removeFromCart } = useCart(); // Obtener la función para eliminar productos
 
+  // Calcula el precio total por producto
+  const unitPrice = Number(product.price) || 0;
+  const quantity = Number(product.quantity) || 1;
+  const totalPrice = (unitPrice * quantity).toFixed(2);
+
   return (
     <div
-      className= "mb-4"
+      className="mb-4"
       style={{
         border: "1px solid #e0e0e0",
         borderRadius: "8px",
@@ -41,14 +46,14 @@ function CartItem({ product }) {
               COLOR: <span className="fw-semibold">{product.color || "N/A"}</span>
             </p>
             <p className="card-text">
-              QUANTITY: <span className="fw-semibold">{Number(product.quantity) || 1}</span>
+              QUANTITY: <span className="fw-semibold">{quantity}</span>
             </p>
           </div>
         </div>
 
-        {/* Precio y botón de eliminación */}
+        {/* Precio total y botón de eliminación */}
         <div className="col-md-4 text-end pe-4">
-          <h4 className="text-danger fw-bold">${(Number(product.price) || 0).toFixed(2)}</h4>
+          <h4 className="text-danger fw-bold subtotaltext">SUBTOTAL: ${totalPrice}</h4>
           <button 
             className="btn btn-danger mt-2"
             onClick={() => removeFromCart(product.id)}
