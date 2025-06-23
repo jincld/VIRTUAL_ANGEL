@@ -40,9 +40,9 @@ const onSubmit = async (data) => {
     const resData = await res.json();
 
     if (res.ok) {
-      setMessage("ACCOUNT CREATED SUCCESSFULLY");
+      setMessage("ACCOUNT CREATED SUCCESSFULLY, CHECK YOU EMAIL TO VERIFY YOUR ACCOUNT");
       reset();
-      setTimeout(() => navigate("/"), 2000); // ✅ Redirigir a /
+      setTimeout(() => navigate("/"), 3000); // ✅ Redirigir a /
     } else {
       setMessage(resData.message || "ERROR CREATING ACCOUNT");
     }
