@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../../context/CartContext"; // Importar el contexto
+import './CartItem.css';
 
 function CartItem({ product }) {
   const { removeFromCart } = useCart(); // Obtener la función para eliminar productos
@@ -55,7 +56,7 @@ function CartItem({ product }) {
         <div className="col-md-4 text-end pe-4">
           <h4 className="text-danger fw-bold subtotaltext">SUBTOTAL: ${totalPrice}</h4>
           <button 
-            className="btn btn-danger mt-2"
+            className="btn btn-danger mt-2 btn-remove"
             onClick={() => removeFromCart(product.id)}
           >
             Remove

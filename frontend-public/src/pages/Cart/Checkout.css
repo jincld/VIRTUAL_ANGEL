@@ -27,13 +27,14 @@
   
   .send-button {
     background-color: transparent;
-    border: 2px solid #c51400;
-    color: #c51400;
+    border: 2px solid #ff1900;
+    color: #ff1900;
     transition: all 0.3s ease;
+    border-radius: 0px;
   }
   
   .send-button:hover {
-    background-color: #c51400;
+    background-color: #ff0000;
     color: white;
   }
   

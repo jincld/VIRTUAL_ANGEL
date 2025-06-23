@@ -1,0 +1,19 @@
+/* Contenedor flexible que ajusta el tamaño del video */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Esto crea una relación de aspecto de 16:9 (común para videos) */
+  height: 0; /* Se usa el padding para definir la altura */
+  background-color: black; /* Fondo negro para cuando el video no esté cargado */
+  overflow: hidden;
+}
+
+/* Video adaptado al tamaño del contenedor */
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que el video se cubra sin deformarse */
+}

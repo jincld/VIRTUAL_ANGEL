@@ -1,0 +1,11 @@
+.subtotaltext{
+    color: #ff0000 !important;
+}
+
+.btn-remove{
+    background-color: #ff0000 !important;
+}
+
+.btn-remove:hover{
+    background-color: #000000 !important;
+}

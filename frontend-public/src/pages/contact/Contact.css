@@ -43,8 +43,10 @@
 .colbg {
     background-color: rgba(0, 0, 0, 0.712);
     border-radius: 10px;
-    width: 50vw;
-    min-height: 400px;
+    width: 100%;
+    max-width: 900px; /* Tamaño máximo del formulario */
+    padding: 40px;
+    margin: 250px auto 0 auto; /* Centrado horizontal con margen superior */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,6 +117,10 @@ textarea.form-control {
     font-weight:normal;                 
 }
 
+.input-group{
+    width: 500px;             
+}
+
 .custom-send-btn {
     background-color: black;
     color: #ff0000;
@@ -146,7 +152,9 @@ textarea.form-control {
         font-size: 30px;
     }
 
-
+    .input-group{
+        width: 300px;         
+    }
 }
 
 @media (max-width: 540px) {
@@ -165,6 +173,9 @@ textarea.form-control {
         font-size: 15px;
     }
 
+    .input-group{
+        width: 200px;         
+    }
 }
 
 @media (max-width: 1020px) {

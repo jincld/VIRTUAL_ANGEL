@@ -57,7 +57,7 @@ function CartPage() {
                 onClick={handleCheckout}
                 disabled={cart.length === 0}
               >
-                Proceed to Checkout
+                PROCEED TO CHECKOUT
               </button>
             </div>
           </div>
