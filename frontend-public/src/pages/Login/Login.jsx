@@ -1,20 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Login.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../AuthToken.jsx';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
+  const toastShown = useRef(false);
 
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, offset: 200 });
   }, []);
+
+  // Mostrar toast solo 1 vez si viene de verificación o ya verificado
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const isVerified = queryParams.get("verified");
+    const alreadyVerified = queryParams.get("alreadyVerified");
+
+    if (!toastShown.current && (isVerified === "true" || alreadyVerified === "true")) {
+      if (alreadyVerified === "true") {
+        toast.success("Your account was already verified. Please log in.", { duration: 5000 });
+      } else {
+        toast.success("Your account has been successfully verified. Please log in.", { duration: 5000 });
+      }
+      toastShown.current = true;
+    }
+
+    // Limpiar los query params para que no vuelva a mostrar el toast al recargar
+    if (isVerified === "true" || alreadyVerified === "true") {
+      window.history.replaceState({}, document.title, location.pathname);
+    }
+  }, [location]);
 
   const {
     register,
@@ -52,12 +76,9 @@ const Login = () => {
 
         if (wrongAppMessage) {
           setMessage(wrongAppMessage);
-
-          // Auto cerrar el mensaje después de 5 segundos
           setTimeout(() => {
             setMessage('');
           }, 5000);
-
         } else {
           if (userType === 'admin' || userType === 'employee') {
             navigate('/firstuse');
@@ -67,7 +88,6 @@ const Login = () => {
             setMessage("Unknown user type");
           }
         }
-
       } else {
         setMessage(resData.message || "Invalid credentials");
       }
@@ -113,7 +133,7 @@ const Login = () => {
                   className="form-control formlogin"
                   {...register("password", { required: "Password is required" })}
                 />
-                                      <button type="button" className="show-loginpassword" onClick={togglePasswordVisibility}>
+                <button type="button" className="show-loginpassword" onClick={togglePasswordVisibility}>
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
               </div>
@@ -121,7 +141,12 @@ const Login = () => {
             </div>
 
             {message && (
-  <div className="alert alert-custom-error mt-3" role="alert">
+              <div
+                className={`alert ${
+                  message.includes("verified") ? "alert-custom-success" : "alert-custom-error"
+                } mt-3`}
+                role="alert"
+              >
                 {message}
               </div>
             )}

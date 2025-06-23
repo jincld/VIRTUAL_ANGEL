@@ -47,14 +47,20 @@ loginController.login = async (req, res) => {
         let userType = null;
 
         if (employeeFound) {
-            console.log("🔍 Encontrado como EMPLOYEE");
-            userFound = employeeFound;
-            userType = userFound.rol || "employee";
-        } else if (clientFound) {
-            console.log("🔍 Encontrado como CLIENT");
-            userFound = clientFound;
-            userType = userFound.rol || "client";
-        }
+  console.log("🔍 Encontrado como EMPLOYEE");
+  userFound = employeeFound;
+  userType = userFound.rol || "employee";
+} else if (clientFound) {
+  console.log("🔍 Encontrado como CLIENT");
+  userFound = clientFound;
+  userType = userFound.rol || "client";
+
+  // 🚫 Validar verificación para clientes
+  if (!userFound.verified) {
+    console.log("❌ Cliente no verificado");
+    return res.status(403).json({ message: "Please verify your email before logging in." });
+  }
+}
 
         if (!userFound) {
             console.log("❌ Usuario no encontrado");

@@ -43,7 +43,7 @@ function LayoutWrapper({ children }) {
   const location = useLocation();
   const { userType } = useAuth();
 
-  const hideLayoutRoutes = ['/', '/forgotpassword', '/verifycode', '/newpassword', '/createaccount'];
+  const hideLayoutRoutes = ['/', '/login', '/forgotpassword', '/verifycode', '/newpassword', '/createaccount'];
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   const renderNav = () => {
@@ -104,6 +104,7 @@ function App() {
             <Routes>
               {/* Auth Pages */}
               <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
               <Route path="forgotpassword" element={<ForgotPass />} />
               <Route path="verifycode" element={
                 <ProtectedRoute element={<VerifyCode />} storageKey="canAccessVerifyCode" />

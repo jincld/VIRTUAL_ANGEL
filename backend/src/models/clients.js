@@ -35,6 +35,13 @@ const clientsSchema = new Schema(
     rol: {
       type: String,
       default: 'client'
+    },    
+    verified: {
+      type: Boolean,
+      default: false
+    },
+    verificationToken: {
+      type: String
     },
   },
   {
