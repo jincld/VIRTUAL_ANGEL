@@ -38,6 +38,14 @@ const employeeSchema = new Schema(
       imagen: {
         type: String
       },
+      loginAttempts: {
+      type: Number,
+      default: 0
+    },
+      lockTime: {
+      type: Date,
+      default: null
+    },
   },
   {
     timestamps: true,

@@ -43,6 +43,14 @@ const clientsSchema = new Schema(
     verificationToken: {
       type: String
     },
+    loginAttempts: {
+      type: Number,
+      default: 0
+    },
+    lockTime: {
+      type: Date,
+      default: null
+    },
   },
   {
     timestamps: true,
